@@ -22,7 +22,7 @@ permalink_defaults:
 
 # Site settings
 SEOTitle:  沙罗双树园 | 追寻梦之碎片
-email: soaringhawkcheng@gmail.com
+email: soaringhawkcheng@qq.com
 description: ""
 keyword: ""
 header-img: /img/vintage/home.jpg
@@ -64,13 +64,13 @@ anchorjs: true                          # if you want to customize anchor. check
 
 # Sidebar settings
 sidebar: true                       # whether or not using Sidebar.
-sidebar-about-description: 
+sidebar-about-description: When nothing seems to help, I go and look at a stonecutter hammering away at his rock perhaps a hundred times without as much as a crack showing in it. Yet at the hundred and first blow it will split in two, and I know it was not that blow that did it——but all that had gone before. 
 sidebar-avatar: /img/avatar/kenshin.jpeg      # use absolute URL, seeing it's used in both `/` and `/about/`
 widgets:
-- featured-tags
 - short-about
+- featured-tags
 - recent-posts
-- friends-blog
+# - friends-blog
 - archive
 - category
 

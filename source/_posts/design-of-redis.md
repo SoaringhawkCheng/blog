@@ -1,5 +1,5 @@
 ---
-title: 「Redis设计与实现」学习笔记[DOING]
+title: 「Redis设计与实现」学习笔记
 catalog: true
 date: 2020-05-12 14:38:09
 subtitle: 
