@@ -68,11 +68,11 @@ sidebar-about-description: When nothing seems to help, I go and look at a stonec
 sidebar-avatar: /img/avatar/kenshin.jpeg      # use absolute URL, seeing it's used in both `/` and `/about/`
 widgets:
 - short-about
+- category
 - featured-tags
+- archive
 - recent-posts
 # - friends-blog
-- archive
-- category
 
 # widget behavior
 ## Archive
