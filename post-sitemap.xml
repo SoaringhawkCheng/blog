@@ -9,32 +9,48 @@
 
 
     <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/white-hat-web-security/</loc>
-        <lastmod>2021-04-21T00:04:51.781Z</lastmod>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/jvm-in-action/</loc>
+        <lastmod>2021-11-06T12:06:54.048Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
     </url>
 
     <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/sec-kill-goods/</loc>
-        <lastmod>2021-04-21T00:04:51.768Z</lastmod>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/design-of-redis/</loc>
+        <lastmod>2021-11-06T11:55:25.908Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
     </url>
 
     <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E4%B8%9A%E5%8A%A1/silicon-valley-growth-hack-in-action/</loc>
-        <lastmod>2021-04-21T00:04:51.768Z</lastmod>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/illustration-of-tcp-ip/</loc>
+        <lastmod>2021-11-06T11:55:25.908Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
     </url>
 
     <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/spring-frame-doc-zh/</loc>
-        <lastmod>2021-04-21T00:04:51.768Z</lastmod>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/principle-of-jdk-concurrency-impl/</loc>
+        <lastmod>2021-11-06T11:55:25.908Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/understand-jvm/</loc>
+        <lastmod>2021-11-06T11:55:25.908Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/action-in-java-concurrent-design/</loc>
+        <lastmod>2021-11-06T11:55:25.907Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -49,40 +65,8 @@
     </url>
 
     <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/transition-art-of-it-architecture-in-enterprise/</loc>
-        <lastmod>2021-04-21T00:04:51.768Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/understand-jvm/</loc>
-        <lastmod>2021-04-21T00:04:51.768Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/rocket-mq-guide/</loc>
         <lastmod>2021-04-21T00:04:51.762Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/principle-of-jdk-concurrency-impl/</loc>
-        <lastmod>2021-04-21T00:04:51.751Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/python-web-guide-notes/</loc>
-        <lastmod>2021-04-21T00:04:51.751Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -113,40 +97,8 @@
     </url>
 
     <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/liaoxuefeng-javascript-notes/</loc>
-        <lastmod>2021-04-21T00:04:51.748Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E7%AE%97%E6%B3%95/linxuantian-machine-learning/</loc>
-        <lastmod>2021-04-21T00:04:51.748Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E7%AE%97%E6%B3%95/machine-learning-note/</loc>
-        <lastmod>2021-04-21T00:04:51.748Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/message-queue-summary/</loc>
         <lastmod>2021-04-21T00:04:51.748Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/learn-architecture-from-scratch/</loc>
-        <lastmod>2021-04-21T00:04:51.714Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -169,14 +121,6 @@
     </url>
 
     <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/illustration-of-tcp-ip/</loc>
-        <lastmod>2021-04-21T00:04:51.706Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/innodb-storage-engine/</loc>
         <lastmod>2021-04-21T00:04:51.706Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -187,14 +131,6 @@
     <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/http-definitive-guide/</loc>
         <lastmod>2021-04-21T00:04:51.686Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/high-performance-linux-server-programming/</loc>
-        <lastmod>2021-04-21T00:04:51.650Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -233,32 +169,8 @@
     </url>
 
     <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/every-one-can-be-architect/</loc>
-        <lastmod>2021-04-21T00:04:51.613Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/from-paxos-to-zookeeper/</loc>
         <lastmod>2021-04-21T00:04:51.613Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/design-patterns/</loc>
-        <lastmod>2021-04-21T00:04:51.603Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/design-software-architecture-programmer-to-architect/</loc>
-        <lastmod>2021-04-21T00:04:51.603Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -273,32 +185,8 @@
     </url>
 
     <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/design-of-redis/</loc>
-        <lastmod>2021-04-21T00:04:51.594Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/cloud-server-setup/</loc>
-        <lastmod>2021-04-21T00:04:51.564Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/design-of-linux-kernel/</loc>
         <lastmod>2021-04-21T00:04:51.564Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/an-introduction-to-general-systems-thinking/</loc>
-        <lastmod>2021-04-21T00:04:51.563Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

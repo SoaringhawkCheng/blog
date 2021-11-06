@@ -29,6 +29,10 @@
     
 <link rel="stylesheet" href="/css/beantech.min.css">
 
+
+    
+<link rel="stylesheet" href="/css/donate.css">
+
     
     <!-- Pygments Highlight CSS -->
     
@@ -83,7 +87,7 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('//img/vintage/home.jpg') 
+            background-image: url('/img/vintage/home.jpg') 
             /*config*/
         
     }
@@ -223,403 +227,162 @@
 
 <div class="post-preview">
 
-    <a href="/工程/design-of-redis/">
+    <a href="/工程/innodb-storage-engine/">
         <h2 class="post-title">
-            「Redis设计与实现」学习笔记[DOING]
+            「MySQL技术内幕·InnoDB存储引擎」学习笔记[DOING]
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
             
-书籍豆瓣链接：《Redis设计与实现》
+书籍豆瓣链接：《MySQL技术内幕·InnoDB存储引擎》
 开始学习时间：
 预计完成时间：
 实际完成时间：
 
-数据结构与对象
-简单动态字符串sds
+体系结构
+基础概念
 
-1234561. 记录字符串长度len，常数时间将获得字符串长度2. 杜绝缓冲区溢出，对sds修改时先检查空间是否满足修改所需的要求3. 减少内存重分配次数	空间预分配，空间扩展的时候，额外分配内存len(sds)&gt;&#x3D;1MB?1MB:len(sd......
+
+数据库 物理操作系统文件或其他形式文件类型的集合，是依照某种数据模型组织起来并存放于二级存储器的数据集合
+
+
+实例 MySQL数据库由后台线程以及一个共享内存区组成。共享内存可以被运行的后台线程所共享，数据库实例才是真正用于操作数据库文件的。Mysql单进程......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by 追寻梦之碎片 on
-            2020-05-12
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#cache" title="cache">cache</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/工程/design-of-linux-kernel/">
-        <h2 class="post-title">
-            「Linux内核设计与实现&深入理解Linux内核」学习笔记
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            
-书籍豆瓣链接：
-《Linux内核设计与实现》
-《深入理解Linux内核》
-相关书籍链接：
-《Linux内核设计的艺术》
-《深入Linux内核架构》
-开始学习时间：
-预计完成时间：
-实际完成时间：
-
-绪论
-内核结构
-
-GNU C库，提供了链接内核的系统调用接口，还提供了在用户空间应用程序和内核之间进行转换的机制
-linux内核分三层：
-
-系统调用接口
-独立于体系结构的内核代码
-依赖于体系结构......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 追寻梦之碎片 on
-            2020-05-01
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#os" title="os">os</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/工程/high-performance-linux-server-programming/">
-        <h2 class="post-title">
-            「Linux高性能服务编程」学习笔记[TODO]
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            
-书籍豆瓣链接：《Linux高性能服务器编程》
-开始学习时间：
-预计完成时间：
-实际完成时间：
-
-...
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 追寻梦之碎片 on
-            2020-05-01
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#net" title="net">net</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/工程/illustration-of-tcp-ip/">
-        <h2 class="post-title">
-            「图解TCP/IP」学习笔记[DOING]
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            
-书籍豆瓣链接：《图解TCP/IP》
-开始学习时间：
-预计完成时间：
-实际完成日期：
-
-网络基础知识
-OSI参考模型
-上下层之间进行交互遵循的约定叫接口 同一层之间的交互遵循的约定叫协议
-
-应用层
-
-1针对特定应用的协议
-
-表示层
-
-1设备固有数据格式和网络标准数据格式的转换
-
-会话层
-
-1通信管理，决定连接建立和断开的时机。在数据前端附加首部和标签信息，记录数据传达顺序的信息
-
-传输层
-
-......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 追寻梦之碎片 on
-            2020-01-26
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#net" title="net">net</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/工程/os-three-easy-pieces/">
-        <h2 class="post-title">
-            「操作系统导论」学习笔记
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            
-书籍豆瓣链接：《操作系统导论》
-开始学习日期：10-27
-预计完成时间：1-24
-实际完成时间：
-
-虚拟化
-虚拟化CPU
-在硬件的支持下，CPU交替执行多个程序，造成一种系统拥有非常多的虚拟CPU的假象。将单个CPU转换为看似无限数量的CPU，从而让多个程序看似同时运行，这就是虚拟化CPU。
-进程
-进程创建
-12341. 程序最初是以可执行文件的形式存储在磁盘上的，运行程序第一件事就是从磁......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 追寻梦之碎片 on
-            2019-12-10
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#os" title="os">os</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/工程/from-paxos-to-zookeeper/">
-        <h2 class="post-title">
-            「从Paxos到Zookeeper：分布式一致性原理与实践」学习笔记
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            
-书籍豆瓣链接：《从Paxos到Zookeeper》
-开始学习时间：
-预计完成时间：
-实际完成时间：
-
-前言
-建议阅读顺序
-I. -ZooKeeper相关: 1、5、6、7章(建议中间穿插第8章阅读).
-II. -分布式一致性协议相关: 2、3、4.
-问题：zookeeper如何保证半数提交后剩下的节点上最新的数据
-分情况。只有在脑裂且系统配置readonlymode.enabled才会读取......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 追寻梦之碎片 on
-            2019-09-28
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#gateway" title="gateway">gateway</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/算法/linxuantian-machine-learning/">
-        <h2 class="post-title">
-            「林轩田机器学习」学习笔记[DOING]
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            
-开始学习日期：8-28
-预计完成时间：
-实际完成时间：
-
-学习笔记1
-学习笔记2
-学习笔记6
-卡在这里，有推导没看
-...
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 追寻梦之碎片 on
-            2019-08-29
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#ml" title="ml">ml</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/算法/machine-learning-note/">
-        <h2 class="post-title">
-            「统计学习方法」学习笔记[TODO]
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            
-书籍豆瓣链接：《统计学习方法》
-开始学习日期：8-1
-预计完成时间：9-1
-实际完成时间：
-
-SVM
-什么是P问题、NP问题和NPC问题
-一文详解凸函数和凸优化，干货满满
-一元和多元函数，可导，可微，可积，连续之间的关系还没搞清楚
-如何理解拉格朗日乘子法
-如何理解KKT条件
-
-满足所有约束条件的n维空间成为可行域，函数是局部最大值意味着在可行域内的可行方向上，目标函数不能增大
-等式约束，可......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 追寻梦之碎片 on
-            2019-08-18
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#ml" title="ml">ml</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/工程/nsq-doc-notes/">
-        <h2 class="post-title">
-            「NSQ文档」学习笔记[DOING]
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            
-书籍豆瓣链接：NSQ 1.1.0文档
-开始学习日期：7-14
-预计完成时间：7-20
-实际完成时间：
-
-nsqd实例处理多个数据流，即topic，一个topic有多个channel
-topic-&gt;channel是多播的，channel-&gt;consumers，每个consumer接受消息的一部分
-consumer通过nsqlookupd查找topic所在的nsqd实例地址
-每个n......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 追寻梦之碎片 on
-            2019-07-14
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#mq" title="mq">mq</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/工程/high-performance-mysql/">
-        <h2 class="post-title">
-            「高性能MYSQL」学习笔记[DOING]
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            
-书籍豆瓣链接：《高性能MySQL》
-开始学习时间：
-预计完成时间：
-实际完成时间：
-
-MySQL架构
-
-架构
-服务层
-负责链接管理(客户端与服务器半双工)、授权认证、安全。维护一个连接池，使用用户名和密码或SSL进行认证。
-查询优化
-负责解析查询（编译SQL），并进行优化。对于SELECT语句，先查询缓存。存储过程、触发器、视图都在这一层。
-存储层
-负责存储数据、提取数据、开启一个事务等等......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 追寻梦之碎片 on
-            2019-07-05
+            2019-06-15
         </p>
         <div class="tags">
             
               <a href="/tags/#database" title="database">database</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/工程/head-first-design-pattern/">
+        <h2 class="post-title">
+            「Head First设计模式」学习笔记
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            
+书籍豆瓣链接：《Head First设计模式》
+开始学习时间：5-24
+预计完成时间：6-9
+实际完成时间：6-6
+
+设计基础
+
+
+继承
+  通过扩展一个已有的类，并继承改类的属性和行为，来创建一个新的类
+
+
+
+封装
+  封装就是把抽象的数据和对数据进行的操作封装在一起，数据被保存在内部，程序的其他部分只有通过被授权的操作（成员方法）才能对数据进行操作。
+
+
+
+多态
+  在判断引用对象的实......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 追寻梦之碎片 on
+            2019-05-24
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#software" title="software">software</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/工程/sqlalchemy-docs-note/">
+        <h2 class="post-title">
+            「SQLAlchemy文档」学习笔记
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            ！！ 千万别一开始就去看官网文档 ！！
+首先看 SQLAlchemy 作者在 Pycon 2013 的 Talk
+
+Introduction to SQLAlchemy
+
+链接：https://techspot.zzzeek.org/2013/04/04/introduction-to-sqlalchemy-pycon-2013-wrapup
+PPT：https://speakerdeck.......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 追寻梦之碎片 on
+            2019-05-05
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#database" title="database">database</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/工程/elasticsearch-docs-notes/">
+        <h2 class="post-title">
+            「Elasticsearch文档」学习笔记[DOING]
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            
+书籍豆瓣链接：ES 5.4 官方文档
+开始学习日期：4-1
+预计完成时间：5-4
+实际完成时间：
+
+入门
+基础概念
+集群 cluster
+集群是一个或多个节点（服务器）的集合，它们共同保存您的整个数据，并提供跨所有节点的联合索引和搜索功能
+节点 node
+节点是作为群集一部分的单个服务器，存储数据并参与群集的索引和搜索功能
+索引 index
+索引是具有某些类似特征的文档集合
+类型 type......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 追寻梦之碎片 on
+            2019-04-24
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#se" title="se">se</a>
             
         </div>
     
@@ -638,13 +401,14 @@ MySQL架构
         </li>
     
     
-        <li class="next">
-            <a href="/archives/4/">Older Posts &rarr;</a>
-        </li>
-    
 </ul>
 
 
+
+                <br>
+
+                <!-- require APlayer -->
+                
 
                 <!-- 如果开启评论功能 -->
                 
@@ -659,79 +423,17 @@ MySQL架构
     sidebar-container
 ">
     
-        <!-- Featured Tags -->
-
-<section>
-    <!-- no hr -->
-    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-    <div class="tags">
-        
-            
-            <a href="/tags/#architecture" title="architecture" rel="7">architecture</a>
-            
-        
-            
-            <a href="/tags/#os" title="os" rel="4">os</a>
-            
-        
-            
-        
-            
-        
-            
-            <a href="/tags/#software" title="software" rel="2">software</a>
-            
-        
-            
-        
-            
-            <a href="/tags/#language" title="language" rel="2">language</a>
-            
-        
-            
-            <a href="/tags/#net" title="net" rel="3">net</a>
-            
-        
-            
-            <a href="/tags/#database" title="database" rel="3">database</a>
-            
-        
-            
-        
-            
-            <a href="/tags/#mq" title="mq" rel="5">mq</a>
-            
-        
-            
-        
-            
-            <a href="/tags/#ml" title="ml" rel="2">ml</a>
-            
-        
-            
-            <a href="/tags/#be" title="be" rel="2">be</a>
-            
-        
-            
-        
-            
-        
-            
-        
-    </div>
-</section>
-
-        <hr>
-    
         <!-- Short About -->
 <section class="visible-md visible-lg">
     <h5><a href="/about/">ABOUT ME</a></h5>
     <div class="short-about">
 
         
-            <img id = "avatar_pic" src="//img/avatar/kenshin.jpeg" />
+            <img id = "avatar_pic" src="/img/avatar/kenshin.jpeg" />
         
 
+        
+            <p>When nothing seems to help, I go and look at a stonecutter hammering away at his rock perhaps a hundred times without as much as a crack showing in it. Yet at the hundred and first blow it will split in two, and I know it was not that blow that did it——but all that had gone before.</p>
         
 
         <!-- SNS Link -->
@@ -751,16 +453,76 @@ MySQL架构
         </ul>
     </div>
 </section>
+
+        <hr>
+    
+        <!-- Categories -->
+
+    <h5>categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E7%A8%8B/">工程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li></ul>
+    </div>
+
+        <hr>
+    
+        <!-- Featured Tags -->
+
+<section>
+    <!-- no hr -->
+    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+    <div class="tags">
+        
+            
+        
+            
+            <a href="/tags/#os" title="os" rel="5">os</a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+            <a href="/tags/#language" title="language" rel="2">language</a>
+            
+        
+            
+            <a href="/tags/#net" title="net" rel="2">net</a>
+            
+        
+            
+            <a href="/tags/#database" title="database" rel="3">database</a>
+            
+        
+            
+        
+            
+            <a href="/tags/#mq" title="mq" rel="5">mq</a>
+            
+        
+            
+        
+            
+        
+    </div>
+</section>
+
+        <hr>
+    
+        
+    <h5>ARCHIVES</h5>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+
         <hr>
     
         
   <h5>RECENT POSTS</h3>
   <div class="widget">
     <ul>
-      
-        <li>
-          <a href="/%E5%B7%A5%E7%A8%8B/spring-frame-doc-zh/">「Spring Framework中文文档」学习笔记</a>
-        </li>
       
         <li>
           <a href="/%E5%B7%A5%E7%A8%8B/principle-of-jdk-concurrency-impl/">「Java并发实现原理：JDK源码剖析」学习笔记</a>
@@ -771,11 +533,15 @@ MySQL架构
         </li>
       
         <li>
-          <a href="/%E5%B7%A5%E7%A8%8B/design-software-architecture-programmer-to-architect/">「软件架构设计：程序员向架构师转型必备」[TODO]</a>
+          <a href="/%E5%B7%A5%E7%A8%8B/jvm-in-action/">「实战Java虚拟机：JVM故障诊断与性能优化」</a>
         </li>
       
         <li>
-          <a href="/%E5%B7%A5%E7%A8%8B/transition-art-of-it-architecture-in-enterprise/">「企业IT架构转型之道」学习笔记[TODO]</a>
+          <a href="/%E5%B7%A5%E7%A8%8B/action-in-java-concurrent-design/">「实战Java高并发程序设计」学习笔记</a>
+        </li>
+      
+        <li>
+          <a href="/%E5%B7%A5%E7%A8%8B/rocket-mq-guide/">「RocketMQ开发者指南」学习笔记</a>
         </li>
       
     </ul>
@@ -783,17 +549,8 @@ MySQL架构
 
         <hr>
     
-        <!-- Friends Blog -->
-
-<h5>FRIENDS</h5>
-<ul class="list-inline">
-
-    
-</ul>
-
-        <hr>
-    
 </div>
+
 
         
     </div>
@@ -821,18 +578,12 @@ MySQL架构
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; 追寻梦之碎片 2021 
-                    <br>
-                    Theme by <a target="_blank" rel="noopener" href="http://huangxuan.me">Hux</a> 
+                    Copyright &copy; 
+                    2021 
                     <span style="display: inline-block; margin: 0 5px;">
                         <i class="fa fa-heart"></i>
                     </span> 
-                    re-Ported by <a target="_blank" rel="noopener" href="http://beantech.org">BeanTech</a> | 
-                    <iframe
-                        style="margin-left: 2px; margin-bottom:-5px;"
-                        frameborder="0" scrolling="0" width="91px" height="20px"
-                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
-                    </iframe>
+                    追寻梦之碎片 
                 </p>
             </div>
         </div>
