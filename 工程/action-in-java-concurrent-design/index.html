@@ -229,11 +229,49 @@
                 post-container">
 
                 <blockquote>
-<p>书籍文档链接：<a target="_blank" rel="noopener" href="https://book.douban.com/subject/30358019/">《实战Java高并发程序设计（第2版）》</a></p>
+<p>书籍文档链接：<br>
+<a target="_blank" rel="noopener" href="https://book.douban.com/subject/30358019/">《实战Java高并发程序设计（第2版）》</a><br>
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/chi_laughinggor/category_6664965.html">笔记地址</a></p>
 <p>开始学习时间：</p>
 <p>预计完成时间：</p>
 <p>实际完成时间：</p>
 </blockquote>
+<h1><span id="第1章">第1章</span></h1>
+<p>并发编程三个概念：</p>
+<ol>
+<li>原子性：即一个操作或者多个操作 要么全部执行并且执行的过程不会被任何因素打断，要么就都不执行</li>
+<li>可见性：可见性是指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值。</li>
+<li>有序性：即程序执行的顺序按照代码的先后顺序执行</li>
+</ol>
+<p>happens-before 原则：Java内存模型具备一些先天的“有序性”，即不需要通过任何手段就能够得到保证的有序性</p>
+<ol>
+<li>程序次序规则：一个线程内，按照代码顺序，书写在前面的操作先行发生于书写在后面的操作</li>
+<li>锁定规则：一个unLock操作先行发生于后面对同一个锁额lock操作</li>
+<li>volatile变量规则：对一个变量的写操作先行发生于后面对这个变量的读操作</li>
+<li>传递规则：如果操作A先行发生于操作B，而操作B又先行发生于操作C，则可以得出操作A先行发生于操作C</li>
+<li>线程启动规则：Thread对象的start()方法先行发生于此线程的每个一个动作</li>
+<li>线程中断规则：对线程interrupt()方法的调用先行发生于被中断线程的代码检测到中断事件的发生</li>
+<li>线程终结规则：线程中所有的操作都先行发生于线程的终止检测，我们可以通过Thread.join()方法结束、Thread.isAlive()的返回值手段检测到线程已经终止执行</li>
+<li>对象终结规则：一个对象的初始化完成先行发生于他的finalize()方法的开始</li>
+</ol>
+<p>处理器中的流水线技术</p>
+<ol>
+<li>
+<p>取指：指令取指（Instruction Fetch）是指将指令从存储器中读取出来的过程。</p>
+</li>
+<li>
+<p>译码：指令译码（Instruction Decode）是指将存储器中取出的指令进行翻译的过程。经过译码之后得到指令需要的操作数寄存器索引，可以使用此索引从通用寄存器组（Register File）中将操作数读出，读入指令寄存器。</p>
+</li>
+<li>
+<p>执行：指令译码之后所需要进行的计算类型都已得知，并且已经从通用寄存器组中读取出了所需的操作数，那么接下来便进行指令执行（Instruction Execute）。指令执行是指对指令进行真正运算的过程。譬如，如果指令是一条加法运算指令，则对操作数进行加法操作；如果是减法运算指令，则进行减法操作。在“执行”阶段的最常见部件为算术逻辑部件运算器（Arithmetic Logical Unit，ALU），作为实施具体运算的硬件功能单元。</p>
+</li>
+<li>
+<p>访存：存储器访问指令往往是指令集中最重要的指令类型之一，访存（Memory Access）是指存储器访问指令将数据从存储器中读出，或者写入存储器的过程。</p>
+</li>
+<li>
+<p>写回：写回（Write-Back）是指将指令执行的结果写回通用寄存器组的过程。如果是普通运算指令，该结果值来自于“执行”阶段计算的结果；如果是存储器读指令，该结果来自于“访存”阶段从存储器中读取出来的数据。</p>
+</li>
+</ol>
 
                 
 
@@ -303,7 +341,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="nav">none</ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">第1章</span></a></li></ol>
         
         </div>
       </aside>
@@ -408,7 +446,7 @@
                 </ul>
                 <p class="copyright text-muted">
                     Copyright &copy; 
-                    2021 
+                    2022 
                     <span style="display: inline-block; margin: 0 5px;">
                         <i class="fa fa-heart"></i>
                     </span> 
