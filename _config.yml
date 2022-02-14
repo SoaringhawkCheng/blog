@@ -3,9 +3,9 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 沙罗双树园
+title: 读书笔记
 subtitle: 
-author: 追寻梦之碎片
+author: 小石匠
 language: zh-CN
 timezone:
 
@@ -21,7 +21,7 @@ permalink_defaults:
 #Custom Setting Start
 
 # Site settings
-SEOTitle:  沙罗双树园 | 追寻梦之碎片
+SEOTitle:  读书笔记 | 小石匠
 email: soaringhawkcheng@qq.com
 description: ""
 keyword: ""
