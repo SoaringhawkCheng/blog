@@ -79,14 +79,15 @@ categories:
 
 * 依赖关系
 
-	![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/head-first-design-pattern/class_dependency.png?raw=true)	
+	![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/head-first-design-pattern/class_dependency.png?raw=true)
+	
 	java中表现为，局部变量、方法中的参数和静态方法调用
 
 * 关联关系
 
 	![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/head-first-design-pattern/class_association.png?raw=true)
 
-	java中使用成员变量实现
+	java中使用成员变量实现，或者使用全局变量
 
 * 聚合关系
 
