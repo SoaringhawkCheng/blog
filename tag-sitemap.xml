@@ -3,6 +3,13 @@
 
 
     <url>
+        <loc>https://blog.soaringhawkcheng.tech/tags/java/</loc>
+        <lastmod>2022-03-14T14:20:03.127Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://blog.soaringhawkcheng.tech/tags/language/</loc>
         <lastmod>2022-03-12T09:49:49.087Z</lastmod>
         <changefreq>weekly</changefreq>
