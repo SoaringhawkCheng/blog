@@ -57,6 +57,7 @@ fun4(**kargs) 关键字参数
 
 ## python命名空间和作用域
 [python3命名空间和作用域](https://www.runoob.com/python3/python3-namespace-scope.html)
+
 ### 命名空间
 命名空间(Namespace)是从名称到对象的映射，大部分的命名空间都是通过 Python 字典来实现的。
 ```
@@ -114,6 +115,69 @@ Iterator实现了`__iter__()`和`__next__()`方法
 
 ## 协程
 [Python协程深入理解](https://www.cnblogs.com/zhaof/p/7631851.html)
+
+### yield关键字
+协程和生成器类似，在定义中包含yield关键字的函数
+
+### yield在协程中的用法
+```
+在协程中yield通常出现在表达式的右边。比如 lhs = yield rhs，或者 lhs = yield(生成器产出None)
+协程可能从调用方接受数据，调用方是通过send(datum)的方式把数据提供给协程使用
+协程可以把控制器让给中心调度程序，从而激活其他的协程
+```
+### 协程的用法
+`lhs = yield` 或 `lhs = yield rhs`，这个表达式的计算过程是先计算等号右边的内容，然后在进行赋值，所以当激活生成器后，程序会停在yield这里，但并没有给x赋值。
+
+当我们调用send方法后yield会收到这个值并赋值给x，而当程序运行到协程定义体的末尾时和用生成器的时候一样会抛出StopIteration异常
+
+```
+#! /usr/bin/python3
+
+from inspect import getgeneratorstate
+
+def simple_coroutine():
+    print('-->coroutine started')
+    x = yield
+    print('-->coroutine received:', x)
+
+my_coro = simple_coroutine()
+print(my_coro)
+print(getgeneratorstate(my_coro))
+print(next(my_coro))
+print(getgeneratorstate(my_coro))
+print(my_coro.send(24))
+print(getgeneratorstate(my_coro))
+```
+
+如果协程没有通过next(...)激活(同样我们可以通过send(None)的方式激活)，但是我们直接send会报can't send non-None value to a just-started generator
+
+```
+##! /usr/bin/python3
+
+from inspect import getgeneratorstate
+
+def averager():
+    total = 0.0
+    count = 0
+    average = None
+    while True:
+        term = yield average
+        total += term
+        count += 1
+        average = total/count
+
+coro_avg = averager()
+print(getgeneratorstate(coro_avg))
+next(coro_avg)
+print(getgeneratorstate(coro_avg))
+print(coro_avg.send(10))
+print(getgeneratorstate(coro_avg))
+print(coro_avg.send(30))
+print(getgeneratorstate(coro_avg))
+print(coro_avg.send(40))
+print(getgeneratorstate(coro_avg))
+```
+
 协程在运行过程中有四个状态：
 ```
 GEN_CREATE:等待开始执行
@@ -121,5 +185,190 @@ GEN_RUNNING:解释器正在执行，这个状态一般看不到
 GEN_SUSPENDED:在yield表达式处暂停
 GEN_CLOSED:执行结束
 ```
-x = yield这个表达式的计算过程是先计算等号右边的内容，然后在进行赋值，所以当激活生成器后，程序会停在yield这里，但并没有给x赋值。
-当我们调用send方法后yield会收到这个值并赋值给x,而当程序运行到协程定义体的末尾时和用生成器的时候一样会抛出StopIteration异常
+
+### 预激协程的装饰器
+关于调用next(...)函数这一步通常称为”预激(prime)“协程，即让协程向前执行到第一个yield表达式，准备好作为活跃的协程使用
+
+```
+##! /usr/bin/python3
+
+from functools import wraps
+from inspect import getgeneratorstate
+
+def coroutine(func):
+    @wraps(func) # 元信息还是func，不被替换
+    def primer(*args, **kwargs):
+        gen = func(*args, **kwargs)
+        next(gen)
+        return gen
+    return primer
+
+@coroutine
+def averager():
+    total = 0.0
+    count = 0
+    average = None
+    while True:
+        term = yield average
+        total += term
+        count += 1
+        average = total/count
+
+coro_avg = averager()
+print(getgeneratorstate(coro_avg))
+print(coro_avg.send(10))
+print(getgeneratorstate(coro_avg))
+print(coro_avg.send(30))
+print(getgeneratorstate(coro_avg))
+print(coro_avg.send(40))
+print(getgeneratorstate(coro_avg))
+```
+
+### 终止协程和异常处理
+协程中为处理的异常会向上冒泡,传给next函数或send函数的调用方(即触发协程的对象)
+
+```
+from inspect import getgeneratorstate
+from operator import ne
+
+
+class DemoException(Exception):
+    """定义的异常类型"""
+
+def demo_exc_handling():
+    print('-> coroutine started')
+    while True:
+        try:
+            x = yield
+        except DemoException:
+            print("DemoException handled, continuing...")
+        else:
+            print("-> coroutine received:{!r}".format(x))
+
+    raise RuntimeError("this line should never run.")
+
+ext_coro = demo_exc_handling()
+next(ext_coro)
+print(getgeneratorstate(ext_coro))
+ext_coro.send(11)
+print(getgeneratorstate(ext_coro))
+ext_coro.send(22)
+print(getgeneratorstate(ext_coro))
+ext_coro.send(33)
+print(getgeneratorstate(ext_coro))
+ext_coro.throw(DemoException)
+print(getgeneratorstate(ext_coro))
+ext_coro.close()
+print(getgeneratorstate(ext_coro))
+```
+
+从python2.5开始客户端代码在生成器对象上调用throw和close两个方法，显示的把异常发送给协程
+
+* throw：生成器在暂时的yield表达式处抛出指定的异常
+
+```
+如果生成器处理了异常，代码会执行到下一个yield表达式，产出的值作为throw方法的返回值
+如果没有处理异常，异常会向上冒泡，传到调用方的上下文中
+```
+	
+* close：生成器在暂停的yield表达式处抛出GeneratorExit异常
+
+```
+ 如果生成器没有处理这个异常，或者抛出了StopIteration异常，调用方不会报错
+ 收到GeneratorExit异常，生成器一定不能产出值，否则解释器会抛出RuntimeError异常，传给调用方
+```
+
+### 协程返回停止返回值 - yield from
+```
+from collections import namedtuple
+
+
+Result = namedtuple("Result", "colunt average")
+
+def averager():
+    total = 0.0
+    count = 0
+    average = None
+    while True:
+        term = yield
+        if term is None:
+            break
+        total += term
+        count += 1
+        average = total/count
+    return Result(count, average)
+
+coro_avg = averager()
+next(coro_avg)
+coro_avg.send(10)
+coro_avg.send(30)
+coro_avg.send(5)
+try:
+    coro_avg.send(None)
+except StopIteration as e:
+    result = e.value
+    print(result)
+```
+上面这种方式获取返回值比较麻烦，使用yield from，解释器不仅会捕获StopIteration异常，还会把value属性的值变成yield from表达式的值
+
+### yield from 
+yield from的主要功能是打开双向通道，把最外层的调用方与最内层的子生成器连接起来，这样二者可以直接发送和产出值，还可以直接传入异常，而不用再像之前那样在位于中间的协程中添加大量处理异常的代码
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/my-python-note-book/1.png?raw=true)
+
+```
+#! /usr/bin/python3
+
+from collections import namedtuple
+
+
+Result = namedtuple("Result", "count average")
+
+# 子生成器
+def averager():
+    total = 0.0
+    count = 0
+    average = None
+    while True:
+        term = yield
+        if term is None:
+            break
+        total += term
+        count += 1
+        average = total/count
+    return Result(count, average)
+
+# 委派生成器
+def grouper(result, key):
+    while True:
+        result[key] = yield from averager()
+
+# 客户端代码， 即调用方
+def main(data):
+    results = {}
+    for key, values in data.items():
+        group = grouper(results, key)
+        next(group)
+        for value in values:
+            group.send(value)
+        group.send(None)
+
+    report(results)
+
+# 输出报告
+def report(results):
+    for key, result in sorted(results.items()):
+        group, unit = key.split(";")
+        print("{} {} averaging {} {}".format(
+            result.count, group, result.average, unit
+        ))
+
+data = {
+    'girls;kg': [40.9, 38.5, 44.3, 42.2, 45.2, 41.7, 44.5, 38.0, 40.6, 44.5],
+    'girls;m': [1.6, 1.51, 1.4, 1.3, 1.41, 1.39, 1.33, 1.46, 1.45, 1.43],
+    'boys;kg': [39.0, 40.8, 43.2, 40.8, 43.1, 38.6, 41.4, 40.6, 36.3],
+    'boys;m': [1.38, 1.5, 1.32, 1.25, 1.37, 1.48, 1.25, 1.49, 1.46],
+}
+
+if __name__ == '__main__':
+    main(data)
+```
