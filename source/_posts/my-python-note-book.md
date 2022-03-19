@@ -1,5 +1,5 @@
 ---
-title: 《我的Python学习笔记》 
+title: 「MorsoLi/python-interview-guide」学习笔记
 catalog: true
 date: 2022-03-12 17:34:13
 subtitle:
@@ -8,9 +8,11 @@ tags:
 - language
 categories:
 - 工程
+---
+
 > 书籍豆瓣链接：[《流畅的Python》](https://book.douban.com/subject/27028517/)
 > 
-> 参考资料链接 [Python面经]()
+> 参考资料链接 [Github链接](https://github.com/MorsoLi/python-interview-guide#wsgi-uwsgi-uwsgi-%E5%8C%BA%E5%88%AB)
 > 
 > 开始学习时间：
 > 
@@ -20,8 +22,6 @@ categories:
 ---
 
 [理解 Python 装饰器看这一篇就够了](https://foofish.net/python-decorator.html)
-
-[Python进阶：浅析「垃圾回收机制」(上篇)](https://hackpython.com/blog/2019/07/05/Python%E8%BF%9B%E9%98%B6%EF%BC%9A%E6%B5%85%E6%9E%90%E3%80%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6%E3%80%8D-%E4%B8%8A%E7%AF%87/)
 
 [Python GIL全局解释器锁详解](http://c.biancheng.net/view/5537.html)
 
@@ -274,7 +274,7 @@ print(getgeneratorstate(ext_coro))
 * close：生成器在暂停的yield表达式处抛出GeneratorExit异常
 
 ```
- 如果生成器没有处理这个异常，或者抛出了StopIteration异常，调用方不会报错
+ 如果生成器没有处理这个异常，调用方不会报错
  收到GeneratorExit异常，生成器一定不能产出值，否则解释器会抛出RuntimeError异常，传给调用方
 ```
 
@@ -312,7 +312,7 @@ except StopIteration as e:
 上面这种方式获取返回值比较麻烦，使用yield from，解释器不仅会捕获StopIteration异常，还会把value属性的值变成yield from表达式的值
 
 ### yield from 
-yield from的主要功能是打开双向通道，把最外层的调用方与最内层的子生成器连接起来，这样二者可以直接发送和产出值，还可以直接传入异常，而不用再像之前那样在位于中间的协程中添加大量处理异常的代码
+* yield from的主要功能是打开双向通道，把最外层的调用方与最内层的子生成器连接起来，这样二者可以直接发送和产出值，还可以直接传入异常，而不用再像之前那样在位于中间的协程中添加大量处理异常的代码
 ![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/my-python-note-book/1.png?raw=true)
 
 ```
@@ -372,3 +372,91 @@ data = {
 if __name__ == '__main__':
     main(data)
 ```
+
+* grouper发送的每个值都会经由yield from处理，通过管道传给averager实例。grouper会在yield from表达式处暂停，等待averager实例处理客户端发来的值。averager实例运行完毕后，返回的值会绑定到results[key]上，while 循环会不断创建averager实例，处理更多的值
+
+* 关于yield from 六点重要的说明（**文档中特殊异常StopIteration和GeneratorExit不上抛好像是错的，都会上抛**）
+
+```
+1. 自生成器的值都是直接传给委派生成器的调用方
+2. send方法发送给委派生成器的值都传给子生成器
+	a. 如果发送的值为None，调用子生成器的__next__方法
+	b. 如果发送的值不是None，调用子生成器的send方法
+	c. 如果调用的方法抛出异常，异常都会向上冒泡，传给委派生成器
+3. 生成器退出是，return的expr会赋值给委派生成器yield from语句的左值
+4. close和throw方法，也会传给子生成器
+```
+
+## python面向对象
+
+### 属性和方法
+#### 按访问权限分
+单下划线、双下划线、头尾双下划线
+```
+__foo__: 特殊方法，一般是系统定义名字，类似__init__()之类的
+_foo: 表示的是protected类型的变量，即保护类型只能允许其本身与子类进行访问，不能用于 from module import *
+__foo: 表示私有类型private的变量，只能允许类本身进行访问
+
+```
+不允许实例化的类访问私有数据，但是可以使用`object._{className}__{attrName}`访问属性
+
+#### 按隶属分
+方法
+```
+@classmethod 类方法主要用途是作为构造函数
+@staticmethod 主要用途是限定namespace
+```
+
+
+### 内置类属性
+* 内置类属性
+
+```
+__dict__ : 类的属性（包含一个字典，由类的数据属性组成）
+__doc__ :类的文档字符串
+__name__: 类名
+__module__: 类定义所在的模块（类的全名是'__main__.className'，如果类位于一个导入模块mymod中，那么className.__module__ 等于 mymod）
+__bases__ : 类的所有父类构成元素（包含了一个由所有父类组成的元组）
+```
+
+* 内置类或者静态方法
+
+```
+__new__(): 是一种负责创建类实例的静态方法，它无需使用 staticmethod 装饰器修饰，且该方法会优先 __init__() 初始化方法被调用
+```
+
+* 操作类的通用方法
+
+```
+issubclass(cls, class_or_tuple)：检查 cls 是否为后一个类或元组包含的多个类中任意类的子类
+```
+
+
+### 内置对象属性和方法
+* 内置对象方法，都可以重载
+
+```
+__class__: 指向类
+__init__(self [,args...]): 构造哈数
+__del__(self): 析构函数
+__repr__(self): 交互式界面信息，print兜底方法
+__str__(self): print优先调用该方法，
+__cmp__(self, x): 对象比较
+__call__(): 该方法的功能类似于在类中重载 () 运算符
+```
+
+* 操作对象的通用方法
+
+```
+isinstance(obj, class_or_tuple)：检查 obj 是否为后一个类或元组包含的多个类中任意类的对象
+getattr(obj, name[, default]) : 访问对象的属性。
+hasattr(obj,name) : 检查是否存在一个属性。
+setattr(obj,name,value) : 设置一个属性。如果属性不存在，会创建一个新属性。
+delattr(obj, name) : 删除属性。
+```
+
+### 寻找方法
+
+
+### 垃圾回收
+[Python进阶：浅析「垃圾回收机制」(上篇)](https://hackpython.com/blog/2019/07/05/Python%E8%BF%9B%E9%98%B6%EF%BC%9A%E6%B5%85%E6%9E%90%E3%80%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6%E3%80%8D-%E4%B8%8A%E7%AF%87/)
