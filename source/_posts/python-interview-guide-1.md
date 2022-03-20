@@ -1,5 +1,5 @@
 ---
-title: 「MorsoLi/python-interview-guide」学习笔记
+title: 「MorsoLi/python-interview-guide」学习笔记(上)
 catalog: true
 date: 2022-03-12 17:34:13
 subtitle:
@@ -10,9 +10,9 @@ categories:
 - 工程
 ---
 
-> 书籍豆瓣链接：[《流畅的Python》](https://book.douban.com/subject/27028517/)
-> 
 > 参考资料链接 [Github链接](https://github.com/MorsoLi/python-interview-guide#wsgi-uwsgi-uwsgi-%E5%8C%BA%E5%88%AB)
+> 
+> 书籍豆瓣链接：[《流畅的Python》](https://book.douban.com/subject/27028517/)
 > 
 > 开始学习时间：
 > 
@@ -25,7 +25,10 @@ categories:
 
 [Python GIL全局解释器锁详解](http://c.biancheng.net/view/5537.html)
 
-## python引用机制
+# 一、基础特性
+
+## 1.1 万物皆对象
+### python引用类型
 在python中将类型分为了可变类型和不可变类型，分别有：
 ```
 可变类型：列表，字典
@@ -34,7 +37,12 @@ categories:
 对于可变类型变量而言，因为可变类型变量特性，直接在原对象上修改，因为此时形参和实参都是指向同一个对象，所以，实参指向的对象自然就被修改了
 ```
 
-## python传参
+### python赋值
+直接赋值：其实就是对象的引用（别名）。
+浅拷贝(copy)：拷贝父对象，不会拷贝对象的内部的子对象。
+深拷贝(deepcopy)： copy 模块的 deepcopy 方法，完全拷贝了父对象及其子对象。
+
+### python传参
 python中函数的参数类型分为以下五种：位置参数、默认参数、可变参数`（*args）`、关键字参数`（**args）`、命名关键字参数(这个这次先不复习)
 
 ```
@@ -50,36 +58,38 @@ fun4(**kargs) 关键字参数
 5 和普通关键字参数不同，命名关键字参数需要一个用来区分的分隔符*，它后面的参数被认为是命名关键字参数 -- 这个先不看
 ```
 
-## python赋值
-直接赋值：其实就是对象的引用（别名）。
-浅拷贝(copy)：拷贝父对象，不会拷贝对象的内部的子对象。
-深拷贝(deepcopy)： copy 模块的 deepcopy 方法，完全拷贝了父对象及其子对象。
-
-## python命名空间和作用域
+## 1.2 python命名空间和作用域
 [python3命名空间和作用域](https://www.runoob.com/python3/python3-namespace-scope.html)
 
 ### 命名空间
-命名空间(Namespace)是从名称到对象的映射，大部分的命名空间都是通过 Python 字典来实现的。
-```
-内置名称（built-in names）， Python 语言内置的名称，比如函数名 abs、char 和异常名称 BaseException、Exception 等等。
-全局名称（global names），模块中定义的名称，记录了模块的变量，包括函数、类、其它导入的模块、模块级的变量和常量。
-局部名称（local names），函数中定义的名称，记录了函数的变量，包括函数的参数和局部定义的变量。（类中定义的也是）
-```
+命名空间(Namespace)是作用域内名称到对象的映射，大部分的命名空间都是通过字典来实现的。一个命名空间中不能有重名，但是不同的命名空间可以重名且互相不影响
+
+命名空间 | 含义 | 生命周期 | 查看方式 
+---|---|---|---
+内置名称（built-in names） | 比如函数名 abs、char和异常名称BaseException、Exception 等等 |         解释器启动时创建，一直保留直到解释器退出 | 使用`dir(__builtins__)`查看，返回的是列表
+全局名称（global names） | 模块中定义的名称，记录了模块的变量，包括函数、类、其它导入的模块、模块级的变量和常量 | 模块被加载时创建，保留到解释器退出 | 使用globals()查看全局命名空间，返回的是字典
+局部名称（local names） | 函数中定义的名称，记录了函数的变量，包括函数的参数和局部定义的变量 | 函数被调用时才被创建，但函数返回结果或抛出异常时被删除（每个递归函数都有自己的命名空间） | 使用locals()查看局部命名空间，返回的是字典
+
 命名空间的生命周期取决于对象的作用域，如果对象执行完成，则该命名空间的生命周期就结束。
 
 ### 作用域
-作用域就是一个 Python 程序可以直接访问命名空间的文本区域。
-在一个 python 程序中，直接访问一个变量，会从内到外依次访问所有的作用域直到找到
+作用域是针对变量而言，指变量在程序里的可应用范围
+在一个python程序中，直接访问一个变量，会从内到外依次访问所有的作用域直到找到
 
-四种作用域
+python有四种作用域，`LEGB`
+
 ```
 L（Local）局部作用域：最内层，包含局部变量，比如一个函数/方法内部。
-E（Enclosing）嵌套作用域：包含了非局部(non-local)也非全局(non-global)的变量。比如两个嵌套函数，一个函数（或类） A 里面又包含了一个函数 B ，那么对于 B 中的名称来说 A 中的作用域就为 nonlocal。
+E（Enclosing）嵌套作用域(闭包)：包含了非局部(non-local)也非全局(non-global)的变量。比如两个嵌套函数，一个函数（或类） A 里面又包含了一个函数 B ，那么对于 B 中的名称来说 A 中的作用域就为 nonlocal。
 G（Global）全局作用域：当前脚本的最外层，比如当前模块的全局变量。
 B（Built-in）内建作用域： 包含了内建的变量/关键字等，最后被搜索。
 ```
 
-## python闭包
+### 命名空间和作用域的关系
+命名空间定义了某个作用域内变量名与值的对应关系，作用定义了命名空间的变量生效的范围
+注意，这里没有类作用域和命名空间，所有访问类和示例成员时，必须使用诸如`self.a`和`cls.b`这种
+
+### 闭包
 闭包指延伸了作用域的函数，访问定义体之外的非全局变量，创建一个闭包必须满足一下几点：
 ```
 必须有一个内嵌函数
@@ -87,7 +97,17 @@ B（Built-in）内建作用域： 包含了内建的变量/关键字等，最后
 外部函数的返回值必须是内嵌函数
 ```
 
-## 函数式编程
+## 1.3 迭代器和生成器
+[Python中的可迭代对象、迭代器和生成器的异同点](https://blog.csdn.net/SL_World/article/details/86507872)
+### 容器
+容器就是一个用来存储多个元素的数据结构，容器中的元素可通过迭代获取。list，tuple，dict，set，str
+### 迭代器
+Iterator实现了`__iter__()`和`__next__()`方法
+
+### 生成器
+含有`yield`关键字的函数就是生成器函数
+
+## 1.4 函数式编程
 ### 函数是一等公民
 函数能作为参数传递，或者是作为返回值返回
 
@@ -103,18 +123,10 @@ lambda内不要包含循环，如果有，定义函数来完成，lambda 是为�
 ### filter函数
 接收一个函数和一个序列，传入的函数依次作用于每个元素，然后根据返回值是True还是False决定保留还是丢弃该元素
 
-## 迭代器和生成器
-[Python中的可迭代对象、迭代器和生成器的异同点](https://blog.csdn.net/SL_World/article/details/86507872)
-### 容器
-容器就是一个用来存储多个元素的数据结构，容器中的元素可通过迭代获取。list，tuple，dict，set，str
-### 迭代器
-Iterator实现了`__iter__()`和`__next__()`方法
-
-### 生成器
-含有`yield`关键字的函数就是生成器函数
-
-## 协程
+# 二、协程
 [Python协程深入理解](https://www.cnblogs.com/zhaof/p/7631851.html)
+
+## 2.1 yield
 
 ### yield关键字
 协程和生成器类似，在定义中包含yield关键字的函数
@@ -278,7 +290,7 @@ print(getgeneratorstate(ext_coro))
  收到GeneratorExit异常，生成器一定不能产出值，否则解释器会抛出RuntimeError异常，传给调用方
 ```
 
-### 协程返回停止返回值 - yield from
+### 协程返回停止返回值
 ```
 from collections import namedtuple
 
@@ -311,7 +323,7 @@ except StopIteration as e:
 ```
 上面这种方式获取返回值比较麻烦，使用yield from，解释器不仅会捕获StopIteration异常，还会把value属性的值变成yield from表达式的值
 
-### yield from 
+## 2.2 yield from
 * yield from的主要功能是打开双向通道，把最外层的调用方与最内层的子生成器连接起来，这样二者可以直接发送和产出值，还可以直接传入异常，而不用再像之前那样在位于中间的协程中添加大量处理异常的代码
 ![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/my-python-note-book/1.png?raw=true)
 
@@ -387,27 +399,98 @@ if __name__ == '__main__':
 4. close和throw方法，也会传给子生成器
 ```
 
-## python面向对象
+# 三、python面向对象
 
-### 属性和方法
-#### 按访问权限分
-单下划线、双下划线、头尾双下划线
+## 3.1 三大特性
+### 封装
+通过修饰符类控制访问权限，如单下划线、双下划线、头尾双下划线
+
 ```
 __foo__: 特殊方法，一般是系统定义名字，类似__init__()之类的
 _foo: 表示的是protected类型的变量，即保护类型只能允许其本身与子类进行访问，不能用于 from module import *
 __foo: 表示私有类型private的变量，只能允许类本身进行访问
-
 ```
 不允许实例化的类访问私有数据，但是可以使用`object._{className}__{attrName}`访问属性
 
-#### 按隶属分
-方法
+### 继承
+Python有三种方法解析顺序(MRO, method resolution order)：
+
 ```
-@classmethod 类方法主要用途是作为构造函数
-@staticmethod 主要用途是限定namespace
+经典类（classic class）的深度遍历。
+Python 2.2 的新式类（new-style class）预计算。
+Python 2.3 的新式类的C3 算法。它也是 Python 3 唯一支持的方式。
+
+经典类（classic class）和新式类（new-style class）。两者的不同之处在于新式类继承自 object，Python3以后，所有类都继承自object，新式类是唯一的类
 ```
 
+* 经典类的深度优先遍历结果
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/python-interview-guide-1/2.png?raw=true)
+```
+1. 不满足局部优先次序：如C的声明中父类X在Y前面，遍历结果[C, A, B, Y, X, object]中Y反而在X前面
+2. 不满足单调性：如果调整A的顺序为[C, A, B, X, Y, object]， B的搜索顺序为[B, Y, X, object]，与子类相反不满足单调性
+```
 
+* C3算法方法：一个类的C3线性表，是由两部分进行merge操作得到的，第一部分是是它所有父类的C3线性表(parents' linearizations)，第二部分是它所有父类组成的列表(parents list)。后者其实是局部的优先级列表。类似于广度遍历
+
+### 多态
+Pyhon不支持多态并且也用不到多态，Python采用鸭子类型
+
+## 3.2 类成员
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/python-interview-guide-1/3.png?raw=true)
+
+### 方法
+
+```
+def func(self, ...): # 实例方法
+	pass
+
+@classmethod
+def class_func(cls, ...): # 类方法主要用途是作为构造函数
+	pass
+
+@staticmethod
+def static_func(): # 主要用途是限定namespace
+	pass
+```
+
+### 属性
+通过`@property`装饰器可以对属性的取值和赋值加以控制
+
+```
+class Goods:
+    # 查看属性值 
+    @property       
+    def price(self):   
+        print('@property')
+    # 修改、设置属性
+    @price.setter                                         
+    def price(self, value):       
+        print('@price.setter')
+    # 删除属性
+    @price.deleter   
+    def price(self):      
+       print('@price.deleter')                             
+obj = Goods()
+# 自动执行 @property 修饰的 price 方法，并获取方法的返回值 
+obj.price
+# 自动执行 @price.setter 修饰的 price 方法，并将2000赋值给方法的参数              
+obj.price = 2000 
+# 自动执行 @price.deleter 修饰的 price 方法  
+del obj.price     
+```
+
+也可以通过方法直接操作
+```
+getattr(obj, name[, default]) : 访问对象的属性。
+hasattr(obj,name) : 检查是否存在一个属性。
+setattr(obj,name,value) : 设置一个属性。如果属性不存在，会创建一个新属性。
+delattr(obj, name) : 删除属性。
+```
+
+对属性的操作，如果没有该属性或者没有权限，会抛AttributeError
+
+### 特殊成员
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/python-interview-guide-1/4.png?raw=true)
 ### 内置类属性
 * 内置类属性
 
@@ -455,7 +538,7 @@ setattr(obj,name,value) : 设置一个属性。如果属性不存在，会创建
 delattr(obj, name) : 删除属性。
 ```
 
-### 寻找方法
+## 3.3 
 
 
 ### 垃圾回收
