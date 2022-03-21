@@ -5,7 +5,7 @@ date: 2022-03-12 17:34:13
 subtitle:
 header-img:
 tags:
-- language
+- interview
 categories:
 - 工程
 ---
@@ -19,11 +19,7 @@ categories:
 > 预计完成时间：
 > 
 > 实际完成时间：
----
-
-[理解 Python 装饰器看这一篇就够了](https://foofish.net/python-decorator.html)
-
-[Python GIL全局解释器锁详解](http://c.biancheng.net/view/5537.html)
+> 
 
 # 一、基础特性
 
