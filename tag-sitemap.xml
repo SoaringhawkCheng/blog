@@ -3,15 +3,22 @@
 
 
     <url>
+        <loc>https://blog.soaringhawkcheng.tech/tags/os/</loc>
+        <lastmod>2022-03-21T07:52:53.939Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://blog.soaringhawkcheng.tech/tags/language/</loc>
-        <lastmod>2022-03-21T07:47:47.057Z</lastmod>
+        <lastmod>2022-03-21T07:52:46.382Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://blog.soaringhawkcheng.tech/tags/java/</loc>
-        <lastmod>2022-03-21T07:46:17.799Z</lastmod>
+        <lastmod>2022-03-21T07:50:35.771Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -26,13 +33,6 @@
     <url>
         <loc>https://blog.soaringhawkcheng.tech/tags/net/</loc>
         <lastmod>2022-02-14T17:38:34.768Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/tags/os/</loc>
-        <lastmod>2022-02-14T17:36:43.505Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
