@@ -9,16 +9,8 @@
 
 
     <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/python-interview-guide-1/</loc>
-        <lastmod>2022-03-20T13:51:37.127Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/article/python-interview-guide-2/</loc>
-        <lastmod>2022-03-20T09:00:11.050Z</lastmod>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/illustration-of-design-pattern/</loc>
+        <lastmod>2022-03-21T07:47:47.057Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -26,7 +18,31 @@
 
     <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/java-concurrency-in-practice/</loc>
-        <lastmod>2022-03-14T14:20:03.127Z</lastmod>
+        <lastmod>2022-03-21T07:46:17.799Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/python-interview-guide-1/</loc>
+        <lastmod>2022-03-21T07:27:06.052Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/python-interview-guide-3/</loc>
+        <lastmod>2022-03-21T07:27:06.049Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/python-interview-guide-2/</loc>
+        <lastmod>2022-03-21T07:27:06.028Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
