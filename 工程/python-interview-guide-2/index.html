@@ -253,21 +253,82 @@
 <ul>
 <li>环检测</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#96;&#96;&#96;</span><br><span class="line"></span><br><span class="line">* 大数加法</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 删除链表节点</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 从尾到头打印链表</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    bool detectCircle(ListNode *head) &#123;</span><br><span class="line">        if (head &#x3D;&#x3D; NULL || head-&gt;next &#x3D;&#x3D; NULL) &#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        ListNode *fast &#x3D; head, *slow &#x3D; head;</span><br><span class="line">        int len &#x3D; 0;</span><br><span class="line">        while (fast-&gt;next !&#x3D; NULL &amp;&amp; fast-&gt;next-&gt;next !&#x3D; NULL) &#123;</span><br><span class="line">            fast &#x3D; fast-&gt;next-&gt;next;</span><br><span class="line">            slow &#x3D; slow-&gt;next;</span><br><span class="line">            len++;</span><br><span class="line">            &#x2F;&#x2F; 相遇即有环，且步数是环长</span><br><span class="line">            if (fast &#x3D;&#x3D; slow) &#123;</span><br><span class="line">                return len;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>大数加法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    ListNode *bigNumberSum(ListNode *head1, ListNode *head2) &#123;</span><br><span class="line">        ListNode dummy(-1);</span><br><span class="line">        ListNode *curr &#x3D; &amp;dummy;</span><br><span class="line">        int carryBit &#x3D; 0;</span><br><span class="line">        while (head1 || head2 || carryBit) &#123;</span><br><span class="line">            int value1 &#x3D; head1 &#x3D;&#x3D; NULL ? 0 : head1-&gt;val;</span><br><span class="line">            int value2 &#x3D; head2 &#x3D;&#x3D; NULL ? 0 : head2-&gt;val;</span><br><span class="line">            </span><br><span class="line">            int sumNum &#x3D; value1 + value2 + carryBit;</span><br><span class="line">            carryBit &#x3D; carryBit&#x2F;10;</span><br><span class="line">            </span><br><span class="line">            curr-&gt;next &#x3D; new ListNode(sumNum % 10);</span><br><span class="line">            curr &#x3D; curr-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        return dummy.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>删除链表节点</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#96;&#96;&#96;</span><br><span class="line"></span><br><span class="line">* 从尾到头打印链表</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 反转链表</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* LRU缓存机制</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <pre><code>
 ### 5.3 栈和队列
 
+* 有效的括号
+
+* 两个栈实现队列
+
+* 栈的压入、弹出序列
+
+* 包含min函数的栈
+
+* 验证栈序列
+
+* 约瑟夫环
+
+* 合并K个排序链表
+
 ### 5.4 二叉树算法
+
+* 前序遍历
+
+* 中序遍历
+
+* 后序遍历
+
+* 层序遍历
+
+* 最小深度
+
+* 层平均值
+
+* 直径
+
+* 最低公共祖先节点
 
 ### 5.5 字符串算法
 
+* 最长公共前缀
+
+* 最长回文子串
+
+* 无重复最长子串
+
 ### 5.6 哈希算法
 
+* 实现哈希表
+
+* 两数之和
+
+* 三数之和
+
+* 重复的DNA序列
+
+* 两个数组的交集
+
 ### 5.7 常见算法基本思想
+
+* 回溯
+
+* 分治
+
+* 动态规划
+
+
+
 
 </code></pre>
 

@@ -9,6 +9,14 @@
 
 
     <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/python-interview-guide-2/</loc>
+        <lastmod>2022-03-21T10:56:00.180Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/illustration-of-design-pattern/</loc>
         <lastmod>2022-03-21T09:16:42.646Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -27,14 +35,6 @@
     <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/python-interview-guide-3/</loc>
         <lastmod>2022-03-21T09:15:20.572Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/python-interview-guide-2/</loc>
-        <lastmod>2022-03-21T09:15:18.592Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

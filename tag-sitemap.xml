@@ -3,6 +3,13 @@
 
 
     <url>
+        <loc>https://blog.soaringhawkcheng.tech/tags/interview/</loc>
+        <lastmod>2022-03-21T10:56:00.180Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://blog.soaringhawkcheng.tech/tags/software/</loc>
         <lastmod>2022-03-21T09:16:42.646Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -12,13 +19,6 @@
     <url>
         <loc>https://blog.soaringhawkcheng.tech/tags/language/</loc>
         <lastmod>2022-03-21T09:16:31.198Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/tags/interview/</loc>
-        <lastmod>2022-03-21T09:15:20.572Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
