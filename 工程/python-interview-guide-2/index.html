@@ -259,78 +259,128 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    ListNode *bigNumberSum(ListNode *head1, ListNode *head2) &#123;</span><br><span class="line">        ListNode dummy(-1);</span><br><span class="line">        ListNode *curr &#x3D; &amp;dummy;</span><br><span class="line">        int carryBit &#x3D; 0;</span><br><span class="line">        while (head1 || head2 || carryBit) &#123;</span><br><span class="line">            int value1 &#x3D; head1 &#x3D;&#x3D; NULL ? 0 : head1-&gt;val;</span><br><span class="line">            int value2 &#x3D; head2 &#x3D;&#x3D; NULL ? 0 : head2-&gt;val;</span><br><span class="line">            </span><br><span class="line">            int sumNum &#x3D; value1 + value2 + carryBit;</span><br><span class="line">            carryBit &#x3D; carryBit&#x2F;10;</span><br><span class="line">            </span><br><span class="line">            curr-&gt;next &#x3D; new ListNode(sumNum % 10);</span><br><span class="line">            curr &#x3D; curr-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        return dummy.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>删除链表节点</li>
+<li>从尾到头打印链表</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#96;&#96;&#96;</span><br><span class="line"></span><br><span class="line">* 从尾到头打印链表</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 反转链表</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* LRU缓存机制</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<pre><code>
-### 5.3 栈和队列
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    vector&lt;int&gt; reversePrintListNode(ListNode *head) &#123;</span><br><span class="line">        vector&lt;int&gt; reverseList;</span><br><span class="line">        while(head!&#x3D;NULL) &#123;</span><br><span class="line">            reverseList.push_back(head-&gt;val);</span><br><span class="line">            head&#x3D;head-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        reverse(reverseList.begin(), reverseList.end());</span><br><span class="line">        return reverseList;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>LRU缓存机制</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">struct CacheNode &#123;</span><br><span class="line">    string key;</span><br><span class="line">    int value;</span><br><span class="line">    CacheNode *prev;</span><br><span class="line">    CacheNode *next;</span><br><span class="line">    CacheNode(string _key, int _val) : key(_key), value(_val), prev(NULL), next(NULL) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class LRUCache &#123;</span><br><span class="line">private:</span><br><span class="line">    unordered_map&lt;string, CacheNode *&gt; nodeTable;</span><br><span class="line">    CacheNode *head;</span><br><span class="line">    CacheNode *tail;</span><br><span class="line">    int size;</span><br><span class="line">    int capacity;</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">    LRUCache(int _capacity) : size(0), capacity(_capacity) &#123;</span><br><span class="line">        head &#x3D; new CacheNode(&quot;&quot;, -1);</span><br><span class="line">        tail &#x3D; new CacheNode(&quot;&quot;, -1);</span><br><span class="line">        head-&gt;next &#x3D; tail;</span><br><span class="line">        tail-&gt;prev &#x3D; head;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int get(string key) &#123;</span><br><span class="line">        if (nodeTable.find(key) &#x3D;&#x3D; nodeTable.end()) &#123;</span><br><span class="line">            return -1;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        CacheNode *node &#x3D; nodeTable[key];</span><br><span class="line">        removeNode(node);</span><br><span class="line">        addToHead(node);</span><br><span class="line">        return node-&gt;value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void put(string key, int value) &#123;</span><br><span class="line">        if (nodeTable.find(key) &#x3D;&#x3D; nodeTable.end()) &#123;</span><br><span class="line">            CacheNode *node &#x3D; new CacheNode(key, value);</span><br><span class="line">            nodeTable[key] &#x3D; node;</span><br><span class="line">            addToHead(node);</span><br><span class="line">            ++size;</span><br><span class="line"></span><br><span class="line">            if (size &gt; capacity) &#123;</span><br><span class="line">                removeTail();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            CacheNode *node &#x3D; nodeTable[key];</span><br><span class="line">            node-&gt;value &#x3D; value;</span><br><span class="line">            removeNode(node);</span><br><span class="line">            addToHead(node);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void print() &#123;</span><br><span class="line">        CacheNode *node &#x3D; head-&gt;next;</span><br><span class="line">        while (node !&#x3D; tail) &#123;</span><br><span class="line">            cout &lt;&lt; node-&gt;key &lt;&lt; &quot;:&quot; &lt;&lt; node-&gt;value &lt;&lt; &quot;,&quot;;</span><br><span class="line">            node &#x3D; node-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    void addToHead(CacheNode *node) &#123;</span><br><span class="line">        node-&gt;next &#x3D; head-&gt;next;</span><br><span class="line">        node-&gt;prev &#x3D; head;</span><br><span class="line"></span><br><span class="line">        head-&gt;next-&gt;prev &#x3D; node;</span><br><span class="line">        head-&gt;next &#x3D; node;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void removeNode(CacheNode *node) &#123;</span><br><span class="line">        node-&gt;prev-&gt;next &#x3D; node-&gt;next;</span><br><span class="line">        node-&gt;next-&gt;prev &#x3D; node-&gt;prev;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    CacheNode *removeTail() &#123;</span><br><span class="line">        if (tail-&gt;prev &#x3D;&#x3D; head) &#123;</span><br><span class="line">            return NULL;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        CacheNode *node &#x3D; tail-&gt;prev;</span><br><span class="line">        removeNode(node);</span><br><span class="line">        nodeTable.erase(node-&gt;key);</span><br><span class="line">        --size;</span><br><span class="line">        return node;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3><span id="53-栈和队列">5.3 栈和队列</span></h3>
+<ul>
+<li>两个栈实现队列</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">class MyQueue &#123;</span><br><span class="line">private:</span><br><span class="line">    stack&lt;int&gt; in;</span><br><span class="line">    stack&lt;int&gt; out;</span><br><span class="line">public:</span><br><span class="line">    MyQueue() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void push(int x) &#123;</span><br><span class="line">        in.push(x);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int pop() &#123;</span><br><span class="line">        if (out.empty()) in2out();</span><br><span class="line">        int res &#x3D; out.top();</span><br><span class="line">        out.pop();</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int peek() &#123;</span><br><span class="line">        if (out.empty()) in2out();</span><br><span class="line">        return out.top();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    bool empty() &#123;</span><br><span class="line">        return in.empty() &amp;&amp; out.empty();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    void in2out() &#123;</span><br><span class="line">        while (!in.empty()) &#123;</span><br><span class="line">            int top &#x3D; in.top();</span><br><span class="line">            out.push(top);</span><br><span class="line">            in.pop();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>栈的压入、弹出序列</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    bool validateStackSequences(vector&lt;int&gt; &amp;pushed, vector&lt;int&gt; &amp;popped) &#123;</span><br><span class="line">        stack&lt;int&gt; stk;</span><br><span class="line">        for (int i &#x3D; 0, j &#x3D; 0; i &lt; pushed.size(); i++) &#123;</span><br><span class="line">            stk.push(pushed[i]);</span><br><span class="line">            while (!stk.empty() &amp;&amp; j &lt; popped.size() &amp;&amp; popped[j] &#x3D;&#x3D; stk.top()) &#123;</span><br><span class="line">                stk.pop();</span><br><span class="line">                j++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return stk.empty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>包含min函数的栈</li>
+</ul>
+<p>class MinStack {<br>
+private:<br>
+stack<int> stk;<br>
+stack<int> min_stk;<br>
+public:<br>
+MinStack() {<br>
+min_stk.push(INT_MAX);<br>
+}</int></int></p>
+<pre><code>void push(int val) &#123;
+    stk.push(val);
+    min_stk.push(min(min_stk.top(), val));
+&#125;
 
-* 有效的括号
+void pop() &#123;
+    stk.pop();
+    min_stk.pop();
+&#125;
 
-* 两个栈实现队列
+int top() &#123;
+    return stk.top();
+&#125;
 
-* 栈的压入、弹出序列
-
-* 包含min函数的栈
-
-* 验证栈序列
-
-* 约瑟夫环
-
-* 合并K个排序链表
-
-### 5.4 二叉树算法
-
-* 前序遍历
-
-* 中序遍历
-
-* 后序遍历
-
-* 层序遍历
-
-* 最小深度
-
-* 层平均值
-
-* 直径
-
-* 最低公共祖先节点
-
-### 5.5 字符串算法
-
-* 最长公共前缀
-
-* 最长回文子串
-
-* 无重复最长子串
-
-### 5.6 哈希算法
-
-* 实现哈希表
-
-* 两数之和
-
-* 三数之和
-
-* 重复的DNA序列
-
-* 两个数组的交集
-
-### 5.7 常见算法基本思想
-
-* 回溯
-
-* 分治
-
-* 动态规划
-
-
-
-
+int getMin() &#123;
+    return min_stk.top();
+&#125;
 </code></pre>
+<p>};</p>
+<ul>
+<li>
+<p>验证栈序列</p>
+</li>
+<li>
+<p>约瑟夫环</p>
+</li>
+<li>
+<p>合并K个排序链表</p>
+</li>
+</ul>
+<h3><span id="54-二叉树算法">5.4 二叉树算法</span></h3>
+<ul>
+<li>
+<p>前序遍历</p>
+</li>
+<li>
+<p>中序遍历</p>
+</li>
+<li>
+<p>后序遍历</p>
+</li>
+<li>
+<p>层序遍历</p>
+</li>
+<li>
+<p>最小深度</p>
+</li>
+<li>
+<p>层平均值</p>
+</li>
+<li>
+<p>直径</p>
+</li>
+<li>
+<p>最低公共祖先节点</p>
+</li>
+</ul>
+<h3><span id="55-字符串算法">5.5 字符串算法</span></h3>
+<ul>
+<li>大数相乘</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    string bigNumberMultiply(string lhs, string rhs) &#123;</span><br><span class="line">        if (lhs.empty() || rhs.empty() || !lhs.compare(&quot;0&quot;) || !rhs.compare(&quot;0&quot;)) &#123;</span><br><span class="line">            return &quot;0&quot;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        vector&lt;int&gt; resList(lhs.size() + rhs.size() + 1, 0);</span><br><span class="line"></span><br><span class="line">        int lsize &#x3D; lhs.size();</span><br><span class="line">        int rsize &#x3D; rhs.size();</span><br><span class="line">        for (int i &#x3D; lsize - 1; i &gt;&#x3D; 0; i--) &#123;</span><br><span class="line">            int lnum &#x3D; lhs[i] - &#39;0&#39;;</span><br><span class="line">            for (int j &#x3D; rsize - 1; j &gt;&#x3D; 0; j--) &#123;</span><br><span class="line">                int rnum &#x3D; rhs[j] - &#39;0&#39;;</span><br><span class="line">                int pos &#x3D; (lsize - 1 - i) + (rsize - 1 - j);</span><br><span class="line">                int sum &#x3D; resList[pos] + lnum * rnum;</span><br><span class="line">                resList[pos] &#x3D; sum % 10;</span><br><span class="line">                resList[pos + 1] +&#x3D; sum &#x2F; 10;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        int index &#x3D; resList.size() - 1;</span><br><span class="line">        while (index &gt; 0 &amp;&amp; resList[index] &#x3D;&#x3D; 0) index--;</span><br><span class="line"></span><br><span class="line">        string resStr;</span><br><span class="line">        for (; index &gt;&#x3D; 0; index--) &#123;</span><br><span class="line">            resStr.push_back(&#39;0&#39; + resList[index]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return resStr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>最长公共前缀</p>
+</li>
+<li>
+<p>最长回文子串</p>
+</li>
+<li>
+<p>无重复最长子串</p>
+</li>
+</ul>
+<h3><span id="56-哈希算法">5.6 哈希算法</span></h3>
+<ul>
+<li>
+<p>实现哈希表</p>
+</li>
+<li>
+<p>两数之和</p>
+</li>
+<li>
+<p>三数之和</p>
+</li>
+<li>
+<p>重复的DNA序列</p>
+</li>
+<li>
+<p>两个数组的交集</p>
+</li>
+</ul>
+<h3><span id="57-回溯">5.7 回溯</span></h3>
+<h3><span id="58-分治">5.8 分治</span></h3>
+<h3><span id="59-动态规划">5.9 动态规划</span></h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int longestValidParentheses(string s) &#123;</span><br><span class="line">        if (s.size() &lt;&#x3D; 1) &#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        vector&lt;int&gt; dp(s.size(), 0);</span><br><span class="line">        int maxLen &#x3D; 0;</span><br><span class="line">        for (int i &#x3D; 1; i &lt; s.size(); i++) &#123;</span><br><span class="line">            if (s[i] &#x3D;&#x3D; &#39;)&#39;) &#123;</span><br><span class="line">                if (s[i - 1] &#x3D;&#x3D; &#39;(&#39;) &#123;</span><br><span class="line">                    dp[i] &#x3D; ((i &gt;&#x3D; 2) ? dp[i - 2] : 0) + 2;</span><br><span class="line">                &#125; else if (i - 1 - dp[i - 1] &gt;&#x3D; 0 &amp;&amp; s[i - 1 - dp[i - 1]] &#x3D;&#x3D; &#39;(&#39;) &#123; &#x2F;&#x2F; &#39;)&#39;</span><br><span class="line">                    dp[i] &#x3D; dp[i - 1] + ((i - 2 - dp[i - 1] &gt;&#x3D; 0) ? dp[i - 2 - dp[i - 1]] : 0) + 2;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                maxLen &#x3D; max(maxLen, dp[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return maxLen;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
                 
 
@@ -400,7 +450,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">四、数据结构与算法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">5.1 排序</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">5.2 链表</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">四、数据结构与算法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">5.1 排序</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">5.2 链表</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">5.3 栈和队列</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">5.4 二叉树算法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">5.5 字符串算法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">5.6 哈希算法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">5.7 回溯</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.8.</span> <span class="toc-nav-text">5.8 分治</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.9.</span> <span class="toc-nav-text">5.9 动态规划</span></a></li></ol></li></ol>
         
         </div>
       </aside>
