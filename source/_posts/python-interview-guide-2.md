@@ -354,6 +354,7 @@ public:
 
 * 包含min函数的栈
 
+```
 class MinStack {
 private:
     stack<int> stk;
@@ -381,6 +382,7 @@ public:
         return min_stk.top();
     }
 };
+```
 
 * 验证栈序列
 
@@ -437,11 +439,23 @@ public:
 
 * 层平均值
 
+```
+
+```
+
 
 
 * 直径
 
+```
+
+```
+
 * 最低公共祖先节点
+
+```
+
+```
 
 ### 5.5 字符串算法
 
@@ -450,44 +464,138 @@ public:
 ```
 class Solution {
 public:
-    string bigNumberMultiply(string lhs, string rhs) {
-        if (lhs.empty() || rhs.empty() || !lhs.compare("0") || !rhs.compare("0")) {
+    string multiply(string s1, string s2) {
+        if (s1.empty() || s2.empty()) {
             return "0";
         }
 
-        vector<int> resList(lhs.size() + rhs.size() + 1, 0);
-
-        int lsize = lhs.size();
-        int rsize = rhs.size();
-        for (int i = lsize - 1; i >= 0; i--) {
-            int lnum = lhs[i] - '0';
-            for (int j = rsize - 1; j >= 0; j--) {
-                int rnum = rhs[j] - '0';
-                int pos = (lsize - 1 - i) + (rsize - 1 - j);
-                int sum = resList[pos] + lnum * rnum;
-                resList[pos] = sum % 10;
-                resList[pos + 1] += sum / 10;
+        int size1 = s1.size();
+        int size2 = s2.size();
+        vector<int> resultList(size1 + size2, 0);
+        for (int i = size1 - 1; i >= 0; i--) {
+            int num1 = s1[i] - '0';
+            for (int j = size2 - 1; j >= 0; j--) {
+                int index = size1 + size2 - i - j - 2;
+                int num2 = s2[j] - '0';
+                int sum = resultList[index] + num1 * num2;
+                resultList[index] = sum % 10;
+                resultList[index + 1] += sum / 10;
             }
         }
 
-        int index = resList.size() - 1;
-        while (index > 0 && resList[index] == 0) index--;
-
-        string resStr;
-        for (; index >= 0; index--) {
-            resStr.push_back('0' + resList[index]);
+        string result;
+        int index = resultList.size() - 1;
+        while (index > 0 && resultList[index] == 0) index--;
+        while (index >= 0) {
+            result.push_back('0' + resultList[index]);
+            index--;
         }
 
-        return resStr;
+        return result;
     }
 };
 ```
 
 * 最长公共前缀
 
+```
+class Solution {
+public:
+    string longestCommonPrefix(vector<string> &strs) {
+        if (strs.empty()) {
+            return "";
+        } else {
+            return longestCommonPrefix(strs, 0, strs.size() - 1);
+        }
+    }
+
+    string longestCommonPrefix(const vector<string> &strs, int start, int end) {
+        if (start == end) {
+            return strs[start];
+        } else {
+            int mid = start + (end - start) / 2;
+            string leftStr = longestCommonPrefix(strs, start, mid);
+            string rightStr = longestCommonPrefix(strs, mid + 1, end);
+            return commonPrefix(leftStr, rightStr);
+        }
+    }
+
+    string commonPrefix(const string &leftStr, const string &rightStr) {
+        int minLength = min(leftStr.size(), rightStr.size());
+        int index = 0;
+        string commonStr = "";
+        while (index < minLength && leftStr[index] == rightStr[index]) {
+            commonStr.push_back(leftStr[index++]);
+        }
+
+        return commonStr;
+    }
+};
+```
+
 * 最长回文子串
 
+```
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int size = s.size();
+        if (size < 2) return s;
+
+        vector<vector<bool>> dp(size, vector<bool>(size, 0));
+        int maxLen = 1;
+        int begin = 0;
+
+        for (int i = 0; i < size; i++) {
+            dp[i][i] = true;
+        }
+
+        for (int len = 2; len <= size; len++) {
+            for (int i = 0; i < size; i++) {
+                int j = len + i - 1;
+                if (j >= size) break;
+                if (s[i] != s[j]) dp[i][j] = false;
+                else if (j - i < 3) dp[i][j] = true;
+                else {
+                    dp[i][j] = dp[i + 1][j - 1];
+                }
+
+                if (dp[i][j] && j - i + 1 > maxLen) {
+                    maxLen = j - i + 1;
+                    begin = i;
+                }
+            }
+        }
+
+        return s.substr(begin, maxLen);
+    }
+};
+```
+
 * 无重复最长子串
+
+```
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int size = s.size();
+        int maxLen = 0, left = 0;
+        unordered_set<char> lookup;
+
+        for (int i = 0; i < size; i++) {
+            while (lookup.find(s[i]) != lookup.end()) {
+                lookup.erase(s[left]);
+                left++;
+            }
+
+            maxLen = max(maxLen, i - left + 1);
+            lookup.insert(s[i]);
+        }
+
+        return maxLen;
+    }
+};
+```
 
 ### 5.6 哈希算法
 
