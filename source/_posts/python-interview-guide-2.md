@@ -386,9 +386,64 @@ public:
 
 * 验证栈序列
 
+```
+class Solution {
+public:
+    bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
+                stack<int> stk;
+
+        if (pushed.size() != popped.size()) {
+            return false;
+        }
+
+        for (int i = 0, j = 0; i < pushed.size(); i++) {
+            stk.push(pushed[i]);
+            while (!stk.empty() && stk.top() == popped[j]) {
+                stk.pop();
+                j++;
+            }
+        }
+        
+        return stk.empty();
+    }
+};
+```
+
 * 约瑟夫环
 
+```
+class Solution {
+public:
+    int lastRemaining(int n, int m) {
+        if (m <= 0 || n <= 1) {
+            return -1;
+        }
+
+        deque<int> queue;
+        for (int i = 0; i < n; i++) {
+            queue.push_back(i);
+        }
+
+        while (queue.size() > 1) {
+            for (int count = 0; count < m - 1; count++) {
+                int num = queue.front();
+                queue.pop_front();
+                queue.push_back(num);
+            }
+            queue.pop_front();
+        }
+
+        return queue.front();
+    }
+};
+```
+
 * 合并K个排序链表
+
+```
+
+```
+
 
 ### 5.4 二叉树算法
 
