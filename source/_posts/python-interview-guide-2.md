@@ -287,6 +287,47 @@ private:
 };
 ```
 
+* 合并k个排序链表
+
+```
+class Solution {
+public:
+    ListNode *mergeKLists(vector<ListNode *> &lists) {
+        return merge(lists, 0, lists.size() - 1);
+    }
+
+private:
+    ListNode *merge(vector<ListNode *> &lists, int left, int right) {
+        if (left == right) return lists[left];
+        if (left > right) return NULL;
+        int mid = left + (right - left) / 2;
+        return mergeTwoLists(merge(lists, left, mid), merge(lists, mid + 1, right));
+    }
+
+    ListNode *mergeTwoLists(ListNode *head1, ListNode *head2) {
+        if (head1 == NULL || head2 == NULL) {
+            return head1 == NULL ? head2 : head1;
+        }
+
+        ListNode dummy(-1), *curr = &dummy;
+        while (head1 != NULL && head2 != NULL) {
+            if (head1->val < head2->val) {
+                curr->next = head1;
+                head1 = head1->next;
+            } else {
+                curr->next = head2;
+                head2 = head2->next;
+            }
+
+            curr = curr->next;
+        }
+
+        curr->next = (head1 == NULL) ? head2 : head1;
+        return dummy.next;
+    }
+};
+```
+
 ### 5.3 栈和队列
 
 * 两个栈实现队列
@@ -441,7 +482,38 @@ public:
 * 合并K个排序链表
 
 ```
+struct PriorityListNode {
+    int val;
+    ListNode *ptr;
 
+    bool operator<(const PriorityListNode &rhs) const {
+        return val > rhs.val;
+    }
+};
+
+class Solution {
+private:
+    priority_queue<PriorityListNode> q;
+public:
+    ListNode *mergeKLists(vector<ListNode *> &lists) {
+        for (auto node: lists) {
+            if (node != NULL) {
+                q.push({node->val, node});
+            }
+        }
+        ListNode dummy(-1);
+        ListNode *curr = &dummy;
+        while (!q.empty()) {
+            auto top = q.top();
+            q.pop();
+            curr->next = top.ptr;
+            curr = curr->next;
+            if (top.ptr->next != NULL)
+                q.push({top.ptr->next->val, top.ptr->next});
+        }
+        return dummy.next;
+    }
+};
 ```
 
 
@@ -496,6 +568,7 @@ public:
 
 ```
 
+
 ```
 
 
@@ -503,13 +576,70 @@ public:
 * 直径
 
 ```
+class Solution {
+private:
+    int diameter;
+public:
+    Solution() : diameter(0) {}
 
+    // 一个节点的最大直径，是左右深度组成的路径，与左右子树的直径三者的最大值
+    int diameterOfBinaryTree(TreeNode *root) {
+        dfs(root);
+        return diameter;
+    }
+
+    int dfs(TreeNode *root) {
+        if (root == NULL) {
+            return 0;
+        }
+
+        int left = dfs(root->left);
+        int right = dfs(root->right);
+        diameter = max(diameter, left + right);
+        return max(left, right) + 1;
+    }
+};
 ```
 
 * 最低公共祖先节点
 
 ```
+class Solution {
+private:
+    TreeNode *pNode, *qNode;
+    TreeNode *ancestor;
+public:
+    // 后序遍历，返回第一个节点
+    TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q) {
+        pNode = p, qNode = q, ancestor = NULL;
+        postTraverse(root);
+        return ancestor;
+    }
 
+private:
+    pair<bool, bool> postTraverse(TreeNode *root) {
+        if (root == NULL) {
+            return make_pair(false, false);
+        }
+
+        pair<bool, bool> leftStatus = postTraverse(root->left);
+        pair<bool, bool> rightStatus = postTraverse(root->right);
+
+        pair<bool, bool> result;
+        if (leftStatus.first || rightStatus.first || root == pNode) {
+            result.first = true;
+        }
+        if (leftStatus.second || rightStatus.second || root == qNode) {
+            result.second = true;
+        }
+
+        if (result.first && result.second && ancestor == NULL) {
+            ancestor = root;
+        }
+
+        return result;
+    }
+};
 ```
 
 ### 5.5 字符串算法
