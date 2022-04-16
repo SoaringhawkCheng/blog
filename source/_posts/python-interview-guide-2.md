@@ -22,7 +22,7 @@ categories:
 
 
 ## 四、数据结构与算法
-### 5.1 排序
+### ### 4.1 排序
 * 快速排序
 
 ```
@@ -61,7 +61,7 @@ private:
 };
 ```
 
-### 5.2 链表
+### 4.2 链表
 * 倒数K节点
 
 ```
@@ -328,7 +328,7 @@ private:
 };
 ```
 
-### 5.3 栈和队列
+### 4.3 栈和队列
 
 * 两个栈实现队列
 
@@ -517,15 +517,117 @@ public:
 ```
 
 
-### 5.4 二叉树算法
+### 4.4 二叉树算法
 
 * 前序遍历
 
+```
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode *root) {
+        vector<int> result;
+
+        stack<TreeNode *> stk;
+        stk.push(root);
+
+        while (!stk.empty()) {
+            TreeNode *top = stk.top();
+            stk.pop();
+            if (top==NULL) continue;
+
+            result.push_back(top->val);
+            stk.push(top->right);
+            stk.push(top->left);
+        }
+
+        return result;
+    }
+};
+```
+
 * 中序遍历
+
+```
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode *root) {
+        vector<int> result;
+        stack<TreeNode *> stk;
+        TreeNode *curr = root;
+        while (!stk.empty() || curr != NULL) {
+            while (curr != NULL) {
+                stk.push(curr);
+                curr = curr->left;
+            }
+
+            curr = stk.top();
+            stk.pop();
+            result.push_back(curr->val);
+            curr = curr->right;
+        }
+        return result;
+    }
+};
+```
 
 * 后序遍历
 
+```
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode *root) {
+        vector<int> result;
+
+        stack<TreeNode *> stk;
+        stk.push(root);
+
+        while (!stk.empty()) {
+            TreeNode *top = stk.top();
+            stk.pop();
+            if (top == NULL) continue;
+
+            result.push_back(top->val);
+            stk.push(top->left);
+            stk.push(top->right);
+        }
+
+        reverse(result.begin(), result.end());
+        return result;
+    }
+};
+```
+
 * 层序遍历
+
+```
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        queue<TreeNode *> q;
+        q.push(root);
+        vector<vector<int>> result;
+
+        while(!q.empty()) {
+            int size = q.size();
+            vector<int> level;
+            for (int i=0;i<size;i++) {
+                TreeNode *front = q.front();
+                q.pop();
+                if (front==NULL) continue;
+                level.push_back(front->val);
+                q.push(front->left);
+                q.push(front->right);
+            }
+
+            if (!level.empty()) {
+                result.push_back(level);
+            }
+        }
+
+        return result;
+    }
+};
+```
 
 * 最小深度
 
@@ -567,11 +669,38 @@ public:
 * 层平均值
 
 ```
+class Solution {
+public:
+    vector<double> averageOfLevels(TreeNode *root) {
+        queue<TreeNode *> q;
+        vector<double> result;
 
+        if (root == NULL) {
+            return result;
+        }
+
+        q.push(root);
+        while (!q.empty()) {
+            int size = q.size();
+            double avg = 0.0;
+            for (int i = 0; i < size; i++) {
+                TreeNode *front = q.front();
+                avg += front->val;
+                if (front->left != NULL) q.push(front->left);
+                if (front->right != NULL) q.push(front->right);
+                q.pop();
+            }
+
+            if (size>0) {
+                result.push_back(avg/=size);
+            }
+        }
+
+        return result;
+    }
+};
 
 ```
-
-
 
 * 直径
 
@@ -642,7 +771,7 @@ private:
 };
 ```
 
-### 5.5 字符串算法
+### 4.5 字符串算法
 
 * 大数相乘
 
@@ -782,23 +911,170 @@ public:
 };
 ```
 
-### 5.6 哈希算法
+### 4.6 哈希算法
 
 * 实现哈希表
 
+```
+class MyHashMap {
+private:
+    vector<list<pair<int, int>>> table;
+    int bucketSize;
+public:
+    MyHashMap(int _bucketSize) {
+        bucketSize = _bucketSize;
+        table = vector<list<pair<int, int>>>(bucketSize, list<pair<int, int>>());
+    }
+
+    void put(int key, int value) {
+        int hash = key % bucketSize;
+        list<pair<int, int>> &bucketList = table[hash];
+        for (auto iter = bucketList.begin(); iter != bucketList.end(); iter++) {
+            if (iter->first==key) {
+                iter->second=value;
+                return;
+            }
+        }
+        bucketList.push_back(make_pair(key, value));
+    }
+
+    int get(int key) {
+        int hash = key % bucketSize;
+        list<pair<int, int>> &bucketList = table[hash];
+        for (auto iter = bucketList.begin(); iter != bucketList.end(); iter++) {
+            if (iter->first==key) {
+                return iter->second;
+            }
+        }
+        return -1;
+    }
+
+    void remove(int key) {
+        int hash = key % bucketSize;
+        list<pair<int, int>> &bucketList = table[hash];
+        for (auto iter = bucketList.begin(); iter != bucketList.end(); iter++) {
+            if (iter->first==key) {
+                bucketList.erase(iter);
+                return;
+            }
+        }
+    }
+};
+```
+
 * 两数之和
+
+```
+class Solution {
+public:
+    vector<int> twoSum(vector<int> &nums, int target) {
+        unordered_map<int, int> numIndex;
+        for (int i = 0; i < nums.size(); i++) {
+            if (numIndex.find(target - nums[i]) != numIndex.end()) {
+                return {numIndex[target - nums[i]], i};
+            } else {
+                numIndex[nums[i]] = i;
+            }
+        }
+        return vector<int>();
+    }
+};
+```
 
 * 三数之和
 
+```
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int> &nums) {
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> result;
+        for (int i = 0; i < nums.size() - 2; i++) {
+            int target = nums[i];
+            int left = i + 1;
+            int right = nums.size() - 1;
+
+            while (left < right) {
+                int sum = nums[left] + nums[right] + target;
+                if (sum == 0) {
+                    result.push_back({target, nums[left], nums[right]});
+                    break;
+                } else if (sum < 0) {
+                    left++;
+                } else {
+                    right--;
+                }
+            }
+        }
+        return result;
+    }
+};
+
+```
+
 * 重复的DNA序列
+
+```
+class Solution {
+public:
+    vector<string> findRepeatedDnaSequences(string s) {
+        unordered_map<string, int> subStrMap;
+        vector<string> result;
+        if (s.size() < 10) {
+            return result;
+        }
+
+        for (int i = 0; i <= s.size() - 10; i++) {
+            string subStr = s.substr(i, 10);
+            if (subStrMap.find(subStr) == subStrMap.end()) {
+                subStrMap[subStr] = 1;
+            } else if (subStrMap[subStr] == 1) {
+                result.push_back(subStr);
+                subStrMap[subStr]++;
+            }
+        }
+
+        return result;
+    }
+};
+```
 
 * 两个数组的交集
 
-### 5.7 回溯
+```
+class Solution {
+public:
+    vector<int> intersect(vector<int> &nums1, vector<int> &nums2) {
+        if (nums1.size() > nums1.size()) {
+            return intersect(nums2, nums1);
+        }
 
-### 5.8 分治
+        unordered_map<int, int> numMap;
+        for (auto num: nums1) {
+            if (numMap.find(num) == numMap.end()) {
+                numMap[num] = 0;
+            }
+            numMap[num]++;
+        }
 
-### 5.9 动态规划
+        vector<int> result;
+        for (auto num: nums2) {
+            if (numMap.find(num) != numMap.end() && numMap[num] > 0) {
+                numMap[num]--;
+                result.push_back(num);
+            }
+        }
+
+        return result;
+    }
+};
+```
+
+### 4.7 回溯
+
+### 4.8 分治
+
+### 4.9 动态规划
 
 ```
 class Solution {
