@@ -22,7 +22,7 @@ categories:
 
 
 ## 四、数据结构与算法
-### ### 4.1 排序
+### 4.1 排序
 * 快速排序
 
 ```
@@ -1072,7 +1072,405 @@ public:
 
 ### 4.7 回溯
 
+* 括号生成
+
+```
+class Solution {
+private:
+    int countDown;
+    string brackets;
+    int limit;
+    string currStr;
+    vector<string> result;
+public:
+    Solution() : countDown(0), brackets("()") {}
+
+    vector<string> generateParenthesis(int n) { // DFS
+        limit = n;
+        dfs();
+        return result;
+    }
+
+    void dfs() {
+        if (currStr.size() == 2 * limit) {
+            if (countDown == 0) {
+                result.push_back(currStr);
+            }
+            return;
+        }
+
+        if (countDown < limit) {
+            currStr.push_back(brackets[0]);
+            countDown++;
+            dfs();
+            countDown--;
+            currStr.pop_back();
+        }
+
+        if (countDown > 0) {
+            currStr.push_back(brackets[1]);
+            countDown--;
+            dfs();
+            countDown++;
+            currStr.pop_back();
+        }
+    }
+};
+```
+
+* 组合总和
+
+```
+class Solution {
+private:
+    int currSum;
+    vector<int> currList;
+    vector<vector<int>> result;
+public:
+    Solution() : currSum(0) {}
+
+    vector<vector<int>> combinationSum(vector<int> &candidates, int target) {
+        sort(candidates.begin(), candidates.end());
+        dfs(candidates, target, 0);
+        return result;
+    }
+
+private:
+    void dfs(const vector<int> &candidates, int target, int currIndex) {
+        if (currSum == target && !currList.empty()) {
+            result.push_back(currList);
+        }
+
+        if (currSum >= target) {
+            return;
+        }
+
+        for (int i = currIndex; i < candidates.size(); i++) {
+            currList.push_back(candidates[i]);
+            currSum += candidates[i];
+            dfs(candidates, target, i);
+            currSum -= candidates[i];
+            currList.pop_back();
+        }
+    }
+};
+```
+
+* 组合总和2
+
+```
+class Solution {
+private:
+    vector<pair<int, int>> freq;
+    int currSum;
+    vector<int> currList;
+    vector<vector<int>> result;
+public:
+    Solution() : currSum(0) {}
+
+    vector<vector<int>> combinationSum2(vector<int> &candidates, int target) {
+        sort(candidates.begin(), candidates.end());
+        for (auto candidate: candidates) {
+            if (freq.empty() || freq.back().first != candidate) {
+                freq.push_back(make_pair(candidate, 1));
+            } else {
+                freq.back().second++;
+            }
+        }
+
+        dfs(freq, target, 0);
+        return result;
+    }
+
+private:
+    void dfs(vector<pair<int, int>> freq, int target, int currIndex) {
+        if (currSum == target && !currList.empty()) {
+            result.push_back(currList);
+        }
+
+        if (currSum >= target) {
+            return;
+        }
+
+        for (int i = currIndex; i < freq.size(); i++) {
+            pair<int,int> &numFreq = freq[i];
+            if (numFreq.second==0) continue;
+
+            currList.push_back(freq[i].first);
+            currSum += freq[i].first;
+            numFreq.second--;
+            dfs(freq, target, i);
+            numFreq.second++;
+            currSum -= freq[i].first;
+            currList.pop_back();
+        }
+    }
+};
+```
+
+* 全排列
+
+```
+class Solution {
+private:
+    unordered_map<int, bool> visited;
+    vector<int> path;
+    vector<vector<int>> results;
+public:
+    vector<vector<int>> permute(vector<int> &nums) {
+        for (int i = 0; i < nums.size(); i++) {
+            visited[i] = false;
+        }
+
+        dfs(nums);
+        return results;
+    }
+
+    void dfs(const vector<int> &nums) {
+        if (path.size() == nums.size()) {
+            results.push_back(path);
+            return;
+        }
+
+        for (int i = 0; i < nums.size(); i++) {
+            if (!visited[i]) {
+                path.push_back(nums[i]);
+                visited[i] = true;
+                dfs(nums);
+                visited[i] = false;
+                path.pop_back();
+
+            }
+        }
+    }
+};
+```
+
+* 单词搜索
+
+```
+class Solution {
+private:
+    bool wordExists;
+    vector<pair<int, int>> directs;
+    vector<vector<bool>> visited;
+public:
+    Solution() {
+        wordExists = false;
+        directs = {{-1, 0},
+                   {1,  0},
+                   {0,  -1},
+                   {0,  1}};
+    };
+
+    bool exist(vector<vector<char>> &board, string word) {// 多起点dfs
+        if (board.empty() || board[0].empty() || word.empty()) {
+            return false;
+        }
+
+        visited = vector<vector<bool>>(board.size(), vector<bool>(board[0].size(), false));
+
+        for (int i = 0; i < board.size(); i++) {
+            for (int j = 0; j < board[i].size(); j++) {
+                if (board[i][j] == word[0]) {
+                    visited[i][j]=true;
+                    dfs(board, word, 0, make_pair(i, j));
+                    visited[i][j]=false;
+                    if (wordExists) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+private:
+    void dfs(const vector<vector<char>> &board, const string &word, int index, pair<int, int> pos) {
+        if (index == word.size() - 1) {
+            wordExists = true;
+            return;
+        }
+
+        for (auto direct: directs) {
+            pair<int, int> newPos = calcPos(board, pos, direct);
+            if (checkPos(board, word, index + 1, newPos)) {
+                visited[newPos.first][newPos.second] = true;
+                dfs(board, word, index + 1, newPos);
+                visited[newPos.first][newPos.second] = false;
+                if (wordExists) {
+                    return;
+                }
+            }
+        }
+    }
+
+    pair<int, int> calcPos(const vector<vector<char>> &board, pair<int, int> pos, pair<int, int> direct) {
+        return make_pair(pos.first + direct.first, pos.second + direct.second);
+    }
+
+    bool checkPos(const vector<vector<char>> &board, const string &word, int index, pair<int, int> &pos) {
+        if (pos.first < 0 || pos.first >= board.size()) {
+            return false;
+        }
+        if (pos.second < 0 || pos.second >= board[0].size()) {
+            return false;
+        }
+        if (visited[pos.first][pos.second]) {
+            return false;
+        }
+
+        return board[pos.first][pos.second] == word[index];
+    }
+};
+```
+
 ### 4.8 分治
+
+* 寻找两个正序数组的中位数
+
+```
+class Solution {
+private:
+    typedef vector<int>::iterator Iterator;
+public:
+    double findMedianSortedArrays(vector<int> &nums1, vector<int> &nums2) {
+        int total = nums1.size() + nums2.size();
+        if (total == 0) {
+            return 0.0;
+        }
+
+        if (total % 2) {
+            return findMedianSortedArrays(nums1.begin(), nums1.end(), nums2.begin(), nums2.end(), total / 2 + 1);
+        } else {
+            return (findMedianSortedArrays(nums1.begin(), nums1.end(), nums2.begin(), nums2.end(), total / 2) +
+                    findMedianSortedArrays(nums1.begin(), nums1.end(), nums2.begin(), nums2.end(), total / 2 + 1)
+                   ) / 2.0;
+        }
+    }
+
+private:
+    double findMedianSortedArrays(Iterator begin1, Iterator end1, Iterator begin2, Iterator end2, int target) {
+        if (end1 - begin1 > end2 - begin2) return findMedianSortedArrays(begin2, end2, begin1, end1, target);
+        if (begin1 >= end1) return *(begin2 + target - 1);
+        if (target == 1) return min(*begin1, *begin2);
+
+        int leftNum = min((target) / 2, int(end1 - begin1));
+        int rightNum = target - leftNum;
+
+        if (*(begin1 + leftNum - 1) == *(begin2 + rightNum - 1)) {
+            return *(begin1 + leftNum - 1);
+        } else if (*(begin1 + leftNum - 1) < *(begin2 + rightNum - 1)) {
+            return findMedianSortedArrays(begin1 + leftNum, end1, begin2, end2, target - leftNum);
+        } else {
+            return findMedianSortedArrays(begin1, end1, begin2 + rightNum, end2, target - rightNum);
+        }
+    }
+};
+```
+
+* 数组中的第k个最大元素
+
+```
+class Solution {
+    typedef vector<int>::iterator Iterator;
+public:
+    int findKthLargest(vector<int> &nums, int k) {
+        auto begin = nums.begin(), end = nums.end();
+        while (begin < end) {
+            auto pivot = partition(begin, end);
+            int diff = pivot - nums.begin() + 1 - k;
+            if (diff == 0) return *pivot;
+            else if (diff > 0) {
+                end = pivot;
+            } else {
+                begin = next(pivot);
+            }
+        }
+        return -1;
+    }
+
+private:
+    Iterator partition(Iterator begin, Iterator end) {
+        auto pivot = begin;
+        auto iter = next(begin), index = next(begin);
+        for (; iter < end; iter++) {
+            if (*iter > *pivot) {
+                iter_swap(iter, index);
+                index++;
+            }
+        }
+        iter_swap(pivot, prev(index));
+        return prev(index);
+    }
+};
+```
+
+* 为运算表达式设计优先级
+
+```
+class Solution {
+    typedef string::iterator Iter;
+public:
+    vector<int> diffWaysToCompute(string expression) {
+        return diffWaysToCompute(expression, expression.begin(), expression.end());
+    }
+
+private:
+    vector<int> diffWaysToCompute(const string &exp, Iter begin, Iter end) {
+        vector<int> result;
+
+        int num = convertToNumber(begin, end);
+        if (num >= 0) {
+            result.push_back(num);
+            return result;
+        }
+
+        for (auto iter = begin; iter != end; iter++) {
+            if (isOperation(*iter)) {
+                vector<int> lhsRes = diffWaysToCompute(exp, begin, iter);
+                vector<int> rhsRes = diffWaysToCompute(exp, next(iter), end);
+                for (int j = 0; j < lhsRes.size(); j++) {
+                    for (int k = 0; k < rhsRes.size(); k++) {
+                        result.push_back(calculate(lhsRes[j], rhsRes[k], *iter));
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    int calculate(int lhs, int rhs, char c) {
+        switch (c) {
+            case '+':
+                return lhs + rhs;
+            case '-':
+                return lhs - rhs;
+            case '*':
+                return lhs * rhs;
+        }
+        return -1;
+    }
+
+    bool isOperation(char c) {
+        return c == '+' || c == '-' || c == '*';
+    }
+
+    int convertToNumber(Iter begin, Iter end) {
+        int num = 0;
+        for (auto iter = begin; iter != end; iter++) {
+            if (*iter < '0' || *iter > '9') {
+                return -1;
+            }
+            num = num * 10 + (*iter - '0');
+        }
+        return num;
+    }
+};
+```
+
 
 ### 4.9 动态规划
 
