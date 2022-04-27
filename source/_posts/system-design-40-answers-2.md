@@ -207,5 +207,21 @@ join和count查询无法实现，需要异构出一张宽表，或者使用分�
 
 NoSQL数据库，如Hbase和MongoDB都提供了auto sharding的特性，可以考虑替代关系型数据库
 
+## 2.4 高并发场景下NoSQL和数据库的互补
+
+NoSQL指的是不同于传统关系型数据库的数据库的统称，有下列分类：
+
+kv存储数据库：Redis，LevelDb，相比传统数据库的优势是更高的读写性能
+
+列式存储数据库：Hbase，Cassandra，按列来存储，适用于一些离线数据统计的场景
+
+文档型数据库：MongoDB，CouchDB，特点是Schema Free
+
+### 2.4.1
+
+NoSQL从一
+
+
+
 ## 7. 计数系统设计
 [](http://t.zoukankan.com/wt645631686-p-13878284.html)
