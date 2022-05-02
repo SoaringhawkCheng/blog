@@ -10,7 +10,15 @@
 
     <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/system-design-40-answers-2/</loc>
-        <lastmod>2022-04-30T11:44:57.072Z</lastmod>
+        <lastmod>2022-05-02T14:13:36.496Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/system-design-40-answers-1/</loc>
+        <lastmod>2022-04-30T13:49:02.586Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -19,14 +27,6 @@
     <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/interview-system-design-2/</loc>
         <lastmod>2022-04-30T11:44:52.496Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/system-design-40-answers-1/</loc>
-        <lastmod>2022-04-30T11:27:42.353Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
