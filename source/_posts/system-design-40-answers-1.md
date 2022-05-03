@@ -247,11 +247,23 @@ NoSQL 可供选型的种类很多，每一个组件都有各自的特点。你�
 
 ### 3.1.1 缓存案例
 
+#### 3.1.1.1 MMU缓存
+
 MMU通过TLB缓存虚拟地址与物理地址的映射
+
+#### 3.1.1.2 feed缓存
 
 feed流的预加载
 
+#### 3.1.1.3 HTTP缓存
+
+* 强制缓存
+
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/system-design-40-answers-1/1.jpeg?raw=true)
+
 HTTP协议也有缓存机制，第一次请求静态资源，响应头有Etag字段，浏览器缓存这个字段。下次请求头里会有一个If-None-Match字段，并把Etag发给客户端。如果图片信息没有变化，则返回的304状态码
+
+#### 3.1.1.4 Nginx缓存
 
 ### 3.1.2 缓存与缓冲区
 
