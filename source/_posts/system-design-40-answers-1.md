@@ -247,27 +247,17 @@ NoSQL 可供选型的种类很多，每一个组件都有各自的特点。你�
 
 ### 3.1.1 缓存案例
 
-#### 3.1.1.1 MMU缓存
-
 MMU通过TLB缓存虚拟地址与物理地址的映射
 
-#### 3.1.1.2 feed缓存
+feed流预加载，或者降级兜底缓存
 
-feed流的预加载
+HTTP缓存等
 
-#### 3.1.1.3 HTTP缓存
+### 3.1.2 缓存与缓冲区区别
 
-* 强制缓存
+位于速度相差较大的两种硬件之间，用于协调两者数据传输速度差异的结构，均可称之为缓存
 
-![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/system-design-40-answers-1/1.jpeg?raw=true)
-
-HTTP协议也有缓存机制，第一次请求静态资源，响应头有Etag字段，浏览器缓存这个字段。下次请求头里会有一个If-None-Match字段，并把Etag发给客户端。如果图片信息没有变化，则返回的304状态码
-
-#### 3.1.1.4 Nginx缓存
-
-### 3.1.2 缓存与缓冲区
-
-缓冲区则是一块临时存储数据的区域，这些数据后面会被传输到其他设备上，用以弥补高速设备和低速设备通信时的速度差
+缓冲区：缓冲区则是一块临时存储数据的区域，这些数据后面会被传输到其他设备上。缓冲区更像是消息队列，用以弥补高速设备和低速设备通信时的速度差
 
 ### 3.1.3 缓存分类
 
@@ -399,7 +389,38 @@ redis sentinel是在服务端提供的一种高可用方案
 
 某个极热点缓存项，一旦失效会有大量请求穿透到数据库，解决方法是当缓存未命中，使用memcached或者redis设置分布式锁，获取了锁才能穿透到数据库，将数据加载回缓存。其他未命中且无法获取锁的请求，直接返回
 
-## 3.5 静态资源如何加速
+## 3.5 静态资源缓存机制
+
+缓存可以分为客户端缓存和服务端缓存：
+
+1. 客户端缓存指的是浏览器缓存, 浏览器缓存是最快的缓存, 因为它直接从本地获取(但有可能需要发送一个协商缓存的请求), 它的优势是可以减少网络流量, 加快请求速度
+2. 服务端缓存指的是反向代理服务器或CDN的缓存, 他的作用是用于减轻后端实际的Web Server的压力
+
+### 3.5.1 客户端缓存
+
+[NGINX缓存详解（一）之客户端缓存](https://zhuanlan.zhihu.com/p/445786218)
+
+#### 3.5.1.1 强制缓存
+
+浏览器在加载资源的时候，会先根据本地缓存资源的header中的信息(Expires 和 Cache-Control)来判断缓存是否过期。如果缓存没有过期，则会直接使用缓存中的资源；否则，会向服务端发起协商缓存的请求
+
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/system-design-40-answers-1/cache-controll.png?raw=true)
+
+#### 3.5.1.2 协商缓存
+
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/system-design-40-answers-1/last-modified.png?raw=true)
+
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/system-design-40-answers-1/etag.png?raw=true)
+
+第一次请求静态资源，响应头有Etag字段，浏览器缓存这个字段。下次请求头里会有一个If-None-Match字段，并把Etag发给客户端。如果图片信息没有变化，则返回的304 Not Modified
+
+### 3.5.2 服务端缓存
+
+[NGINX缓存详解（二）之服务端缓存](https://zhuanlan.zhihu.com/p/447592516)
+
+proxy cache属于服务端缓存，主要实现 nginx 服务器对客户端数据请求的快速响应。 nginx 服务器在接收到被代理服务器的响应数据之后，一方面将数据传递给客户端，另一方面根据proxy cache的配置将这些数据缓存到本地硬盘上。 当客户端再次访问相同的数据时，nginx服务器直接从硬盘检索到相应的数据返回给用户，从而减少与被代理服务器交互的时间
+
+## 3.6 静态资源如何加速
 
 将静态资源从，静态资源服务器比如Nginx，迁移到CDN上，支持更大请求量和带宽，访问速度更快
 
@@ -443,4 +464,4 @@ CDN DNS返回GSLB（Global Server Load Balance，全局负载均衡）的域名
 
 
 ## 7. 计数系统设计
-[](http://t.zoukankan.com/wt645631686-p-13878284.html)
+[haha](http://t.zoukankan.com/wt645631686-p-13878284.html)
