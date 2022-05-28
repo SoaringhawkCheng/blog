@@ -81,7 +81,7 @@ categories:
 
 	![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/head-first-design-pattern/class_dependency.png?raw=true)
 	
-	java中表现为，局部变量、方法中的参数和静态方法调用
+	是一种非常弱、临时性的关系。java中表现为，局部变量、方法中的参数和静态方法调用
 
 * 关联关系
 
@@ -115,7 +115,7 @@ categories:
 
 		组合的意思就是把你需要的东西组合在一个类里面，这个类并不需要继承任何父类，也可以提供想要的行为方法。利用继承设计子类的行为，是在编译时静态决定的，而且所有的子类都会继承到相同的行为。利用组合(composition)和委托(delegation)的做法扩展对象的可以在运行时动态地进行扩展。
 		
-* 未来交互对象之间的松耦合设计而努力
+* 为交互对象之间的松耦合设计而努力
 
 		松耦合的设计之所以能让我们建立有弹性的OO系统，能够应对变化，是因为对象之间的互相依赖降到了最低
 
