@@ -1,5 +1,5 @@
 ---
-title: 「图解设计模式」学习笔记
+title: 「图解设计模式」学习笔记 [DOING]
 catalog: true
 date: 2022-03-21 15:43:42
 subtitle:
@@ -62,12 +62,72 @@ categories:
 	
 	整体和部分强依赖，部分生命周期依赖整体，如普通成员变量
 
-## 第一部分 适应设计模式
+## 一、适应设计模式
 
-## 第二部分 交给子类
+### 1.1 迭代器模式 Iterator
 
-## 第三部分 生成实例
+### 1.2 适配器模式 Adapter
 
-## 第四部分 分开考虑
+## 二、交给子类
 
-## 
+### 2.1 模板方法模式 Template Method
+
+### 2.2 工厂方法模式 Factory Method
+
+## 三、生成实例
+
+### 3.1 单例模式 Singleton
+
+### 3.2 原型模式 Prototype
+
+### 3.3 建造者模式 Builder
+
+builder定义构建接口，concrete builder实现接口
+
+director调用builder的接口生成实例
+
+### 3.4 抽象工厂模式 Factory
+
+## 四、分开考虑
+
+### 4.1 桥接模式 Bridge
+
+### 4.2 策略模式 Strategy
+
+## 五、一致性
+
+### 5.1 组合模式 Composite
+
+### 5.2 装饰模式 Decorator
+
+## 六、访问数据结构
+
+### 6.1 访问者模式 Visitor
+
+### 6.2 职责链模式 Chain of Responsibility
+
+## 七、简单化
+
+### 7.1 外观模式 Facade
+
+### 7.2 中介者模式 Mediator
+
+## 八、管理状态
+
+### 8.1 观察者模式 Observer
+
+### 8.2 备忘录模式 Memento
+
+### 8.3 状态模式 State
+
+## 九、避免浪费
+
+### 9.1 享元模式 Flyweight
+
+### 9.2 代理模式 Proxy
+
+## 十、用类来表现
+
+### 10.1 命令模式 Command
+
+### 10.2 解释器模式 Interpreter
