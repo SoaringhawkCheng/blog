@@ -10,7 +10,39 @@
 
     <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/illustration-of-design-pattern/</loc>
-        <lastmod>2022-05-30T04:19:30.314Z</lastmod>
+        <lastmod>2022-05-30T04:37:58.195Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/software-design-coder-to-architect/</loc>
+        <lastmod>2022-05-30T04:37:51.954Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/git-flow/</loc>
+        <lastmod>2022-05-30T04:37:40.847Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/redis-adventure/</loc>
+        <lastmod>2022-05-30T04:37:38.054Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/principle-of-jdk-concurrency-impl/</loc>
+        <lastmod>2022-05-30T04:37:33.540Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -25,32 +57,8 @@
     </url>
 
     <url>
-        <loc>https://blog.soaringhawkcheng.tech/article/software-design-coder-to-architect/</loc>
-        <lastmod>2022-05-27T14:15:04.169Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/interview-system-design-2/</loc>
         <lastmod>2022-05-26T02:44:24.608Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/git-flow/</loc>
-        <lastmod>2022-05-24T03:55:59.571Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/redis-adventure/</loc>
-        <lastmod>2022-05-14T04:23:34.858Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -162,14 +170,6 @@
 
     <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/illustration-of-tcp-ip/</loc>
-        <lastmod>2021-11-06T11:55:25.908Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/principle-of-jdk-concurrency-impl/</loc>
         <lastmod>2021-11-06T11:55:25.908Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
