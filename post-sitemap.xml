@@ -9,6 +9,54 @@
 
 
     <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/illustration-of-design-pattern/</loc>
+        <lastmod>2022-05-30T04:19:30.314Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/head-first-design-pattern/</loc>
+        <lastmod>2022-05-28T03:51:16.296Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/article/software-design-coder-to-architect/</loc>
+        <lastmod>2022-05-27T14:15:04.169Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/interview-system-design-2/</loc>
+        <lastmod>2022-05-26T02:44:24.608Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/git-flow/</loc>
+        <lastmod>2022-05-24T03:55:59.571Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/redis-adventure/</loc>
+        <lastmod>2022-05-14T04:23:34.858Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/system-design-40-answers-1/</loc>
         <lastmod>2022-05-04T13:15:57.446Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -19,14 +67,6 @@
     <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/system-design-40-answers-2/</loc>
         <lastmod>2022-05-04T13:15:54.094Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/interview-system-design-2/</loc>
-        <lastmod>2022-04-30T11:44:52.496Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -51,14 +91,6 @@
     <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/penix-architecture/</loc>
         <lastmod>2022-04-24T12:02:29.573Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/illustration-of-design-pattern/</loc>
-        <lastmod>2022-03-21T09:16:42.646Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -99,14 +131,6 @@
     <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/action-in-java-concurrent-design/</loc>
         <lastmod>2022-03-21T07:52:46.382Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/head-first-design-pattern/</loc>
-        <lastmod>2022-03-06T11:34:32.017Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
