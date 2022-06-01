@@ -234,66 +234,99 @@
 <p>预计完成时间：</p>
 <p>实际完成时间：</p>
 </blockquote>
-<p>![](<!----><a target="_blank" rel="noopener" href="https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/illustration-of-design-pattern/mind.png?raw=true">https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/illustration-of-design-pattern/mind.png?raw=true</a>)</p>
-<h2><span id="关于uml">关于UML</span></h2>
-<p>统一建模语言(UML, Unified Modeling Language)</p>
-<h1><span id="uml类图">UML类图</span></h1>
-<ul>
-<li>
-<p>泛化关系</p>
-<p><img src="https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/head-first-design-pattern/class_generalize.png?raw=true" alt></p>
-<p>继承类和接口，java中通过extends实现</p>
-</li>
-<li>
-<p>实现关系</p>
-<p><img src="https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/head-first-design-pattern/class_realization.png?raw=true" alt></p>
-<p>实现接口，java中使用implements表示</p>
-</li>
-<li>
-<p>依赖关系</p>
-<p><img src="https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/head-first-design-pattern/class_dependency.png?raw=true" alt></p>
-<p>是一种非常弱、临时性的关系。java中表现为，局部变量、方法中的参数和静态方法调用</p>
-</li>
-<li>
-<p>关联关系</p>
-<p><img src="https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/head-first-design-pattern/class_association.png?raw=true" alt></p>
-<p>java中使用成员变量实现，或者引用全局变量</p>
-</li>
-<li>
-<p>聚合关系</p>
-<p><img src="https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/head-first-design-pattern/class_aggregation.png?raw=true" alt></p>
-<p>整体和部分弱依赖，部分生命周期不依赖整体，比如指针成员变量</p>
-</li>
-<li>
-<p>组合关系</p>
-<p><img src="https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/head-first-design-pattern/class_composition.png?raw=true" alt></p>
-<p>整体和部分强依赖，部分生命周期依赖整体，如普通成员变量</p>
-</li>
-</ul>
+<!--![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/illustration-of-design-pattern/mind.png?raw=true)-->
+<h2><span id="零-前言">零、前言</span></h2>
+<p>统一建模语言(UML, Unified Modeling Language)，具体见<a href="https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/head-first-design-pattern/">「Head first设计模式」学习笔记</a></p>
 <h2><span id="一-适应设计模式">一、适应设计模式</span></h2>
 <h3><span id="11-迭代器模式-iterator">1.1 迭代器模式 Iterator</span></h3>
 <h3><span id="12-适配器模式-adapter">1.2 适配器模式 Adapter</span></h3>
 <h2><span id="二-交给子类">二、交给子类</span></h2>
 <h3><span id="21-模板方法模式-template-method">2.1 模板方法模式 Template Method</span></h3>
 <h3><span id="22-工厂方法模式-factory-method">2.2 工厂方法模式 Factory Method</span></h3>
+<h4><span id="221-简单工厂简介">2.2.1 简单工厂简介</span></h4>
+<p>简单工厂模式不属于23种GOF设计模式，是由一个工厂类根据传入的参数，动态决定应该创建哪一个产品类</p>
+<ul>
+<li>优点：实现了对象创建和使用的分离，不修改客户端代码即可更改具体产品</li>
+<li>缺点：更改具体产品需要修改工厂类，违反了开放——封闭原则</li>
+</ul>
+<h4><span id="222-工厂方法">2.2.2 工厂方法</span></h4>
+<p>工厂方法将工厂抽象化，增加新产品只需增加对应的具体实现工厂类<br>
+factory定义工厂接口，product定义产品接口，concrete product和对应的concrete factory实现接口</p>
+<ul>
+<li>优点：解决了简单工厂不符合开放——封闭原则的问题</li>
+<li>缺点：增加新产品需要增加工厂类</li>
+</ul>
 <h2><span id="三-生成实例">三、生成实例</span></h2>
 <h3><span id="31-单例模式-singleton">3.1 单例模式 Singleton</span></h3>
 <h3><span id="32-原型模式-prototype">3.2 原型模式 Prototype</span></h3>
 <h3><span id="33-建造者模式-builder">3.3 建造者模式 Builder</span></h3>
 <p>builder定义构建接口，concrete builder实现接口</p>
 <p>director调用builder的接口生成实例</p>
-<h3><span id="34-抽象工厂模式-factory">3.4 抽象工厂模式 Factory</span></h3>
+<h3><span id="34-抽象工厂模式-abstract-factory">3.4 抽象工厂模式 Abstract Factory</span></h3>
+<h4><span id="341-对比工厂方法">3.4.1 对比工厂方法</span></h4>
+<p>工厂方法模式中，我们使用一个工厂创建一个产品，一个具体工厂对应一个具体产品</p>
+<p>抽象工厂模式拥有多个抽象产品类（产品族）和一个抽象工厂类， 一个工厂能够提供多个产品对象，即一个产品族</p>
+<h4><span id="342-产品概念">3.4.2 产品概念</span></h4>
+<p>产品等级结构：产品等级结构指的是产品的继承结构，例如一个空调抽象类，它有海尔空调、格力空调、美的空调等一系列的子类，那么这个空调抽象类和他的子类就构成了一个产品等级结构。</p>
+<p>产品族：产品族是指由同一个工厂生产的，位于不同产品等级结构中的一组产品。比如，海尔工厂生产海尔空调、海尔冰箱，那么海尔空调则位于空调产品族中</p>
+<h4><span id="343-优缺点">3.4.3 优缺点</span></h4>
+<p>易于增加新的具体工厂，难以增加新的零件</p>
 <h2><span id="四-分开考虑">四、分开考虑</span></h2>
 <h3><span id="41-桥接模式-bridge">4.1 桥接模式 Bridge</span></h3>
+<p>将类的功能层次结构和实现层次结构分离，不使用继承而使用组合委托</p>
+<h4><span id="411-类的层次结构">4.1.1 类的层次结构</span></h4>
+<p>功能层次结构：extends，实现层次结构：implement</p>
+<h4><span id="412-组成结构">4.1.2 组成结构</span></h4>
+<ul>
+<li>abstraction：持有implementer的实例，并简单封装了implementer的方法</li>
+<li>refined abstraction：在abstraction基础上新增了功能</li>
+<li>implementor：定义了abstraction接口依赖的方法</li>
+<li>concrete implementer：实现了implementer的接口</li>
+</ul>
+<h4><span id="413-优缺点">4.1.3 优缺点</span></h4>
+<p>桥接模式可以取代多层继承方案，多层继承方案违背了“单一职责原则”，复用性较差，且类的个数非常多，桥接模式是比多层继承方案更好的解决方法，它极大减少了子类的个数，如下面的示意。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">                   ----Shape---</span><br><span class="line">                  &#x2F;            \</span><br><span class="line">         Rectangle              Circle</span><br><span class="line">        &#x2F;         \            &#x2F;      \</span><br><span class="line">BlueRectangle  RedRectangle BlueCircle RedCircle</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">          ----Shape---                        Color</span><br><span class="line">         &#x2F;            \                       &#x2F;   \</span><br><span class="line">Rectangle(Color)   Circle(Color)           Blue   Red</span><br></pre></td></tr></table></figure>
 <h3><span id="42-策略模式-strategy">4.2 策略模式 Strategy</span></h3>
+<p>strategy负责定义策略所必须的接口，concrete strategy实现这些接口</p>
+<p>context使用组合，持有concrete strategy实例</p>
+<p>将策略实现解耦出来，使用委托的方式，可以动态替换算法</p>
 <h2><span id="五-一致性">五、一致性</span></h2>
-<h3><span id="51-组合模式-composite">5.1 组合模式 Composite</span></h3>
+<h3><span id="51-混合模式-composite">5.1 混合模式 Composite</span></h3>
+<h4><span id="511-详细原理">5.1.1 详细原理</span></h4>
+<p>目录树结构使用的设计模式，目录下即有文件也有子目录</p>
+<p>容器和内容具有一致性，提供一致性的方法，创造出递归结构的模式</p>
+<h4><span id="512-组成结构">5.1.2 组成结构</span></h4>
+<ul>
+<li>Leaf：叶子节点，不能放入其他叶子</li>
+<li>Composite：容器节点，可以放入Leaf和Composite</li>
+<li>Component：使Leaf和Composite具有一致性的父类</li>
+</ul>
 <h3><span id="52-装饰模式-decorator">5.2 装饰模式 Decorator</span></h3>
+<ul>
+<li>component：定义了被装饰的对象的接口</li>
+<li>decorator：实现并组合了component</li>
+<li>concrete component：实现了被装饰component的接口</li>
+<li>concrete decorator：实现decorator的方法，使用委托</li>
+</ul>
 <h2><span id="六-访问数据结构">六、访问数据结构</span></h2>
 <h3><span id="61-访问者模式-visitor">6.1 访问者模式 Visitor</span></h3>
+<p>访问者模式基于混合模式的目录，将组件的处理从组件数据结构中分离出来，提高了组件的独立性</p>
+<ul>
+<li>component：访问者模式中增加accept方法调用visitor.visit(this)</li>
+<li>visitor：visitor对混合模式中的leaf和composite各自声明一个visitor接口</li>
+<li>concrete visitor：实现visitor中的接口</li>
+</ul>
+<p>易于增加concrete visitor，不易于增加component，因为每个concrete visitor都需要适配新component</p>
 <h3><span id="62-职责链模式-chain-of-responsibility">6.2 职责链模式 Chain of Responsibility</span></h3>
+<ul>
+<li>handler：有next指针，定义了处理请求的接口</li>
+<li>concrete handler：实现处理请求的接口</li>
+</ul>
+<p>弱化了调用方和处理方的关系，可以动态改变职责链</p>
 <h2><span id="七-简单化">七、简单化</span></h2>
 <h3><span id="71-外观模式-facade">7.1 外观模式 Facade</span></h3>
+<p>facade为错综复杂无法解耦的部分提供统一的高层接口</p>
 <h3><span id="72-中介者模式-mediator">7.2 中介者模式 Mediator</span></h3>
 <h2><span id="八-管理状态">八、管理状态</span></h2>
 <h3><span id="81-观察者模式-observer">8.1 观察者模式 Observer</span></h3>
@@ -305,6 +338,7 @@
 <h2><span id="十-用类来表现">十、用类来表现</span></h2>
 <h3><span id="101-命令模式-command">10.1 命令模式 Command</span></h3>
 <h3><span id="102-解释器模式-interpreter">10.2 解释器模式 Interpreter</span></h3>
+<h2><span id="附录一-延伸阅读">附录一、延伸阅读</span></h2>
 
                 
 
@@ -374,7 +408,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">关于UML</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number"></span> <span class="toc-nav-text">UML类图</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">一、适应设计模式</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">1.1 迭代器模式 Iterator</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">1.2 适配器模式 Adapter</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">二、交给子类</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">2.1 模板方法模式 Template Method</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">2.2 工厂方法模式 Factory Method</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">三、生成实例</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">3.1 单例模式 Singleton</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">3.2 原型模式 Prototype</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">3.3 建造者模式 Builder</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">3.4 抽象工厂模式 Factory</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">四、分开考虑</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">4.1 桥接模式 Bridge</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">4.2 策略模式 Strategy</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">五、一致性</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">5.1 组合模式 Composite</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">5.2 装饰模式 Decorator</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">六、访问数据结构</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">6.1 访问者模式 Visitor</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">6.2.</span> <span class="toc-nav-text">6.2 职责链模式 Chain of Responsibility</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">七、简单化</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">7.1.</span> <span class="toc-nav-text">7.1 外观模式 Facade</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">7.2.</span> <span class="toc-nav-text">7.2 中介者模式 Mediator</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">八、管理状态</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">8.1.</span> <span class="toc-nav-text">8.1 观察者模式 Observer</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">8.2.</span> <span class="toc-nav-text">8.2 备忘录模式 Memento</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">8.3.</span> <span class="toc-nav-text">8.3 状态模式 State</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">九、避免浪费</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">9.1.</span> <span class="toc-nav-text">9.1 享元模式 Flyweight</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">9.2.</span> <span class="toc-nav-text">9.2 代理模式 Proxy</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">10.</span> <span class="toc-nav-text">十、用类来表现</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">10.1.</span> <span class="toc-nav-text">10.1 命令模式 Command</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">10.2.</span> <span class="toc-nav-text">10.2 解释器模式 Interpreter</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">零、前言</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">一、适应设计模式</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">1.1 迭代器模式 Iterator</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">1.2 适配器模式 Adapter</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">二、交给子类</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">2.1 模板方法模式 Template Method</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">2.2 工厂方法模式 Factory Method</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.2.1.</span> <span class="toc-nav-text">2.2.1 简单工厂简介</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.2.2.</span> <span class="toc-nav-text">2.2.2 工厂方法</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">三、生成实例</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">3.1 单例模式 Singleton</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">3.2 原型模式 Prototype</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">3.3 建造者模式 Builder</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">3.4 抽象工厂模式 Abstract Factory</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">4.4.1.</span> <span class="toc-nav-text">3.4.1 对比工厂方法</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">4.4.2.</span> <span class="toc-nav-text">3.4.2 产品概念</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">4.4.3.</span> <span class="toc-nav-text">3.4.3 优缺点</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">四、分开考虑</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">4.1 桥接模式 Bridge</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">5.1.1.</span> <span class="toc-nav-text">4.1.1 类的层次结构</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">5.1.2.</span> <span class="toc-nav-text">4.1.2 组成结构</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">5.1.3.</span> <span class="toc-nav-text">4.1.3 优缺点</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">4.2 策略模式 Strategy</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">五、一致性</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">5.1 混合模式 Composite</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">6.1.1.</span> <span class="toc-nav-text">5.1.1 详细原理</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">6.1.2.</span> <span class="toc-nav-text">5.1.2 组成结构</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">6.2.</span> <span class="toc-nav-text">5.2 装饰模式 Decorator</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">六、访问数据结构</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">7.1.</span> <span class="toc-nav-text">6.1 访问者模式 Visitor</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">7.2.</span> <span class="toc-nav-text">6.2 职责链模式 Chain of Responsibility</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">七、简单化</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">8.1.</span> <span class="toc-nav-text">7.1 外观模式 Facade</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">8.2.</span> <span class="toc-nav-text">7.2 中介者模式 Mediator</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">八、管理状态</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">9.1.</span> <span class="toc-nav-text">8.1 观察者模式 Observer</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">9.2.</span> <span class="toc-nav-text">8.2 备忘录模式 Memento</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">9.3.</span> <span class="toc-nav-text">8.3 状态模式 State</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">10.</span> <span class="toc-nav-text">九、避免浪费</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">10.1.</span> <span class="toc-nav-text">9.1 享元模式 Flyweight</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">10.2.</span> <span class="toc-nav-text">9.2 代理模式 Proxy</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">11.</span> <span class="toc-nav-text">十、用类来表现</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">11.1.</span> <span class="toc-nav-text">10.1 命令模式 Command</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">11.2.</span> <span class="toc-nav-text">10.2 解释器模式 Interpreter</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">12.</span> <span class="toc-nav-text">附录一、延伸阅读</span></a></li></ol>
         
         </div>
       </aside>
