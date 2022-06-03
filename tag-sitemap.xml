@@ -3,15 +3,15 @@
 
 
     <url>
-        <loc>https://blog.soaringhawkcheng.tech/tags/devops/</loc>
-        <lastmod>2022-06-01T12:34:48.249Z</lastmod>
+        <loc>https://blog.soaringhawkcheng.tech/tags/software/</loc>
+        <lastmod>2022-06-03T08:06:54.613Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://blog.soaringhawkcheng.tech/tags/software/</loc>
-        <lastmod>2022-06-01T08:04:32.076Z</lastmod>
+        <loc>https://blog.soaringhawkcheng.tech/tags/devops/</loc>
+        <lastmod>2022-06-01T12:34:48.249Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
