@@ -173,24 +173,67 @@ facade为错综复杂无法解耦的部分提供统一的高层接口
 
 ### 7.2 中介者模式 Mediator
 
+* mediator：定义与colleage角色进行通信和做出决定的接口
+* concreate mediator：实现mediator的这些接口
+* colleague：定义与mediator进行通信的接口
+* concrete colleague：实现colleague的这些接口
+
+colleage之间的交互，统一提交给mediator处理
+
 ## 八、管理状态
 
-### 8.1 观察者模式 Observer
+### 8.1 观察者模式（发布-订阅模式） Observer
+
+* subject：表示观察对象，定义了注册、删除observer的方法，
+* concrete subject：
+* observer：定义接受observer通知的接口
+* concrete observer：实现observer的接口
 
 ### 8.2 备忘录模式 Memento
 
+* originator：会在保存自己最新状态时生成memento
+* caretaker：通知originator生成memento，或者使用memento恢复状态
+* memento：会将originator内部信息整合在一起；提供了宽接口和窄接口，宽接口用于获取恢复获取对象状态的信息，只给originator使用。caretaker只能访问窄接口。
+
+caretaker和originator职责分开，当需要变更快照和恢复策略时，不需要更改originator
+
 ### 8.3 状态模式 State
+
+* state：标识状态，定义了一系列接口，接受context作为入参，并调用context的方法处理状态流转
+* concrete state：实现了state接口
+* context：持有表示当前状态的concrete state，定义了供外部接口调用的接口
+
+监控到消息事件后，context的方法调用持有的concrete state，state的方法又调用context方法更新状态
 
 ## 九、避免浪费
 
 ### 9.1 享元模式 Flyweight
 
+通过尽量共享实例来避免new出实例
+
+* flyweight：实例会被共享的类
+* flyweight factory：是生成flyweight的工厂
+* client：使用flyweight factory生成flyweight
+
 ### 9.2 代理模式 Proxy
+
+#### 9.2.1 模式原理
+
+* subject：为proxy和real subject提供一致性的接口
+* proxy：实现了subject的接口，处理来自client的请求，对于无法处理才会交给real subject，proxy只有在必要时才会生成real subject角色
+* real subject：实现了subject接口，由proxy调用，处理proxy无法胜任的工作
+* client：使用proxy模式的客户端
+
+#### 9.2.2 模式优缺点
+
+使用proxy来提升处理速度，划分proxy和subject，划分职责不需要修改subject类
 
 ## 十、用类来表现
 
 ### 10.1 命令模式 Command
 
+
+
 ### 10.2 解释器模式 Interpreter
 
-## 附录一、延伸阅读
+
