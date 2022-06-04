@@ -1,5 +1,5 @@
 ---
-title: 「图解设计模式」学习笔记 [DOING]
+title: 「图解设计模式」学习笔记
 catalog: true
 date: 2022-03-21 15:43:42
 subtitle:
@@ -18,7 +18,7 @@ categories:
 > 
 > 实际完成时间：
 
-<!--![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/illustration-of-design-pattern/mind.png?raw=true)-->
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/illustration-of-design-pattern/mind.png?raw=true)
 
 ## 零、前言
 
@@ -28,11 +28,33 @@ categories:
 
 ### 1.1 迭代器模式 Iterator
 
+### 1.1.1 组成部分
+
+* iterator：定义遍历元素的接口
+* concrete iterator：实现遍历元素的接口，并持有对应的concrete aggregator，保存当前的下标
+* aggregate：定义创建iterator的接口
+* concrete aggregate：实现aggregate的忌口
+
+### 1.1.2 优缺点
+
+* 优点：将遍历和容器实现分离
+
 ### 1.2 适配器模式 Adapter
+
+类适配器模式：使用继承和接口实现
+
+对象适配器模式：使用委托
+
+对扩展开放，对修改封闭，符合开闭原则
 
 ## 二、交给子类
 
 ### 2.1 模板方法模式 Template Method
+
+父类定义处理流程的框架，子类实现具体处理
+
+* abstract class：负责实现模板方法，并声明模板方法中用到的抽象方法
+* concrete class：实现abstract class声明的抽象方法
 
 ### 2.2 工厂方法模式 Factory Method
 
@@ -55,7 +77,194 @@ factory定义工厂接口，product定义产品接口，concrete product和对�
 
 ### 3.1 单例模式 Singleton
 
+[Java中的单例模式](https://zhuanlan.zhihu.com/p/322477346)
+
+#### 3.1.1 饿汉模式
+
+在类加载时就会进行单例的初始化，以后访问时直接使用单例对象即可
+
+```
+public class Singleton {
+    private static Singleton instance = new Singleton();    
+    // 获取实例（单例对象）
+    public static Singleton getInstance() {
+        return instance;
+    }
+    private Singleton() {
+    }
+}
+```
+
+#### 3.1.2 懒汉模式
+
+当每次需要使用实例时，再去创建获取实例，而不是在类加载时就将实例创建好
+
+```
+public class Singleton {
+    // 声明私有对象
+    private static Singleton instance;
+    // 获取实例（单例对象）
+    public static Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+    private Singleton() {
+    }
+}
+```
+
+#### 3.1.3 线程安全问题
+
+为了保证懒汉模式的线程安全，简单的做法就是给获取实例的方法上加上 synchronized。但由于整个方法都被 synchronized 所包围，因此增加了同步开销，降低了程序的执行效率。
+
+```
+public class Singleton {
+    // 声明私有对象
+    private static Singleton instance;
+    // 获取实例（单例对象）
+    public synchronized static Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}
+```
+
+#### 3.1.4 优化执行效率
+
+于是为了改进程序的执行效率，我们将 synchronized 放入到方法中，代码会存在着非线程安全的问题
+
+```
+public class Singleton {
+    // 声明私有对象
+    private static Singleton instance;
+    // 获取实例（单例对象）
+    public static Singleton getInstance() {
+        if (instance == null) {
+            synchronized (Singleton.class) {
+                instance = new Singleton();
+            }
+        }
+        return instance;
+    }
+}
+```
+
+#### 3.1.5 双重检测锁
+
+于是就诞生了大名鼎鼎的双重检测锁
+
+```
+public class Singleton {
+    // 声明私有对象
+    private static Singleton instance;
+    // 获取实例（单例对象）
+    public static Singleton getInstance() {
+        // 第一次判断
+        if (instance == null) {
+            synchronized (Singleton.class) {
+                // 第二次判断
+                if (instance == null) {
+                    instance = new Singleton();
+                }
+            }
+        }
+        return instance;
+    }
+}
+```
+
+#### 3.1.6 指令重排问题
+
+但是instance = new Singleton() 这行代码看似是一个原子操作，然而并不是，这行代码最终会被编译成多条汇编指令，它大致的执行流程为以下三个步骤：
+
+1. 给对象实例分配内存空间；
+2. 调用对象的构造方法、初始化成员字段；
+3. 将 instance 对象指向分配的内存空间
+
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/illustration-of-design-pattern/rank.png?raw=true)
+
+为了解决此问题，我们可以使用关键字 volatile 来修饰 instance 对象，这样就可以防止 CPU 指令重排，从而完美地运行懒汉模式
+
+```
+public class Singleton {
+    // 声明私有对象
+    private volatile static Singleton instance;
+    // 获取实例（单例对象）
+    public static Singleton getInstance() {
+        // 第一次判断
+        if (instance == null) {
+            synchronized (Singleton.class) {
+                // 第二次判断
+                if (instance == null) {
+                    instance = new Singleton();
+                }
+            }
+        }
+        return instance;
+    }
+    private Singleton() {
+    }
+}
+```
+
+#### 3.1.7 静态内部类
+
+JVM 会在类初始化阶段（也就是类装载阶段）创建一个锁，该锁可以保证多个线程同步执行类初始化的工作，因此在多线程环境下，类加载机制依然是线程安全的。
+
+静态内部类和饿汉方式也有着细微的差别，饿汉方式是在程序启动时就会进行加载，因此可能造成资源的浪费；而静态内部类只有在调用 getInstance() 方法时，才会装载内部类从而完成实例的初始化工作
+
+```
+public class Singleton {
+    // 静态内部类
+    private static class SingletonInstance {
+        private static final Singleton instance = new Singleton();
+    }
+    // 获取实例（单例对象）
+    public static Singleton getInstance() {
+        return SingletonInstance.instance;
+    }
+    private Singleton() {
+    }
+}
+```
+
+#### 3.1.8 枚举类
+
+枚举的实现方式不仅是线程安全的，而且只会装载一次，无论是序列化、反序列化、反射还是克隆都不会新创建对象
+
+```
+public class Singleton {
+    // 枚举类型是线程安全的，并且只会装载一次
+    private enum SingletonEnum {
+        INSTANCE;
+        // 声明单例对象
+        private final Singleton instance;
+        // 实例化
+        SingletonEnum() {
+            instance = new Singleton();
+        }
+        private Singleton getInstance() {
+            return instance;
+        }
+    }
+    // 获取实例（单例对象）
+    public static Singleton getInstance() {
+        return SingletonEnum.INSTANCE.getInstance();
+    }
+    private Singleton() {
+    }
+}
+```
+
 ### 3.2 原型模式 Prototype
+
+* prototype：负责定义用于复制现有实例生成新实例的方法
+* concrete prototype：实现prototype的方法
+* client：使用复制实例的方法生成新的实例并使用
 
 ### 3.3 建造者模式 Builder
 
@@ -232,8 +441,18 @@ caretaker和originator职责分开，当需要变更快照和恢复策略时，�
 
 ### 10.1 命令模式 Command
 
-
+* command：定义命令的接口
+* concrete command：实现command的接口
+* receiver：是command命令的接受者，command执行时会调用receiver
+* client：负责生成command并分配receiver
+* invoker：执行命令的角色，调用command接口的execute方法
 
 ### 10.2 解释器模式 Interpreter
 
+* abstract expression：定义了语法树节点的共同接口
+* concrete expression：具体语法节点，从程序级别到变量级别
+* context：为解释器进行语法解析提供了必要的上下文信息
+* client：读取程序，一行一行解释
+
+具体的回忆自己之前写过的解释器
 
