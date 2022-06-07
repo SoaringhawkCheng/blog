@@ -1,5 +1,5 @@
 ---
-title: 「Kubernetes in Action中文版」读书笔记
+title: 「Kubernetes in Action中文版」读书笔记 [DOING]
 catalog: true
 date: 2022-06-01 18:07:29
 subtitle:
