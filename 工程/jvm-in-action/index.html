@@ -235,6 +235,25 @@
 <p>预计完成时间：</p>
 <p>实际完成时间：</p>
 </blockquote>
+<h2><span id="一-初探java虚拟机">一、初探Java虚拟机</span></h2>
+<h2><span id="二-认识java虚拟机的基础结构">二、认识Java虚拟机的基础结构</span></h2>
+<h2><span id="三-常见虚拟机参数">三、常见虚拟机参数</span></h2>
+<h2><span id="四-垃圾回收的概念与算法">四、垃圾回收的概念与算法</span></h2>
+<h2><span id="五-垃圾收集器和内存分配">五、垃圾收集器和内存分配</span></h2>
+<h2><span id="六-性能监控工具">六、性能监控工具</span></h2>
+<h2><span id="七-分析java堆">七、分析Java堆</span></h2>
+<h2><span id="八-锁与并发">八、锁与并发</span></h2>
+<h2><span id="九-class文件结构">九、Class文件结构</span></h2>
+<h2><span id="十-class装载系统">十、Class装载系统</span></h2>
+<p><a target="_blank" rel="noopener" href="https://note.youdao.com/ynoteshare/index.html?id=9cc3963222a194e90f1ac8a08ed7dd45&amp;type=note&amp;_time=1654517637002">笔记</a></p>
+<p>String.class.getClassLoader()</p>
+<ul>
+<li>启动类加载器负责加载系统的核心类，比如rt.jar中的Java类</li>
+<li>扩展类加载器用于加载%JAVA_HOME%/lib/ext/*.jar中的Java类</li>
+<li>应用类加载器用于加载用户类，也就是用户程序的类</li>
+<li>自定义类加载器用于加载一些特殊途径的类，一般也是用户程序的类</li>
+</ul>
+<h2><span id="十一-字节码执行">十一、字节码执行</span></h2>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wangyy130/article/details/88758055">cms</a></p>
 
                 
@@ -305,7 +324,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="nav">none</ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">一、初探Java虚拟机</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">二、认识Java虚拟机的基础结构</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">三、常见虚拟机参数</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">四、垃圾回收的概念与算法</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">五、垃圾收集器和内存分配</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">六、性能监控工具</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">七、分析Java堆</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">八、锁与并发</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">九、Class文件结构</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">10.</span> <span class="toc-nav-text">十、Class装载系统</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">11.</span> <span class="toc-nav-text">十一、字节码执行</span></a></li></ol>
         
         </div>
       </aside>

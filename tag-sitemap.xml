@@ -3,6 +3,34 @@
 
 
     <url>
+        <loc>https://blog.soaringhawkcheng.tech/tags/interview/</loc>
+        <lastmod>2022-06-07T08:54:43.045Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/tags/operation/</loc>
+        <lastmod>2022-06-07T08:54:38.435Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/tags/devops/</loc>
+        <lastmod>2022-06-07T08:53:55.548Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/tags/os/</loc>
+        <lastmod>2022-06-07T08:37:01.565Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://blog.soaringhawkcheng.tech/tags/software/</loc>
         <lastmod>2022-06-04T12:25:42.300Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -17,13 +45,6 @@
     </url>
 
     <url>
-        <loc>https://blog.soaringhawkcheng.tech/tags/devops/</loc>
-        <lastmod>2022-06-01T12:34:48.249Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://blog.soaringhawkcheng.tech/tags/architecture/</loc>
         <lastmod>2022-05-30T04:37:51.954Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -33,20 +54,6 @@
     <url>
         <loc>https://blog.soaringhawkcheng.tech/tags/language/</loc>
         <lastmod>2022-05-30T04:37:33.540Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/tags/interview/</loc>
-        <lastmod>2022-05-26T02:44:24.608Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/tags/os/</loc>
-        <lastmod>2022-03-21T07:52:53.939Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
