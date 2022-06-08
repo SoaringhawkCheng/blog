@@ -17,3 +17,7 @@ categories:
 > 预计完成时间：
 > 
 > 实际完成时间：
+
+[大白带你认识JVM](https://snailclimb.gitee.io/javaguide/#/./docs/java/jvm/jvm-intro?id=%e5%a4%a7%e7%99%bd%e8%af%9d%e5%b8%a6%e4%bd%a0%e8%ae%a4%e8%af%86jvm)
+
+[SpringBootGuide](https://snailclimb.gitee.io/springboot-guide/#/)
