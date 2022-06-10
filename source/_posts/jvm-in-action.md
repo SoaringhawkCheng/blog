@@ -21,43 +21,43 @@ categories:
 > 
 > 实际完成时间：
 
-## 一、初探Java虚拟机
+# 一、初探Java虚拟机
 
-## 二、Java内存模型
+# 二、Java内存模型
 
-### 运行时数据区域
+## 运行时数据区域
 
-#### Java虚拟机栈
+### Java虚拟机栈
 
 ![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/jvm-in-action/jvm-stack.png?raw=true)
 
-#### Java堆
+### Java堆
 
 java堆中的的Eden区可以划分出多个线程私有的缓冲区(Thread Local Allocation Buffer, TLAB)
 
-#### 方法区
+### 方法区
 
 ![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/jvm-in-action/marea17.png?raw=true)
 
 ![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/jvm-in-action/marea18.png?raw=true)
 
-#### 直接内存
+### 直接内存
 
 NIO是基于Channel和Buffer的I/O方式，直接用native方法分配native内存，通过DirectByteBuffer引用这块内存，避免了在java堆和native对之间复制数据
 
-#### 运行时常量池
+### 运行时常量池
 
 静态常量池中的内容，在类加载后会被存放到方法区的运行时常量池中；字符串常量池也存在运行时常量池之中，String.intern()会把new出来的字符串添加到常量池中
 
-### 对象内存分配
+## 对象内存分配
 
-#### 内存分配方式
+### 内存分配方式
 
 分配方式有`指针碰撞`和`空闲链表`，取决于Java堆是否规整也就是GC是否有压缩整理功能
 
 并发问题采用两种解决方式：CAS+失败重试、TLAB，优先使用TLAB
 
-#### 内存布局
+### 内存布局
 
 对象内存中包括三部分：对象头，实例数据和对齐填充
 
@@ -65,7 +65,7 @@ NIO是基于Channel和Buffer的I/O方式，直接用native方法分配native内�
 * 实例数据部分是对象真正存储的有效信息
 * Hotspot 虚拟机的自动内存管理系统要求对象起始地址必须是 8 字节的整数倍
 
-#### 内存引用
+### 内存引用
 
 ![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/jvm-in-action/object-handler.png?raw=true)
 
@@ -73,25 +73,27 @@ NIO是基于Channel和Buffer的I/O方式，直接用native方法分配native内�
 
 使用句柄来访问的最大好处是 reference 中存储的是稳定的句柄地址，在对象被移动时只会改变句柄中的实例数据指针，而 reference 本身不需要修改。使用直接指针访问方式最大的好处就是速度快，它节省了一次指针定位的时间开销。
 
-## 三、常见虚拟机参数
+# 三、常见虚拟机参数
 
-## 四、垃圾回收的概念与算法
+# 四、垃圾回收的概念与算法
 
-## 五、垃圾收集器和内存分配
+# 五、垃圾收集器和内存分配
 
-## 六、性能监控工具
+# 六、性能监控工具
 
-## 七、分析Java堆
+# 七、分析Java堆
 
-## 八、锁与并发
+# 八、锁与并发
 
-## 九、Class文件结构
+# 九、Class文件结构
 
-## 十、Class装载系统
+# 十、Class装载系统
 
 [笔记](https://note.youdao.com/ynoteshare/index.html?id=9cc3963222a194e90f1ac8a08ed7dd45&type=note&_time=1654517637002)
 
 ![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/jvm-in-action/life-cycle.png?raw=true)
+
+## 流程
 
 ### 触发
 
@@ -115,6 +117,13 @@ NIO是基于Channel和Buffer的I/O方式，直接用native方法分配native内�
 
 ![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/jvm-in-action/class-load.png?raw=true)
 
+加载类时，Java虚拟机必须完成一下工作：
+
+* 通过类的全名获取类的二进制数据流。
+* 解析类的二进制数据流为方法区内的数据结构。
+* 创建java.lang.Class类的实例，表示该类型。
+
+
 ### 链接
 
 #### 验证
@@ -131,27 +140,64 @@ NIO是基于Channel和Buffer的I/O方式，直接用native方法分配native内�
 
 #### 解析
 
+解析阶段是虚拟机将常量池内的符号引用替换为直接引用的过程，直接引用与虚拟机的内存布局直接相关
+
 ### 初始化
 
-解析阶段是虚拟机将常量池内的符号引用替换为直接引用的过程，
+初始化阶段的重要工作是执行类的初始化方法<clinit>。方法<clinit>是由编译器自动生成的，它是由类静态成员的赋值语句及static语句块共同产生的。
 
-### 10.1 class loader分类
-String.class.getClassLoader()
+<clinit>方法是带锁安全的，所以多线程下进行类初始化时，可能会引起死锁，如下面代码所示
+```
+class StaticA {
+    static {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+            Class.forName("org.example.StaticB");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        System.out.println("StaticA init ok!");
+    }
+}
 
-#### Bootstrap classLoader 
+class StaticB {
+    static {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+            Class.forName("org.example.StaticA");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        System.out.println("StaticB init ok!");
+    }
+}
+```
 
-启动类加载器 负责的目录如下:
+## 加载机制
+
+### 类加载器
+
+#### Bootstrap classLoader
+
+启动类加载器，负责的目录如下: 
 
 * 环境变量 classpath
 * -cp
 * 系统属性java.class.path
 
-#### ExtClassLoader 
-
+#### ExtClassLoader
 扩展类加载器 负责的目录如下:
 
 * %JAVA_HOME%/jre/lib/ext
-* 系统属性java.ext.dirs指定的类库
+*系统属性java.ext.dirs指定的类库
 
 #### AppClassLoader(SystemClassLoader)
 
@@ -161,16 +207,26 @@ String.class.getClassLoader()
 * -Xbootclasspath 参数指定的目录
 * 系统属性sun.boot.class.path
 
-#### 10.1.1 自定义ClassLoader 
+#### 自定义ClassLoader 
 
 自定义类加载器用于加载用户自定义路径下的类包
 
-### 双亲加载机制
+### 双亲委托模式
+
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/jvm-in-action/classloader.png?raw=true)
+
+String.class.getClassLoader()获取对应的类加载器，如果得到的是null，那么这个类的类加载器是启动类加载器
+
+查找和委托都是单向的，上层的ClassLoader无法访问下层的ClassLoader所加载的类。`getContextClassLoader()`和`setContextClassLoader(ClassLoader cl)`两个方法分别是取得设置在线程中的上下文加载器和设置一个线程的上下文加载器
+
+### 热替换
+
+两个不同ClassLoader加载同一个类，虚拟机内部会认为这两个类是完全不同的
 
 
 
 
 
-## 十一、字节码执行
+# 十一、字节码执行
 
 [cms](https://blog.csdn.net/wangyy130/article/details/88758055)
