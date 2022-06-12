@@ -223,7 +223,7 @@ String.class.getClassLoader()获取对应的类加载器，如果得到的是nul
 
 两个不同ClassLoader加载同一个类，虚拟机内部会认为这两个类是完全不同的
 
-
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/jvm-in-action/hotswap.png?raw=true)
 
 
 
