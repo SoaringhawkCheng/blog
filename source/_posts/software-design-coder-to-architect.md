@@ -1,5 +1,5 @@
 ---
-title: 「软件架构设计：程序员向架构师转型必备」读书笔记 [DOING]
+title: 「软件架构设计：程序员向架构师转型必备」读书笔记 [TODO]
 catalog: true
 date: 2022-05-27 20:18:08
 subtitle:
