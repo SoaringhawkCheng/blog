@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          「实战Java高并发程序设计&amp;Java并发实现原理」读书笔记 [DOING] - 读书笔记 | 小石匠
+        
+    </title>
+
+    <link rel="canonical" href="https://blog.soaringhawkcheng.tech/工程/java-concurrent-implement/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+<link rel="stylesheet" href="/css/beantech.min.css">
+
+
+    
+<link rel="stylesheet" href="/css/donate.css">
+
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/toc.css">
+
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/vintage/article.jpg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#language" title="language">language</a>
+                            
+                        </div>
+                        <h1>「实战Java高并发程序设计&amp;Java并发实现原理」读书笔记 [DOING]</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 小石匠 on
+                            2022-06-12
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">读书笔记</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <blockquote>
+<p>书籍豆瓣链接：<a target="_blank" rel="noopener" href="https://book.douban.com/subject/35013531/">《Java并发实现原理：JDK源码剖析》</a></p>
+<p>开始学习时间：</p>
+<p>预计完成时间：</p>
+<p>实际完成时间：</p>
+</blockquote>
+<h1><span id="一-线程基础">一、线程基础</span></h1>
+<h2><span id="11-线程状态机">1.1 线程状态机</span></h2>
+<p><img src="https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/java-concurrent-implement/thread-state.png?raw=true" alt></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/74295daa17c3">笔记</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/sufu1065/article/details/120170509">状态转换</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_41489022/article/details/113109184">2</a></p>
+<h2><span id="12-线程中止">1.2 线程中止</span></h2>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b5e0188f80a8">笔记</a></p>
+<p>stop、destroy之类的函数不建议使用，强制杀死线程，线程中所使用的资源如描述符和网络连接无法正常关闭，通过传递标志位来完成线程退出操作</p>
+<p>JVM中线程分为守护线程和非守护线程，所有非守护线程退出后，整个JVM进程就会退出</p>
+<h2><span id="13-线程通信">1.3 线程通信</span></h2>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/e54ab941a147">笔记</a></p>
+<h2><span id="synchronized">synchronized</span></h2>
+<h2><span id="wait与notify">wait与notify</span></h2>
+<h2><span id="14-线程封闭">1.4 线程封闭</span></h2>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/8d305f178685">笔记</a></p>
+<h2><span id="interrupt">interrupt</span></h2>
+<h2><span id="volatile关键字">volatile关键字</span></h2>
+<h1><span id="java内存模型">Java内存模型</span></h1>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/337ad6f11a6b">笔记</a></p>
+<p>JVM为了跨平台，实现了Java内存模型用来屏蔽掉各种硬件和操作系统的内存访问差异</p>
+<p>JMM的目标是定义程序中各个变量的访问规则，即在JVM中将变量从内存中取出和存入的底层细节</p>
+<p>JMM的关键技术点都是围绕多线程的原子性、可见性和有序性来建立的</p>
+<h2><span id="三个概念">三个概念</span></h2>
+<h3><span id="原子性">原子性</span></h3>
+<p>对于32位系统来说，long型数据的读写不是原子性的</p>
+<h3><span id="可见性">可见性</span></h3>
+<h4><span id="缓存一致性问题">缓存一致性问题</span></h4>
+<p><img src="https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/java-concurrent-implement/os-cache-model.webp?raw=true" alt></p>
+<p>如果一个变量在多个CPU中都存在缓存（一般在多线程编程时才会出现），那么就可能存在缓存不一致的问题</p>
+<p>为了解决缓存不一致性问题，通常来说有以下2种解决方法：</p>
+<ul>
+<li>通过在总线加LOCK锁，在锁住总线期间，其他CPU无法访问内存，导致效率低下</li>
+<li>通过缓存一致性协议</li>
+</ul>
+<p><img src="https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/java-concurrent-implement/cpu-cache-consistency.jpeg" alt></p>
+<h4><span id="缓存一致性协议">缓存一致性协议</span></h4>
+<p>缓存同步协议MESI，规定每条缓存有个状态位，定义了四种状态M、E、S和I</p>
+<p>单个CPU对缓存中数据进行了改动，需要通知给其他CPU；这意味着CPU不仅要控制自己的读写操作</p>
+<p>缓存一致性协议可以保证CPU缓存一致，但是对性能有很大的消耗，因此CPU的架构师在计算单元和L1之前又增加了 Store Buffer、Load Buffer。也就是说，往内存中写入一个变量，这个变量会保存在 Store Buffer 里面，稍后才异步写入L1中，同时同步写入主内存中</p>
+<p><img src="https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/java-concurrent-implement/cpu-cache-model.webp?raw=true" alt></p>
+<h3><span id="有序性">有序性</span></h3>
+<p><img src="https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/java-concurrent-implement/jmm-rerank.webp?raw=true" alt></p>
+<h4><span id="重排序">重排序</span></h4>
+<p>重排序分类：</p>
+<ul>
+<li>编译器重排序：对于没有先后依赖关系的语句，编译器可以重新调整语句的执行顺序</li>
+<li>CPU指令重排序：当CPU写缓存时发现缓存区块正在被其他CPU占用，为了提高CPU处理性能，可能将后面的读缓存命令优先执行</li>
+<li>CPU内存重排序：读写都是在 Load Buffer 和 Store Buffer 中完成的，缓存中的数据不会马上同步到主内存中去，因此数据同步到主内存中的顺序可能跟指令执行的顺序不一致，如下图所示</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/SoaringhawkCheng/blog/master/source/_posts/java-concurrent-implement/cpu-memory-rerank.webp" alt></p>
+<h4><span id="as-if-serial">as-if-serial</span></h4>
+<p>编译器和CPU只能保证每个线程的as-if-serial语义，即单线程程序的执行结果不能改变</p>
+<p>对于多线程场景，需要上层告知编译器和CPU是否可以重排序</p>
+<h4><span id="happen-before">happen-before</span></h4>
+<ul>
+<li>程序次序规则：一个线程内，按照代码顺序，书写在前面的操作先行发生于书写在后面的操作</li>
+<li>锁定规则：一个unLock操作先行发生于后面对同一个锁额lock操作</li>
+<li>volatile变量规则：对一个变量的写操作先行发生于后面对这个变量的读操作</li>
+<li>传递规则：如果操作A先行发生于操作B，而操作B又先行发生于操作C，则可以得出操作A先行发生于操作C</li>
+<li>线程启动规则：Thread对象的start()方法先行发生于此线程的每个一个动作</li>
+<li>线程中断规则：对线程interrupt()方法的调用先行发生于被中断线程的代码检测到中断事件的发生</li>
+<li>线程终结规则：线程中所有的操作都先行发生于线程的终止检测，我们可以通过Thread.join()方法结束</li>
+<li>Thread.isAlive()的返回值手段检测到线程已经终止执行</li>
+<li>对象终结规则：一个对象的初始化完成先行发生于他的finalize()方法的开始</li>
+</ul>
+<h2><span id="解决方案">解决方案</span></h2>
+<h2><span id="内存屏障">内存屏障</span></h2>
+<p>为了禁止编译器重排序和CPU重排序，在编译器和CPU层面都有内存屏障指令，也是JMM和happen-before规则的底层实现原理</p>
+<h3><span id="linux内核例子">Linux内核例子</span></h3>
+<p>kfifo.c源代码中RingBuffer</p>
+<p>在修改数据和更新指针之间，通过smp_wmb()插入了一个Store Barrier，从而确保两个操作：</p>
+<ul>
+<li>更新指针操作不会被重排到修改数据前</li>
+<li>数据的修改在更新指针前，已经完成Store Cache刷新，其他CPU可见</li>
+</ul>
+<h3><span id="jdk内存屏障">JDK内存屏障</span></h3>
+<p>读内存屏障loadfence：在指令前插入Load Barrier，可以让高速缓存中的数据失效，强制重新从主内存加载数据，让CPU缓存与主内存保持一致，避免缓存导致的一致性问题。</p>
+<p>写内存屏障writefence：在指令后插入Store Barrier，能让写入缓存中的最新数据更新写入主内存，让其他线程可见；当发生这种强制写入主内存的显式调用，CPU就不会处于性能优化考虑进行指令重排。</p>
+<p>fullfence：loadfence + writefence</p>
+<p><img src="https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/java-concurrent-implement/memory-barrier-instruct.webp?raw=true" alt></p>
+<h3><span id="volatile">volatile</span></h3>
+<h4><span id="功能">功能</span></h4>
+<ul>
+<li>64位写入的原子性：32位虚拟机下，long型变量的原子写入</li>
+<li>内存可见性：多线程数据强一致性，即写完之后会立即对其他线程可见</li>
+<li>禁止重排序：</li>
+</ul>
+<h4><span id="读写规则">读写规则</span></h4>
+<p>对一个volatile变量的单个读/写操作，与对一个普通变量的读/写操作使用同一个锁来同步，执行效果是相同的</p>
+<ul>
+<li>当写一个volatile时，JMM会把该线程对应的本地内存中的共享变量刷新到内存。</li>
+<li>当读一个volatile时，JMM会把该线程对应的本地内存中的共享变量置为无效，线程接下来将从主内存中读取共享变量</li>
+</ul>
+<h1><span id="sdk并发包">SDK并发包</span></h1>
+<p><img src="https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/java-concurrent-implement/concurrent-sdk-structure.webp?raw=true" alt></p>
+<h2><span id="atomic类">Atomic类</span></h2>
+<h1><span id="lock和condition">Lock和Condition</span></h1>
+<h2><span id="互斥锁">互斥锁</span></h2>
+<p>AbstractQueuedSynchronizer是用来构建锁或者其他同步组件的基础框架</p>
+<h3><span id="基本原理">基本原理</span></h3>
+<ul>
+<li>保存一个state变量标记该锁的状态，标识持有线程数量，对state变量的操作使用CAS保证线程安全</li>
+<li>记录当前持有锁的线程</li>
+<li>基于底层的park()和unpark()阻塞自己，或者唤醒线程</li>
+<li>使用一个线程安全的无锁队列维护所有的阻塞的线程</li>
+</ul>
+<h3><span id="无锁队列实现">无锁队列实现</span></h3>
+<p>双向链表，有head和tail指针</p>
+<p>入队流程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pred &#x3D; tail &#x2F;&#x2F; 获取tail的快照pred</span><br><span class="line">node.prev &#x3D; pred &#x2F;&#x2F; 新节点node的prev指向pred</span><br><span class="line">if (CAS(pred, node)) &#123; &#x2F;&#x2F; 如果tail&#x3D;&#x3D;pred，将tail设置为pred</span><br><span class="line">	pred.next&#x3D;node</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>出队流程：release中调用unparkProcessor，由于release会判断是否持有锁，所以不需要CAS</p>
+<h2><span id="读写锁">读写锁</span></h2>
+<h2><span id="condition">Condition</span></h2>
+<h1><span id="并发容器">并发容器</span></h1>
+<h1><span id="线程池与future">线程池与Future</span></h1>
+<h1><span id="forkjoinpool">ForkJoinPool</span></h1>
+<h1><span id="completefuture">CompleteFuture</span></h1>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/article/mysql-in-action-45/" data-toggle="tooltip" data-placement="top" title="mysql-in-action-45">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/工程/java-guide/" data-toggle="tooltip" data-placement="top" title="「Java Guide」学习笔记 [DOING]">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">一、线程基础</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">1.1 线程状态机</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">1.2 线程中止</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">1.3 线程通信</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">synchronized</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">wait与notify</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">1.4 线程封闭</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">interrupt</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.8.</span> <span class="toc-nav-text">volatile关键字</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Java内存模型</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">三个概念</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.1.1.</span> <span class="toc-nav-text">原子性</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.1.2.</span> <span class="toc-nav-text">可见性</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.1.2.1.</span> <span class="toc-nav-text">缓存一致性问题</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.1.2.2.</span> <span class="toc-nav-text">缓存一致性协议</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.1.3.</span> <span class="toc-nav-text">有序性</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.1.3.1.</span> <span class="toc-nav-text">重排序</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.1.3.2.</span> <span class="toc-nav-text">as-if-serial</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.1.3.3.</span> <span class="toc-nav-text">happen-before</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">解决方案</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">内存屏障</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.3.1.</span> <span class="toc-nav-text">Linux内核例子</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.3.2.</span> <span class="toc-nav-text">JDK内存屏障</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.3.3.</span> <span class="toc-nav-text">volatile</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.3.3.1.</span> <span class="toc-nav-text">功能</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.3.3.2.</span> <span class="toc-nav-text">读写规则</span></a></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">SDK并发包</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">Atomic类</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Lock和Condition</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">互斥锁</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">4.1.1.</span> <span class="toc-nav-text">基本原理</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">4.1.2.</span> <span class="toc-nav-text">无锁队列实现</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">读写锁</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">Condition</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">并发容器</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">线程池与Future</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">ForkJoinPool</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">CompleteFuture</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#language" title="language">language</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 
+                    2022 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    小石匠 
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://blog.soaringhawkcheng.tech/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://blog.soaringhawkcheng.tech/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
