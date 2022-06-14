@@ -23,6 +23,8 @@ categories:
 
 # 一、初探Java虚拟机
 
+[线程](https://www.jianshu.com/p/b0fc3d4bda5a)
+
 # 二、Java内存模型
 
 ## 运行时数据区域

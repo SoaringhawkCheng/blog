@@ -1,5 +1,5 @@
 ---
-title: 「Java并发实现原理」读书笔记 [DOING]
+title: 「实战Java高并发程序设计&Java并发实现原理」读书笔记 [DOING]
 catalog: true
 date: 2022-06-12 15:51:25
 subtitle:
@@ -18,27 +18,45 @@ categories:
 > 
 > 实际完成时间：
 
-# 一、多线程基础
+# 一、线程基础
 
-## 线程的优雅关闭
+## 1.1 线程状态机
 
 ![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/java-concurrent-implement/thread-state.png?raw=true)
+
+[笔记](https://www.jianshu.com/p/74295daa17c3)
+
+[状态转换](https://blog.csdn.net/sufu1065/article/details/120170509)
+
+[2](https://blog.csdn.net/weixin_41489022/article/details/113109184)
+
+## 1.2 线程中止
+
+[笔记](https://www.jianshu.com/p/b5e0188f80a8)
 
 stop、destroy之类的函数不建议使用，强制杀死线程，线程中所使用的资源如描述符和网络连接无法正常关闭，通过传递标志位来完成线程退出操作
 
 JVM中线程分为守护线程和非守护线程，所有非守护线程退出后，整个JVM进程就会退出
 
-## interrupt
+## 1.3 线程通信
 
-
+[笔记](https://www.jianshu.com/p/e54ab941a147)
 
 ## synchronized
 
 ## wait与notify
 
+## 1.4 线程封闭
+
+[笔记](https://www.jianshu.com/p/8d305f178685)
+
+## interrupt
+
 ## volatile关键字
 
 # Java内存模型
+
+[笔记](https://www.jianshu.com/p/337ad6f11a6b)
 
 JVM为了跨平台，实现了Java内存模型用来屏蔽掉各种硬件和操作系统的内存访问差异
 
@@ -46,15 +64,70 @@ JMM的目标是定义程序中各个变量的访问规则，即在JVM中将变�
 
 JMM的关键技术点都是围绕多线程的原子性、可见性和有序性来建立的
 
-## 可见性
+## 三个概念
+
+### 原子性
+
+对于32位系统来说，long型数据的读写不是原子性的
+
+### 可见性
+
+#### 缓存一致性问题
+
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/java-concurrent-implement/os-cache-model.webp?raw=true)
+
+如果一个变量在多个CPU中都存在缓存（一般在多线程编程时才会出现），那么就可能存在缓存不一致的问题
+
+为了解决缓存不一致性问题，通常来说有以下2种解决方法：
+
+* 通过在总线加LOCK锁，在锁住总线期间，其他CPU无法访问内存，导致效率低下
+* 通过缓存一致性协议
+
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/java-concurrent-implement/cpu-cache-consistency.jpeg)
+
+#### 缓存一致性协议
 
 缓存同步协议MESI，规定每条缓存有个状态位，定义了四种状态M、E、S和I
 
 单个CPU对缓存中数据进行了改动，需要通知给其他CPU；这意味着CPU不仅要控制自己的读写操作
 
-![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/java-concurrent-implement/?raw=true)
+缓存一致性协议可以保证CPU缓存一致，但是对性能有很大的消耗，因此CPU的架构师在计算单元和L1之前又增加了 Store Buffer、Load Buffer。也就是说，往内存中写入一个变量，这个变量会保存在 Store Buffer 里面，稍后才异步写入L1中，同时同步写入主内存中
 
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/java-concurrent-implement/cpu-cache-model.webp?raw=true)
 
+### 有序性
+
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/java-concurrent-implement/jmm-rerank.webp?raw=true)
+
+#### 重排序
+
+重排序分类：
+
+* 编译器重排序：对于没有先后依赖关系的语句，编译器可以重新调整语句的执行顺序
+* CPU指令重排序：当CPU写缓存时发现缓存区块正在被其他CPU占用，为了提高CPU处理性能，可能将后面的读缓存命令优先执行
+* CPU内存重排序：读写都是在 Load Buffer 和 Store Buffer 中完成的，缓存中的数据不会马上同步到主内存中去，因此数据同步到主内存中的顺序可能跟指令执行的顺序不一致，如下图所示
+
+![](https://raw.githubusercontent.com/SoaringhawkCheng/blog/master/source/_posts/java-concurrent-implement/cpu-memory-rerank.webp)
+
+#### as-if-serial
+
+编译器和CPU只能保证每个线程的as-if-serial语义，即单线程程序的执行结果不能改变 
+
+对于多线程场景，需要上层告知编译器和CPU是否可以重排序
+
+#### happen-before
+
+* 程序次序规则：一个线程内，按照代码顺序，书写在前面的操作先行发生于书写在后面的操作
+* 锁定规则：一个unLock操作先行发生于后面对同一个锁额lock操作
+* volatile变量规则：对一个变量的写操作先行发生于后面对这个变量的读操作
+* 传递规则：如果操作A先行发生于操作B，而操作B又先行发生于操作C，则可以得出操作A先行发生于操作C
+* 线程启动规则：Thread对象的start()方法先行发生于此线程的每个一个动作
+* 线程中断规则：对线程interrupt()方法的调用先行发生于被中断线程的代码检测到中断事件的发生
+* 线程终结规则：线程中所有的操作都先行发生于线程的终止检测，我们可以通过Thread.join()方法结束
+* Thread.isAlive()的返回值手段检测到线程已经终止执行
+* 对象终结规则：一个对象的初始化完成先行发生于他的finalize()方法的开始
+
+## 解决方案
 
 ## 内存屏障
 
@@ -71,11 +144,36 @@ kfifo.c源代码中RingBuffer
 
 ### JDK内存屏障
 
+读内存屏障loadfence：在指令前插入Load Barrier，可以让高速缓存中的数据失效，强制重新从主内存加载数据，让CPU缓存与主内存保持一致，避免缓存导致的一致性问题。
+
+写内存屏障writefence：在指令后插入Store Barrier，能让写入缓存中的最新数据更新写入主内存，让其他线程可见；当发生这种强制写入主内存的显式调用，CPU就不会处于性能优化考虑进行指令重排。
+
+fullfence：loadfence + writefence
+
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/java-concurrent-implement/memory-barrier-instruct.webp?raw=true)
+
+### volatile 
+
+#### 功能
+
+* 64位写入的原子性：32位虚拟机下，long型变量的原子写入
+* 内存可见性：多线程数据强一致性，即写完之后会立即对其他线程可见
+* 禁止重排序：
+
+#### 读写规则
+
+对一个volatile变量的单个读/写操作，与对一个普通变量的读/写操作使用同一个锁来同步，执行效果是相同的
+
+* 当写一个volatile时，JMM会把该线程对应的本地内存中的共享变量刷新到内存。
+* 当读一个volatile时，JMM会把该线程对应的本地内存中的共享变量置为无效，线程接下来将从主内存中读取共享变量
+
+# SDK并发包
+
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/java-concurrent-implement/concurrent-sdk-structure.webp?raw=true)
+
+## Atomic类
 
 
-
-
-# Atomic类
 
 # Lock和Condition
 ## 互斥锁
