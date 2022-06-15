@@ -173,21 +173,47 @@ fullfence：loadfence + writefence
 
 ## Atomic类
 
+### 线程安全机制
 
+* 等待唤醒机制：当长时间都无法抢到锁的时候，还是将线程挂起，然后等待唤醒的好。因为等待和唤醒牵扯到线程挂起和切换，会导致从用户态到内核态的切换，并且线程切换会导致上下文的切换，现场保存什么的，会比较浪费资源
+* 自旋CAS：当短时间内就可以获取到锁的时候，自旋CAS比较合适，短时间的自旋CAS肯定会比线程切换消耗的资源要少，如果要是时间长的话，就不太划算了，因为自旋CAS会一直占用CPU
 
-# Lock和Condition
-## 互斥锁
+### atomic类型
+
+unsafe提供了三种类型的cas操作：int，long，object
+
+对应的基本类型有AtomicInteger、AtomicBoolean、AtomicLong、AtomicReference和Atomic{type}Array
+
+AtomicStampedReference通过引入时间戳来解决了ABA问题。每次要更新值的时候，需要额外传入oldStamp和newStamp，将对象和stamp包装成了一个Pair对象
+
+Atomic{type}Updater用来修改实例对象中的属性的值的，被修改变量必须用volatile修饰
+
+### 高并发原子累加器striped64
+
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/java-concurrent-implement/long-addr-1.png?raw=true)
+
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/java-concurrent-implement/long-addr-2.png?raw=true)
+
+多线程对变量进行CAS，高并发场景下仍不够快，将long拆成base和cells，求和的时候并不加锁，只能保证最终一致性
+
+{type}Addr进行累加，{type}Accumulator可以定义二元操作符
+
+## Lock和Condition
+
+### 基本原理
 
 AbstractQueuedSynchronizer是用来构建锁或者其他同步组件的基础框架
 
-### 基本原理
+#### 核心要素
+
+锁有以下核心要素：
 
 * 保存一个state变量标记该锁的状态，标识持有线程数量，对state变量的操作使用CAS保证线程安全
 * 记录当前持有锁的线程
 * 基于底层的park()和unpark()阻塞自己，或者唤醒线程
 * 使用一个线程安全的无锁队列维护所有的阻塞的线程
 
-### 无锁队列实现
+#### 阻塞队列实现
 
 双向链表，有head和tail指针
 
@@ -203,14 +229,57 @@ if (CAS(pred, node)) { // 如果tail==pred，将tail设置为pred
 
 出队流程：release中调用unparkProcessor，由于release会判断是否持有锁，所以不需要CAS
 
+### 锁操作分类
+
+公平性和非公平性：公平锁先排队，非公平锁先cas锁的state，默认为非公平锁
+
+可中断锁和不可中断锁：不可中断锁会记录阻塞期间是否有中断信号，锁唤醒后返回中断状态处理；可中断锁，阻塞时收到信号会直接抛出异常
+
+tryLock：非公平锁的一种，但是cas锁的state，如果失败就会返回不会轮询
+
+读写锁：将state分为高低位，分别保存写锁和读锁state
+
+### Condition
+
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/java-concurrent-implement/lock-condition.png?raw=true)
+
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/java-concurrent-implement/condition-await.png?raw=true)
+
+从队列（同步队列和等待队列）的角度看await()方法，当调用await()方法时，相当于同步队列的首节点（获取了锁的节点）移动到Condition的等待队列中
+
+![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/java-concurrent-implement/condition-signal.png?raw=true)
+
+调用Condition的signal()方法，将会唤醒在等待队列中等待时间最长的节点（首节点），在唤醒节点之前，会将节点移到同步队列中
+
+## 同步工具类
 
 
-## 读写锁
 
-## Condition
+## 并发容器
+
+### BlockingQueue
+
+ArrayBlockingQueue：数组实现的环形队列，一个lock两个condition
+
+LinkedBlockingQueue：单向链表，FIFO，两个lock和两个condition
+
+PriorityBlockingQueue：底层最小二叉堆，并实现compare接口
+
+DelayQueue：底层是PriorityQueue（非线程安全），一个lock一个condition，时间堆
+
+SynchronousQueue：基于TransferQueue（公平模式）和TransferStack（非公平），底层是单向链表
+
+LinkedBlockingDeque：双向链表，支持双端队列操作接口
+
+### ConcurrentHashMap
+
+使用红黑树，加锁粒度是头结点，并发扩容
+
+[扩容机制](https://blog.csdn.net/Mind_programmonkey/article/details/111035223)
+
+### ConcurrentSkipListMap
 
 
-# 并发容器
 
 # 线程池与Future 
 

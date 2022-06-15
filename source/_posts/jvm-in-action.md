@@ -79,6 +79,8 @@ NIO是基于Channel和Buffer的I/O方式，直接用native方法分配native内�
 
 # 四、垃圾回收的概念与算法
 
+[](http://www.voycn.com/article/guanyugcxiacmsheg1gcdebijiao)
+
 # 五、垃圾收集器和内存分配
 
 # 六、性能监控工具
