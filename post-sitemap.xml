@@ -9,6 +9,14 @@
 
 
     <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/java-concurrent-implement/</loc>
+        <lastmod>2022-06-24T15:03:40.092Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/system-design-40-answers-2/</loc>
         <lastmod>2022-06-24T14:49:58.253Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -43,14 +51,6 @@
     <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/jvm-in-action/</loc>
         <lastmod>2022-06-20T05:29:33.830Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/java-concurrent-implement/</loc>
-        <lastmod>2022-06-20T03:46:58.413Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -163,14 +163,6 @@
     <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/git-flow/</loc>
         <lastmod>2022-05-30T05:36:45.517Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/principle-of-jdk-concurrency-impl/</loc>
-        <lastmod>2022-05-30T04:37:33.540Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
