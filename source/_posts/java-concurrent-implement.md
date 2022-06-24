@@ -1,5 +1,5 @@
 ---
-title: 「实战Java高并发程序设计&Java并发实现原理」读书笔记 [DOING]
+title: 「Java并发实现原理：JDK源码剖析」读书笔记 [DOING]
 catalog: true
 date: 2022-06-12 15:51:25
 subtitle:

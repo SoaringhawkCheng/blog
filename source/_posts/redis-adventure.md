@@ -18,3 +18,4 @@ categories:
 > 
 > 实际完成时间：
 
+redis占用内存评估
