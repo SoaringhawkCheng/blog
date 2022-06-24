@@ -3,22 +3,29 @@
 
 
     <url>
-        <loc>https://blog.soaringhawkcheng.tech/tags/language/</loc>
-        <lastmod>2022-06-14T15:12:55.998Z</lastmod>
+        <loc>https://blog.soaringhawkcheng.tech/tags/architecture/</loc>
+        <lastmod>2022-06-24T14:49:58.253Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/tags/storage/</loc>
+        <lastmod>2022-06-24T09:24:37.593Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://blog.soaringhawkcheng.tech/tags/os/</loc>
-        <lastmod>2022-06-13T15:48:04.582Z</lastmod>
+        <lastmod>2022-06-20T05:29:33.830Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://blog.soaringhawkcheng.tech/tags/architecture/</loc>
-        <lastmod>2022-06-13T08:46:12.054Z</lastmod>
+        <loc>https://blog.soaringhawkcheng.tech/tags/language/</loc>
+        <lastmod>2022-06-20T03:46:58.413Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -26,13 +33,6 @@
     <url>
         <loc>https://blog.soaringhawkcheng.tech/tags/interview/</loc>
         <lastmod>2022-06-10T07:38:57.007Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/tags/storage/</loc>
-        <lastmod>2022-06-07T08:58:21.009Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

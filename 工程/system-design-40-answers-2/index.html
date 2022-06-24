@@ -238,49 +238,6 @@
 <p>预计完成时间：</p>
 <p>实际完成时间：</p>
 </blockquote>
-<h1><span id="四-消息队列">四、消息队列</span></h1>
-<h2><span id="41-如何处理大量写请求">4.1 如何处理大量写请求</span></h2>
-<p>异步处理、解耦合和削峰填谷 是消息队列在秒杀系统设计中起到的主要作用</p>
-<h2><span id="42处理消息丢失">4.2处理消息丢失</span></h2>
-<h3><span id="421-消息生产阶段">4.2.1 消息生产阶段</span></h3>
-<p>使用重传，重试次数2-3次，但仍然有丢失的风险</p>
-<h3><span id="422-消息队列阶段">4.2.2 消息队列阶段</span></h3>
-<p>为减少磁盘的随机I/O，会将消息写入操作系统的Page Cache中，然后异步刷入磁盘，这样会造成未持久化宕机造成的消息丢失</p>
-<p>redis集群有leader提供消息写入和消费，多个follower负责数据的备份，leader故障就从follower的ISR选主</p>
-<p>如果需要确保消息不丢失，生产者需要设置<code>acks=all</code>，每一条消息必须得到所有Leader和ISR确认才会被认为发送成功</p>
-<h3><span id="423-消费过程阶段">4.2.3 消费过程阶段</span></h3>
-<p>一定要等到消息接收和处理完成后才能更新消费进度，但是这也会造成消息重复的问题</p>
-<h2><span id="43-如何保证消息只被消息一次">4.3 如何保证消息只被消息一次</span></h2>
-<p>想要完全的避免消息重复的发生是很难做到的，只能保证在消息的生产和消费的过程是幂等的</p>
-<h3><span id="431-消息不重复生产">4.3.1 消息不重复生产</span></h3>
-<p>给每一个生产者一个唯一的 ID，并且为生产的每一条消息赋予一个唯一 ID，消息队列的服务端会存储<code>&lt;生产者 ID，最后一条消息ID&gt;</code>的映射，丢失重复消息</p>
-<h3><span id="432-消费端">4.3.2 消费端</span></h3>
-<p>通过版本号，发送消息查询版本号，消费后增加版本号，丢弃低版本号消息</p>
-<h2><span id="44-如何降低消息队列系统消息的延迟">4.4 如何降低消息队列系统消息的延迟</span></h2>
-<h3><span id="441-监控消息延迟">4.4.1 监控消息延迟</span></h3>
-<p>Kakfa 的一个专门的 topic 叫 <code>__consumer_offsets</code>，Kafka 安装包的 bin 目录下有个工具<code>kafka-consumer-groups.sh</code>，可以查看消息消费情况</p>
-<h3><span id="442-优化消息延迟">4.4.2 优化消息延迟</span></h3>
-<h4><span id="4421-消费端">4.4.2.1 消费端</span></h4>
-<ol>
-<li>
-<p>提升consumer代码性能</p>
-</li>
-<li>
-<p>一个partition对应一个consumer，否则需要加锁。consumer创建一个线程池，一次拉取多条消息，分配给多个线程处理</p>
-</li>
-<li>
-<p>客户端拉取消息，采用递增步长，10ms拉不到，下次20ms，20ms拉不到下次100ms</p>
-</li>
-</ol>
-<h4><span id="4422-消息队列">4.4.2.2 消息队列</span></h4>
-<ol>
-<li>
-<p>数据库写入qps只能到千级别，消息存储使用本地磁盘而不是数据库，page cache可以提升读取速度，因为消息读取是顺序的</p>
-</li>
-<li>
-<p>零拷贝，sendfile直接将数据从内核缓冲区拷贝到socket缓冲区，不经过用户缓冲区</p>
-</li>
-</ol>
 <h1><span id="五-分布式服务">五、分布式服务</span></h1>
 <h2><span id="51-每秒1w次请求的系统需要服务化拆分嘛">5.1 每秒1w次请求的系统需要服务化拆分嘛</span></h2>
 <h3><span id="511-一体化架构的痛点">5.1.1 一体化架构的痛点</span></h3>
@@ -447,11 +404,191 @@
 <li>Grafana链接时序数据库，绘制报表</li>
 </ul>
 <h2><span id="62-性能管理">6.2 性能管理</span></h2>
+<p>应用性能管理（Application Performance Management，简称 APM）。服务端监控的核心关注点是后端服务的性能和可用性，而应用性能管理的核心关注点是终端用户的使用体验，也就是你需要衡量，从客户端请求发出开始，到响应数据返回到客户端为止，这个端到端的整体链路上的性能情况。</p>
+<h3><span id="621-如何搭建apm系统">6.2.1 如何搭建APM系统</span></h3>
+<ul>
+<li>数据采集：客户单sdk采集信息并并定期上报</li>
+<li>数据存储：类似工作中遇到的客户端埋点格式</li>
+<li>数据展示：与服务端监控一样</li>
+</ul>
+<h3><span id="622-如何采取网络数据">6.2.2 如何采取网络数据</span></h3>
+<p>安卓一般会使用 OkHttpClient 来请求接口数据，而 OkHttpClient 提供了 EventListner 接口，可以让调用者接收到网络请求事件，可以得出一次请求过程中，经历的一系列过程的时间，其中主要包括下面几项：</p>
+<ul>
+<li>等待时间：请求会首先缓存在本地的队列里面，由专门的 I/O 线程负责，那么在 I/O 线程真正处理请求之前，会有一个等待的时间</li>
+<li>DNS 时间</li>
+<li>握手时间</li>
+<li>SSL 时间</li>
+<li>发送时间</li>
+<li>首包时间</li>
+<li>包接收时间</li>
+</ul>
 <h2><span id="63-压力测试">6.3 压力测试</span></h2>
+<h3><span id="如何搭建全链路压测平台">如何搭建全链路压测平台</span></h3>
+<p>全链路压测平台需要包含以下几个模块:</p>
+<ul>
+<li>流量构造和产生模块</li>
+<li>压测数据隔离模块</li>
+<li>系统健康度检查和压测流量干预模块</li>
+</ul>
+<p><img src="https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/system-design-40-answers-2/stress.jpg?raw=true" alt></p>
+<h3><span id="631-压测数据产生">6.3.1 压测数据产生</span></h3>
+<p>入口流量是来自于客户端的 HTTP 请求，拷贝一份存储在像是 HBase、MongoDB 这些 NoSQL 存储组件，或者亚马逊 S3 这些云存储服务中，我们称之为 流量数据工厂</p>
+<p>拷贝方式：</p>
+<ul>
+<li>直接拷贝负载均衡服务器的访问日志，数据就以文本的方式写入到流量数据工厂中</li>
+<li>流量拷贝工具 GoReplay，它可以劫持本机某一个端口的流量，将它们记录在文件中</li>
+</ul>
+<p>需要对 压测流量染色，也就是增加压测标记。在实际项目中，我会在 HTTP 的请求头中增加一个标记项，比如说叫做 is stress test</p>
+<h3><span id="632-数据如何隔离">6.3.2 数据如何隔离</span></h3>
+<h4><span id="6321-读取请求下行流量">6.3.2.1 读取请求（下行流量）</span></h4>
+<p>对压测产生的用户行为，做特殊处理，不再记录到大数据日志中</p>
+<p>一些推荐服务，展示过的商品就不再会被推荐出来，需要Mock 这些推荐服务</p>
+<h4><span id="6322-写入请求上行流量">6.3.2.2 写入请求（上行流量）</span></h4>
+<p>把压测流量产生的数据，写入到影子库，针对不同的存储类型，我们会使用不同的影子库的搭建方式：</p>
+<ul>
+<li>MySQL：同一个MySQL不同的Schema中创建一套和线上相同的库表结构，并导入线上数据</li>
+<li>Redis：对压测流量产生的数据，增加一个统一前缀，存储在相同实例中</li>
+<li>ES：放在另一个索引表</li>
+</ul>
+<h3><span id="633-压力测试如何实施">6.3.3 压力测试如何实施</span></h3>
+<p>而是按照一定的步长，逐渐地增加流量。在增加一次流量之后，让系统稳定运行一段时间，观察系统在性能上的表现。如果发现依赖的服务或者组件出现了瓶颈，回退到上一次压测的 QPS，保证服务的稳定，再针对此服务或者组件进行扩容，然后再继续增加流量压测。</p>
 <h2><span id="64-配置管理">6.4 配置管理</span></h2>
+<h3><span id="641-配置管理的方式">6.4.1 配置管理的方式</span></h3>
+<p>管理配置的方式主要有两种：</p>
+<ul>
+<li>
+<p>一种是通过配置文件来管理；基础组件如Tomcat、Nginx都用这种方式管理配置项</p>
+</li>
+<li>
+<p>另一种是使用配置中心来管理；</p>
+</li>
+</ul>
+<h3><span id="642-配置中心如何实现">6.4.2 配置中心如何实现</span></h3>
+<h4><span id="6421-配置信息如何存储">6.4.2.1 配置信息如何存储</span></h4>
+<p>Etcd 作为存储组件，支持存储全局配置、机房配置和节点配置。其中，节点配置优先级高于机房配置，机房配置优先级高于全局配置。也就是说，我们会优先读取节点的配置，如果节点配置不存在，再读取机房配置，最后读取全局配置</p>
+<h4><span id="6422-变更推送如何实现">6.4.2.2 变更推送如何实现</span></h4>
+<ul>
+<li>一种是轮询查询的方式；使用MD5，先轮询MD5，不一致再拉取最新配置</li>
+<li>一种是长连推送的方式；配置中心服务端保存每个连接关注的配置项列表，配置中心感知到配置变化后，就可以通过这个连接，把变更的配置推送给客户端</li>
+</ul>
+<h4><span id="6423-如何保证配置中心高可用">6.4.2.3 如何保证配置中心高可用</span></h4>
+<p>核心是配置中心「旁路化」，配置中心宕机不影响启动</p>
+<p>我们一般会在配置中心的客户端上，增加两级缓存：第一级缓存是内存的缓存；另外一级缓存是文件的缓存</p>
+<p>客户端会同时把配置信息同步地写入到内存缓存，异步地写入到文件缓存中</p>
+<p>内存缓存的作用是降低客户端和配置中心的交互频率，文件的缓存的作用就是灾备</p>
 <h2><span id="65-降级熔断">6.5 降级熔断</span></h2>
+<p>性能问题和隐患主要归结为两大类：</p>
+<ul>
+<li>依赖的资源或者服务不可用，最终导致整体服务宕机。解决思路是「降级」和「熔断」</li>
+<li>当有超过系统承载能力的流量到来时，系统不堪重负，从而出现拒绝服务的情况。解决思路是「限流」</li>
+</ul>
+<h3><span id="651-雪崩是如何发生的">6.5.1 雪崩是如何发生的</span></h3>
+<p>某一个服务或者组件宕机也许只会影响系统的部分功能，但它响应一慢，就会出现雪崩拖垮整个系统</p>
+<p>解决的思路就是在检测到某一个服务的响应时间出现异常时，切断调用它的服务与它之间的联系，让服务的调用快速返回失败，从而释放这次请求持有的资源</p>
+<h3><span id="652-熔断机制是如何做的">6.5.2 熔断机制是如何做的</span></h3>
+<p>断路器模式，服务调用方为每个调用的服务维护一个有限状态机，在关闭（调用远程服务）、半打开（尝试调用远程服务）和打开（返回错误）状态间相互转换</p>
+<h3><span id="653-降级机制要如何做">6.5.3 降级机制要如何做</span></h3>
+<p>特指开关降级，熔断和限流其实也是降级的一种</p>
+<p>代码中预先埋设一些开关，写入到配置中心中</p>
+<p>设计开关降级预案的时候，首先要区分哪些是核心服务，哪些是非核心服务 。因为我们只能针对非核心服务来做降级处理</p>
+<p>实现策略有：</p>
+<ul>
+<li>读场景：直接返回降级数据，比如缓存替代数据库数据</li>
+<li>轮询场景：问降低获取数据的频率；</li>
+<li>写场景：同步写转换成异步写</li>
+</ul>
 <h2><span id="66-流量控制">6.6 流量控制</span></h2>
+<h4><span id="661-固定窗口算法">6.6.1 固定窗口算法</span></h4>
+<p>记录每秒钟访问次数，启动一个定时器定期重置计数</p>
+<p>无法处理临界时间点上突发流量无法控制的问题</p>
+<h4><span id="662-滑动窗口">6.6.2 滑动窗口</span></h4>
+<p>将时间的窗口划分为多个小窗口，每个小窗口中都有单独的请求计数，计算区间的总请求量对比阈值</p>
+<p>要存储每个小的时间窗口内的计数，所以空间复杂度有所增加</p>
+<h4><span id="663-漏桶算法">6.6.3 漏桶算法</span></h4>
+<p>流量会进入和暂存到漏桶里面，而漏桶的出口处会按照一个固定的速率将流量漏出到接收端，流出的流量都会变得比较平滑</p>
+<p>一般会使用消息队列作为漏桶的实现，流量首先被放入到消息队列中排队，由固定的几个队列处理程序来消费流量，如果消息队列中的流量溢出，那么后续的流量就会被拒绝</p>
+<h4><span id="664-令牌桶算法">6.6.4 令牌桶算法</span></h4>
+<p>算法原理：一秒内限制访问次数为 N 次，那么就每隔 1/N 的时间，往桶内放入一个令牌，处理请求之前先要从桶中获得一个令牌，如果桶中已经没有了令牌，那么就需要等待新的令牌或者直接拒绝服务</p>
+<p>一般会使用 Redis 来存储这个令牌的数量。这样的话，每次请求的时候都需要请求一次 Redis 来获取一个令牌，会增加几毫秒的延迟，性能上会有一些损耗。 因此，一个折中的思路是： 我们可以在每次取令牌的时候，不再只获取一个令牌，而是获取一批令牌，这样可以尽量减少请求 Redis 的次数</p>
 <h1><span id="七-实战篇">七、实战篇</span></h1>
+<h2><span id="71-微博计数系统设计">7.1 微博计数系统设计</span></h2>
+<p><a target="_blank" rel="noopener" href="http://t.zoukankan.com/wt645631686-p-13878284.html">haha</a></p>
+<h3><span id="711-业务特点">7.1.1 业务特点</span></h3>
+<ul>
+<li>数据量巨大</li>
+<li>访问量巨大，性能要求高</li>
+<li>可用性、数字准确性要求高</li>
+</ul>
+<h3><span id="712-高并发如何设计">7.1.2 高并发如何设计</span></h3>
+<h4><span id="7121-mysql方案">7.1.2.1 MySQL方案</span></h4>
+<p>本着 KISS（Keep It Simple and Stupid）原则，流量不大的时候使用 MySQL 存储计数的数据</p>
+<p>MySQL 数据库单表的存储量级达到几千万的时候，性能上就会有损耗，考虑使用分库分表的方式分散数据量，提升写计数的性能</p>
+<p>数据库已经完全不能承担如此高的并发量，使用数据库主从结构，结合Redis加速读请求</p>
+<h4><span id="7122-redis方案">7.1.2.2 Redis方案</span></h4>
+<p>数据库+缓存的方式有一个弊端：无法保证数据一致性，可以直接使用Redis作为计数的存储组件</p>
+<p>可以通过批量处理消息的方式进一步减小 Redis 的写压力，使用消息队列来削峰填谷</p>
+<h3><span id="713-降低存储成本">7.1.3 降低存储成本</span></h3>
+<p>如何在有限的存储成本下实现对于全量计数数据的存取</p>
+<h4><span id="7131-原生数据结构改造">7.1.3.1 原生数据结构改造</span></h4>
+<p>Redis 在存储 Key 时是按照字符串类型来存储的，比如一个 8 字节的 Long 类型的数据，需要8（sdshdr数据结构）+19（0字节数字长度）+ 1（\0） = 28 字节，改成使用Long类型存储只需要8字节，节省20字节</p>
+<p>去除Redis中斗鱼指针，存储一个KV只需要8+4=12字节</p>
+<h4><span id="7132-优化内存使用">7.1.3.2 优化内存使用</span></h4>
+<p>微博计数的数据具有明显的热点属性，为了尽量减少服务器的使用，我们考虑给计数服务增加 SSD 磁盘，然后将时间上比较久远的数据 dump 到磁盘上</p>
+<p>读取冷数据的时候，使用单独的 I/O 线程异步地将冷数据从 SSD 磁盘中加载到一块儿单独的 Cold Cache（冷缓存） 中</p>
+<h2><span id="72-未读数系统设计">7.2 未读数系统设计</span></h2>
+<h3><span id="721-系统通知的未读数设计">7.2.1 系统通知的未读数设计</span></h3>
+<p>未读数：系统通知存储在大列表中，对所有用户共享。每个人根据看过的最后一条消息ID，计算大列表中这个ID后面有多少消息</p>
+<p>小红点：为每一个用户存储一个时间戳，代表最近点过这个红点的时间。也记录一个全局的时间戳，只需要判断用户的时间戳和全局时间戳的大小</p>
+<h3><span id="722-信息流未读数设计">7.2.2 信息流未读数设计</span></h3>
+<h4><span id="7221-复杂原因">7.2.2.1 复杂原因</span></h4>
+<p>信息流的未读数之所以复杂主要有这样几点原因：</p>
+<ul>
+<li>微博的信息流是基于关注关系的，未读数也是基于关注关系的，如果处理大V的关注关系是个问题</li>
+<li>信息流未读数请求量极大、并发极高，这是因为接口是客户端轮询请求的</li>
+<li>不像系统通知那样有共享的存储，因为每个人的关注点不同，信息流的列表不同</li>
+</ul>
+<h4><span id="7222-设计方案">7.2.2.2 设计方案</span></h4>
+<p>承接每秒几十万次请求的信息流未读数系统：</p>
+<ul>
+<li>通用计数器中记录每一个用户发布的博文数</li>
+<li>Redis 或者 Memcached 中记录一个人所有关注人的博文数快照</li>
+<li>当用户点击未读消息重置未读数为 0 时，将他关注所有人的博文数刷新到快照中</li>
+<li>关注所有人的博文总数减去快照中的博文总数就是他的信息流未读数</li>
+</ul>
+<p>方案的缺陷，都是可以接受的：</p>
+<ul>
+<li>关注关系变更的时候更新不及时，那么就会造成未读数不准确</li>
+<li>全缓存存储，缓存满了可以剔除一部分数据</li>
+</ul>
+<h4><span id="7223-案例启发">7.2.2.3 案例启发</span></h4>
+<ul>
+<li>缓存是提升系统性能和抵抗大并发量的神器，微博团队仅仅用 16 台普通的服务器就支撑了每秒接近 50 万次的请求</li>
+<li>围绕系统设计的关键困难点想解决办法</li>
+<li>分析业务场景，明确哪些是可以权衡的；比如对于长久不登录用户，我们就会记录未读数为 0</li>
+</ul>
+<h2><span id="73-通用信息流设计">7.3 通用信息流设计</span></h2>
+<p><a target="_blank" rel="noopener" href="https://www.infoq.cn/article/t0qlhfk7uxxzwo0uo*9s">参考文档</a></p>
+<h3><span id="731-业务特点">7.3.1 业务特点</span></h3>
+<p>业务关注点：</p>
+<ul>
+<li>关注延迟数据，信息更新速度</li>
+<li>如何支撑高并发的访问</li>
+<li>信息流拉取性能直接影响用户的使用体验</li>
+</ul>
+<p>一般来说有两个思路：一个是基于推模式，另一个是基于拉模式</p>
+<h3><span id="732-推模式">7.3.2 推模式</span></h3>
+<h4><span id="7321-设计思路">7.3.2.1 设计思路</span></h4>
+<p>给每一个用户都维护一份发件箱和收件箱，新消息写入发件箱消息队列，然后往所有关注着收件箱写消息，执行扩散往</p>
+<h4><span id="7322-存在问题">7.3.2.2 存在问题</span></h4>
+<p>可以定期地清理数据，比如只保留最近 1 个月的数据</p>
+<p>问题</p>
+<p>推模式会遇到扩展性的问题，比如引入了分组，那么新微博要发送到同一个用户的多个收件箱</p>
+<h3><span id="733-拉模式">7.3.3 拉模式</span></h3>
+<h4><span id="7331-设计思路">7.3.3.1 设计思路</span></h4>
+<h4><span id="7332-存在问题">7.3.3.2 存在问题</span></h4>
+<p>需要对多个发件箱的数据做聚合，这个查询和聚合的成本比较高</p>
+<p>缓存节点的带宽成本比较高</p>
+<h3><span id="734-推拉结合">7.3.4 推拉结合</span></h3>
 
                 
 
@@ -521,7 +658,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">四、消息队列</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">4.1 如何处理大量写请求</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">4.2处理消息丢失</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">4.2.1 消息生产阶段</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">4.2.2 消息队列阶段</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">4.2.3 消费过程阶段</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">4.3 如何保证消息只被消息一次</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">4.3.1 消息不重复生产</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">4.3.2 消费端</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">4.4 如何降低消息队列系统消息的延迟</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">4.4.1 监控消息延迟</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">4.4.2 优化消息延迟</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.4.2.1.</span> <span class="toc-nav-text">4.4.2.1 消费端</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.4.2.2.</span> <span class="toc-nav-text">4.4.2.2 消息队列</span></a></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">五、分布式服务</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">5.1 每秒1w次请求的系统需要服务化拆分嘛</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.1.1.</span> <span class="toc-nav-text">5.1.1 一体化架构的痛点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.1.2.</span> <span class="toc-nav-text">5.1.2 如何使用微服务化解决这些痛点</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">5.2 微服务化后，系统架构如何改造</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.2.1.</span> <span class="toc-nav-text">5.2.1 微服务拆分原则</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.2.2.</span> <span class="toc-nav-text">5.2.2 微服务化带来的问题和解决思路</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.2.2.1.</span> <span class="toc-nav-text">5.2.2.1 服务间的调用变成进程间的网络调用</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.2.2.2.</span> <span class="toc-nav-text">5.2.2.2 服务间依赖关系错综复杂</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.2.2.3.</span> <span class="toc-nav-text">5.2.2.3 调用链路问题定位</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">5.3 实现支持10w QPS的RPC框架</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.3.1.</span> <span class="toc-nav-text">5.3.1 网络传输优化</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.3.2.</span> <span class="toc-nav-text">5.3.2 合适的序列化方式</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">5.4 注册中心：分布式系统如何寻址</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.4.1.</span> <span class="toc-nav-text">5.4.1 Nginx反向代理与注册中心</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.4.2.</span> <span class="toc-nav-text">5.4.2 如何做服务管理</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.5.</span> <span class="toc-nav-text">5.5 分布式Trace</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.6.</span> <span class="toc-nav-text">5.6 负载均衡</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.6.1.</span> <span class="toc-nav-text">5.6.1 负载均衡种类</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.6.1.1.</span> <span class="toc-nav-text">5.6.1.1 代理类负载均衡服务</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.6.1.2.</span> <span class="toc-nav-text">5.6.1.2 客户端负载均衡服务</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.6.2.</span> <span class="toc-nav-text">5.6.2 负载均衡策略</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.6.2.1.</span> <span class="toc-nav-text">5.6.2.1 静态策略</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.6.2.2.</span> <span class="toc-nav-text">5.6.2.2 动态策略</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.6.3.</span> <span class="toc-nav-text">5.6.3 使用Nginx进行负载均衡</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.6.3.1.</span> <span class="toc-nav-text">5.6.3.1 负载均衡配置</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.6.3.2.</span> <span class="toc-nav-text">5.6.3.2 感知节点故障</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.6.3.3.</span> <span class="toc-nav-text">5.6.3.3 感知节点新增节点</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.7.</span> <span class="toc-nav-text">5.7 API网关</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.7.1.</span> <span class="toc-nav-text">5.7.1 API网关的作用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.7.1.1.</span> <span class="toc-nav-text">5.7.1.1 入口网关</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.7.1.2.</span> <span class="toc-nav-text">5.7.1.2 出口网关</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.7.2.</span> <span class="toc-nav-text">5.7.2 TODO</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.8.</span> <span class="toc-nav-text">5.8 多机房部署</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.8.1.</span> <span class="toc-nav-text">5.8.1 部署方案</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.8.2.</span> <span class="toc-nav-text">5.8.2 数据传输时延迟</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.8.3.</span> <span class="toc-nav-text">5.8.3 业务方案选型</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.8.3.1.</span> <span class="toc-nav-text">5.8.3.1 同城双活</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.8.3.2.</span> <span class="toc-nav-text">5.8.3.2 异地多活</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.9.</span> <span class="toc-nav-text">5.9 ServiceMesh</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.9.1.</span> <span class="toc-nav-text">5.9.1 sidecar</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.9.2.</span> <span class="toc-nav-text">5.9.2 Istio</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">六、维护</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">6.1 服务端监控</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.1.1.</span> <span class="toc-nav-text">6.1.1 监控指标</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.1.2.</span> <span class="toc-nav-text">6.1.2 如何采集</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.1.2.1.</span> <span class="toc-nav-text">6.1.2.1 Agent</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.1.2.2.</span> <span class="toc-nav-text">6.1.2.2 代码埋点</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.1.2.3.</span> <span class="toc-nav-text">6.1.2.3 日志</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.1.3.</span> <span class="toc-nav-text">6.1.3 监控数据处理和存储</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.1.3.1.</span> <span class="toc-nav-text">6.1.3.1 ES</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.1.3.2.</span> <span class="toc-nav-text">6.1.3.2 流式处理中间件</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">6.2 性能管理</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">6.3 压力测试</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">6.4 配置管理</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">3.5.</span> <span class="toc-nav-text">6.5 降级熔断</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">3.6.</span> <span class="toc-nav-text">6.6 流量控制</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">七、实战篇</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">五、分布式服务</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">5.1 每秒1w次请求的系统需要服务化拆分嘛</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">5.1.1 一体化架构的痛点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">5.1.2 如何使用微服务化解决这些痛点</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">5.2 微服务化后，系统架构如何改造</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">5.2.1 微服务拆分原则</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">5.2.2 微服务化带来的问题和解决思路</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.2.2.1.</span> <span class="toc-nav-text">5.2.2.1 服务间的调用变成进程间的网络调用</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.2.2.2.</span> <span class="toc-nav-text">5.2.2.2 服务间依赖关系错综复杂</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.2.2.3.</span> <span class="toc-nav-text">5.2.2.3 调用链路问题定位</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">5.3 实现支持10w QPS的RPC框架</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">5.3.1 网络传输优化</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">5.3.2 合适的序列化方式</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">5.4 注册中心：分布式系统如何寻址</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">5.4.1 Nginx反向代理与注册中心</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">5.4.2 如何做服务管理</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">5.5 分布式Trace</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">5.6 负载均衡</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.6.1.</span> <span class="toc-nav-text">5.6.1 负载均衡种类</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.6.1.1.</span> <span class="toc-nav-text">5.6.1.1 代理类负载均衡服务</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.6.1.2.</span> <span class="toc-nav-text">5.6.1.2 客户端负载均衡服务</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.6.2.</span> <span class="toc-nav-text">5.6.2 负载均衡策略</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.6.2.1.</span> <span class="toc-nav-text">5.6.2.1 静态策略</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.6.2.2.</span> <span class="toc-nav-text">5.6.2.2 动态策略</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.6.3.</span> <span class="toc-nav-text">5.6.3 使用Nginx进行负载均衡</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.6.3.1.</span> <span class="toc-nav-text">5.6.3.1 负载均衡配置</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.6.3.2.</span> <span class="toc-nav-text">5.6.3.2 感知节点故障</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.6.3.3.</span> <span class="toc-nav-text">5.6.3.3 感知节点新增节点</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">5.7 API网关</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.7.1.</span> <span class="toc-nav-text">5.7.1 API网关的作用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.7.1.1.</span> <span class="toc-nav-text">5.7.1.1 入口网关</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.7.1.2.</span> <span class="toc-nav-text">5.7.1.2 出口网关</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.7.2.</span> <span class="toc-nav-text">5.7.2 TODO</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.8.</span> <span class="toc-nav-text">5.8 多机房部署</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.8.1.</span> <span class="toc-nav-text">5.8.1 部署方案</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.8.2.</span> <span class="toc-nav-text">5.8.2 数据传输时延迟</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.8.3.</span> <span class="toc-nav-text">5.8.3 业务方案选型</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.8.3.1.</span> <span class="toc-nav-text">5.8.3.1 同城双活</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.8.3.2.</span> <span class="toc-nav-text">5.8.3.2 异地多活</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.9.</span> <span class="toc-nav-text">5.9 ServiceMesh</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.9.1.</span> <span class="toc-nav-text">5.9.1 sidecar</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.9.2.</span> <span class="toc-nav-text">5.9.2 Istio</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">六、维护</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">6.1 服务端监控</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.1.1.</span> <span class="toc-nav-text">6.1.1 监控指标</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.1.2.</span> <span class="toc-nav-text">6.1.2 如何采集</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.1.2.1.</span> <span class="toc-nav-text">6.1.2.1 Agent</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.1.2.2.</span> <span class="toc-nav-text">6.1.2.2 代码埋点</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.1.2.3.</span> <span class="toc-nav-text">6.1.2.3 日志</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.1.3.</span> <span class="toc-nav-text">6.1.3 监控数据处理和存储</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.1.3.1.</span> <span class="toc-nav-text">6.1.3.1 ES</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.1.3.2.</span> <span class="toc-nav-text">6.1.3.2 流式处理中间件</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">6.2 性能管理</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.2.1.</span> <span class="toc-nav-text">6.2.1 如何搭建APM系统</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.2.2.</span> <span class="toc-nav-text">6.2.2 如何采取网络数据</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">6.3 压力测试</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.3.1.</span> <span class="toc-nav-text">如何搭建全链路压测平台</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.3.2.</span> <span class="toc-nav-text">6.3.1 压测数据产生</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.3.3.</span> <span class="toc-nav-text">6.3.2 数据如何隔离</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.3.3.1.</span> <span class="toc-nav-text">6.3.2.1 读取请求（下行流量）</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.3.3.2.</span> <span class="toc-nav-text">6.3.2.2 写入请求（上行流量）</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.3.4.</span> <span class="toc-nav-text">6.3.3 压力测试如何实施</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">6.4 配置管理</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.4.1.</span> <span class="toc-nav-text">6.4.1 配置管理的方式</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.4.2.</span> <span class="toc-nav-text">6.4.2 配置中心如何实现</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.4.2.1.</span> <span class="toc-nav-text">6.4.2.1 配置信息如何存储</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.4.2.2.</span> <span class="toc-nav-text">6.4.2.2 变更推送如何实现</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.4.2.3.</span> <span class="toc-nav-text">6.4.2.3 如何保证配置中心高可用</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.5.</span> <span class="toc-nav-text">6.5 降级熔断</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.5.1.</span> <span class="toc-nav-text">6.5.1 雪崩是如何发生的</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.5.2.</span> <span class="toc-nav-text">6.5.2 熔断机制是如何做的</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.5.3.</span> <span class="toc-nav-text">6.5.3 降级机制要如何做</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.6.</span> <span class="toc-nav-text">6.6 流量控制</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.6.0.1.</span> <span class="toc-nav-text">6.6.1 固定窗口算法</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.6.0.2.</span> <span class="toc-nav-text">6.6.2 滑动窗口</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.6.0.3.</span> <span class="toc-nav-text">6.6.3 漏桶算法</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.6.0.4.</span> <span class="toc-nav-text">6.6.4 令牌桶算法</span></a></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">七、实战篇</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">7.1 微博计数系统设计</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.1.1.</span> <span class="toc-nav-text">7.1.1 业务特点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.1.2.</span> <span class="toc-nav-text">7.1.2 高并发如何设计</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.1.2.1.</span> <span class="toc-nav-text">7.1.2.1 MySQL方案</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.1.2.2.</span> <span class="toc-nav-text">7.1.2.2 Redis方案</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.1.3.</span> <span class="toc-nav-text">7.1.3 降低存储成本</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.1.3.1.</span> <span class="toc-nav-text">7.1.3.1 原生数据结构改造</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.1.3.2.</span> <span class="toc-nav-text">7.1.3.2 优化内存使用</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">7.2 未读数系统设计</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.2.1.</span> <span class="toc-nav-text">7.2.1 系统通知的未读数设计</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.2.2.</span> <span class="toc-nav-text">7.2.2 信息流未读数设计</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.2.2.1.</span> <span class="toc-nav-text">7.2.2.1 复杂原因</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.2.2.2.</span> <span class="toc-nav-text">7.2.2.2 设计方案</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.2.2.3.</span> <span class="toc-nav-text">7.2.2.3 案例启发</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">7.3 通用信息流设计</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.3.1.</span> <span class="toc-nav-text">7.3.1 业务特点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.3.2.</span> <span class="toc-nav-text">7.3.2 推模式</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.3.2.1.</span> <span class="toc-nav-text">7.3.2.1 设计思路</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.3.2.2.</span> <span class="toc-nav-text">7.3.2.2 存在问题</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.3.3.</span> <span class="toc-nav-text">7.3.3 拉模式</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.3.3.1.</span> <span class="toc-nav-text">7.3.3.1 设计思路</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.3.3.2.</span> <span class="toc-nav-text">7.3.3.2 存在问题</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.3.4.</span> <span class="toc-nav-text">7.3.4 推拉结合</span></a></li></ol></li></ol></li></ol>
         
         </div>
       </aside>
