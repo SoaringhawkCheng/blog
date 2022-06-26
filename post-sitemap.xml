@@ -10,7 +10,7 @@
 
     <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/java-concurrent-implement/</loc>
-        <lastmod>2022-06-26T14:42:03.090Z</lastmod>
+        <lastmod>2022-06-26T14:43:19.218Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -107,14 +107,6 @@
     <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/penix-architecture/</loc>
         <lastmod>2022-06-13T08:45:04.645Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/java-guide/</loc>
-        <lastmod>2022-06-10T07:38:57.007Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
