@@ -9,8 +9,32 @@
 
 
     <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/grokking-system-design-2/</loc>
+        <lastmod>2022-06-26T14:40:18.117Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/grokking-system-design-1/</loc>
+        <lastmod>2022-06-26T14:40:18.112Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/python-interview-guide-1/</loc>
+        <lastmod>2022-06-26T14:39:49.833Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/interview-system-design-1/</loc>
-        <lastmod>2022-06-26T12:54:03.549Z</lastmod>
+        <lastmod>2022-06-26T13:48:27.393Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -195,14 +219,6 @@
     <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/python-interview-guide-3/</loc>
         <lastmod>2022-03-21T09:15:20.572Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/python-interview-guide-1/</loc>
-        <lastmod>2022-03-21T09:15:16.268Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
