@@ -1,5 +1,5 @@
 ---
-title: 「面试系统设计题精选」学习笔记（上）
+title: 「面试系统设计题精选」学习笔记
 catalog: true
 date: 2022-04-18 22:03:58
 subtitle:
@@ -163,3 +163,33 @@ redis-cell
 ## 11. PageRank
 
 ## 12. 搜索引擎
+
+## 13. 大数据
+
+
+### 13.1. 数据流采样
+
+### 13.2. 频率估价
+
+PV计数：redis incrby
+
+### 13.3. 基数估计
+
+UV计数：即基数估计
+
+#### 13.3.1 bitmap
+
+redis支持
+
+#### 13.3.2 Linear Counting
+
+#### 13.3.3 LogLog Counting
+
+#### 13.3.4 HyperLogLog Counting
+
+
+### 13.4. Top K频繁项
+
+### 13.5. 范围查询
+
+### 13.6. 成员查询

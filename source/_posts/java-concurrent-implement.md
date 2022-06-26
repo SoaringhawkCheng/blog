@@ -1,7 +1,7 @@
 ---
-title: 「Java并发实现原理：JDK源码剖析」读书笔记 [DOING]
+title: 「Java并发实现原理：JDK源码剖析」学习笔记 [DOING]
 catalog: true
-date: 2022-06-12 15:51:25
+date: 2021-11-12 15:51:25
 subtitle:
 header-img:
 tags:
