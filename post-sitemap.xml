@@ -9,8 +9,24 @@
 
 
     <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/system-design-primer-1/</loc>
+        <lastmod>2022-06-26T15:48:17.713Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/system-design-primer-2/</loc>
+        <lastmod>2022-06-26T15:48:15.797Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/grokking-system-design-2/</loc>
-        <lastmod>2022-06-26T14:54:42.963Z</lastmod>
+        <lastmod>2022-06-26T15:28:52.055Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -18,7 +34,7 @@
 
     <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/grokking-system-design-1/</loc>
-        <lastmod>2022-06-26T14:52:56.851Z</lastmod>
+        <lastmod>2022-06-26T15:28:49.806Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
