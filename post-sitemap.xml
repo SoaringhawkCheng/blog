@@ -9,6 +9,22 @@
 
 
     <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E7%94%9F%E6%B4%BB/2022-summer-holiday-plan/</loc>
+        <lastmod>2022-06-30T17:40:58.856Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/redis-adventure/</loc>
+        <lastmod>2022-06-30T10:40:28.636Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/system-design-primer-1/</loc>
         <lastmod>2022-06-26T15:48:17.713Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -67,14 +83,6 @@
     <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/system-design-40-answers-2/</loc>
         <lastmod>2022-06-26T08:51:51.880Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/redis-adventure/</loc>
-        <lastmod>2022-06-24T09:24:37.593Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
