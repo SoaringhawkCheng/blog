@@ -20,6 +20,10 @@ categories:
 
 ## 本周进度
 
+* 《Redis深度历险》读完但并未整理出笔记
+* LeetCode * 10
+* 步行5km * 2
+
 
 # 第二周(7.4-7.10)
 ## 本周计划
@@ -28,6 +32,11 @@ categories:
 * 打球 or 跑步5km * 2
 
 ## 本周进度
+
+* 看了前两章
+* LeetCode * 10
+* 步行5km * 2
+
 
 
 # 第三周(7.11-7.17)
@@ -41,17 +50,40 @@ categories:
 
 ## 本周进度
 
+* 面试3场
+* LeetCode * 10
+* 步行5km * 2
+
 # 第四周(7.18-7.24)
 
 ## 本周计划
-* 学习《netty实战》并整理出笔记
+* 学习《netty实战》和[《Netty学习手册》](https://dongzl.github.io/netty-handbook/#/)并整理出笔记
 * 学习 [J2EE基本知识](https://snailclimb.gitee.io/javaguide/#/docs/system-design/J2EE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86)
 * 学习《深入剖析tomcat》和《Tomcat架构解析》，并整理出笔记
 * 学习jetty的原理和使用
 * LeetCode * 10
 * 打球 or 跑步5km * 2
 
+## 本周日报
+
+### 7.18日报
+
+* 面试一场
+* LeetCode * 3
+
+### 7.19日报
+
+* LeetCode * 2
+
+### 7.20日报
+
+* 面试一场
+* [《Netty学习手册》](https://dongzl.github.io/netty-handbook/#/)
+
+
 ## 本周进度
+
+
 
 # 第五周(7.25-7.31)
 
