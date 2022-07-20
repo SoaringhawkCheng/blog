@@ -9,8 +9,16 @@
 
 
     <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/mongodb-docs/</loc>
+        <lastmod>2022-07-20T12:49:58.481Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/netty-in-action/</loc>
-        <lastmod>2022-07-20T08:55:17.818Z</lastmod>
+        <lastmod>2022-07-20T11:32:52.678Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
