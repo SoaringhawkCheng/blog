@@ -9,8 +9,8 @@
 
 
     <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/kubernetes-in-action/</loc>
-        <lastmod>2022-07-02T12:42:47.592Z</lastmod>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/netty-in-action/</loc>
+        <lastmod>2022-07-20T08:19:17.708Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -18,7 +18,15 @@
 
     <url>
         <loc>https://blog.soaringhawkcheng.tech/%E7%94%9F%E6%B4%BB/2022-summer-holiday-plan/</loc>
-        <lastmod>2022-06-30T17:40:58.856Z</lastmod>
+        <lastmod>2022-07-20T05:53:35.981Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/kubernetes-in-action/</loc>
+        <lastmod>2022-07-13T09:52:04.060Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
