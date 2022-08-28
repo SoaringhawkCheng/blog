@@ -253,6 +253,11 @@ tryLock：非公平锁的一种，但是cas锁的state，如果失败就会返�
 
 ## 同步工具类
 
+[图解CyclicBarrier](https://www.cnblogs.com/crazymakercircle/p/13906379.html)
+
+[图解Semaphore](https://www.cnblogs.com/crazymakercircle/p/13907012.html)
+
+[图解CountDownLatch](https://www.cnblogs.com/crazymakercircle/p/13906922.html)
 
 
 ## 并发容器
