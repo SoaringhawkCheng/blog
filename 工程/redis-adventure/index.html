@@ -238,12 +238,20 @@
 <p>实际完成时间：</p>
 </blockquote>
 <p>redis占用内存评估</p>
+<p><a target="_blank" rel="noopener" href="https://so.51cto.com/?sever_type=2&amp;keywords=%E9%AB%98%E5%B9%B6%E5%8F%91redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0">高并发redis学习笔记</a></p>
 <h1><span id="一-基础篇">一、基础篇</span></h1>
+<h2><span id="11-分布式锁">1.1 分布式锁</span></h2>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/fengyuyeguirenenen/article/details/123752418">Redis实现分布式锁的7种方案</a></p>
+<h3><span id="111-setnx-expire">1.1.1 SETNX + EXPIRE</span></h3>
+<p>先用setnx来抢锁，如果抢到之后，再用expire给锁设置一个过期时间</p>
+<p>不是原子操作，容易产生未释放死锁的问题</p>
+<h3><span id="112-setnx-value值是系统时间过期时间">1.1.2 SETNX + value值是(系统时间+过期时间)</span></h3>
+<p>为了解决方案一，发生异常锁得不到释放的场景</p>
+<p>过期时间放到setnx的value值里面。如果加锁失败，再拿出value值校验一下</p>
 <h1><span id="二-原理篇">二、原理篇</span></h1>
 <h1><span id="三-集群篇">三、集群篇</span></h1>
 <h1><span id="四-拓展篇">四、拓展篇</span></h1>
 <h1><span id="五-源码篇">五、源码篇</span></h1>
-<h1><span id></span></h1>
 
                 
 
@@ -313,7 +321,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">一、基础篇</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">二、原理篇</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">三、集群篇</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">四、拓展篇</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">五、源码篇</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">6.</span> <span class="toc-nav-text"></span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">一、基础篇</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">1.1 分布式锁</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">1.1.1 SETNX + EXPIRE</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">1.1.2 SETNX + value值是(系统时间+过期时间)</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">二、原理篇</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">三、集群篇</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">四、拓展篇</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">五、源码篇</span></a></li></ol>
         
         </div>
       </aside>
