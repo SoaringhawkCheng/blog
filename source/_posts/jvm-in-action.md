@@ -317,15 +317,39 @@ G1 收集器在后台维护了一个优先列表，每次根据允许的收集�
 
 ### 4.2.4 低延迟垃圾收集器
 
-## 4.3 
-
-
-## 5.4 G1
-
-
-
-
 # 六、性能监控工具
+
+[](https://snailclimb.gitee.io/javaguide/#/./docs/java/jvm/jdk-monitoring-and-troubleshooting-tools)
+
+## 6.1 JDK 命令行工具
+
+### 6.1.1 jps
+
+显示虚拟机执行主类名称以及这些进程的本地虚拟机唯一 ID
+
+### 6.1.2 jstat：（JVM Statistics Monitoring Tool） 
+
+使用于监视虚拟机各种运行状态信息的命令行工具
+
+比如 jstat -gc -h3 31736 1000 10表示分析进程 id 为 31736 的 gc 情况，每隔 1000ms 打印一次记录，打印 10 次停止，每 3 行后打印指标头部。
+
+### 6.1.3 jinfo
+
+实时地查看和调整虚拟机各项参数
+
+### 6.1.4 jmap
+
+生成堆转储快照
+
+要想获取 Java 堆转储，可以使用 “-XX:+HeapDumpOnOutOfMemoryError” 参数，可以让虚拟机在 OOM 异常出现之后自动生成 dump 文件，Linux 命令下可以通过 kill -3 发送进程退出信号也能拿到 dump 文件。
+
+### 6.1.5 jhat
+
+分析 heapdump 文件
+
+### 6.1.6 jstack
+
+生成虚拟机当前时刻的线程快照。目的主要是定位线程长时间出现停顿的原因，如线程间死锁、死循环、请求外部资源导致的长时间等待等都是导致线程长时间停顿的原因
 
 # 七、分析Java堆
 
