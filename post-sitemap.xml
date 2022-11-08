@@ -9,16 +9,32 @@
 
 
     <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/jvm-in-action/</loc>
-        <lastmod>2022-10-07T10:41:31.265Z</lastmod>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/java-performance/</loc>
+        <lastmod>2022-11-08T09:31:18.828Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
     </url>
 
     <url>
-        <loc>https://blog.soaringhawkcheng.tech/article/java-performance/</loc>
-        <lastmod>2022-08-28T04:24:05.887Z</lastmod>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/learning-spring-doc/</loc>
+        <lastmod>2022-11-08T09:31:11.020Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/how-tomcat-works/</loc>
+        <lastmod>2022-11-08T09:29:59.089Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/jvm-in-action/</loc>
+        <lastmod>2022-10-08T14:28:29.725Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -35,14 +51,6 @@
     <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/redis-adventure/</loc>
         <lastmod>2022-07-30T00:45:29.962Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/how-tomcat-works/</loc>
-        <lastmod>2022-07-20T13:59:37.197Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
