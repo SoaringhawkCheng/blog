@@ -7,3 +7,5 @@ header-img:
 tags:
 categories:
 ---
+
+[next-key lock的规则](https://blog.csdn.net/wang11yangyang/article/details/118087876)
