@@ -9,3 +9,6 @@ tags:
 categories:
 - 工程
 ---
+
+org.springframework.context.ApplicationContext 是 Spring IoC 容器实现的代表,它负责实例化,配置和组装 Bean
+
