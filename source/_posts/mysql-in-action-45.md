@@ -8,4 +8,11 @@ tags:
 categories:
 ---
 
+
 [next-key lock的规则](https://blog.csdn.net/wang11yangyang/article/details/118087876)
+
+[两阶段提交演示-知乎](https://www.zhihu.com/question/479810716/answer/2508608912)
+
+[innodb架构图](https://blog.51cto.com/u_15297441/3823586)
+
+[300帧图解mysql需要bin redo undo](https://mp.weixin.qq.com/s/2Y-9noKZKzePqYjr5GikeA)
