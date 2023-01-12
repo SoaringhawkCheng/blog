@@ -1,12 +1,22 @@
 ---
-title: 「MySQL实战45讲」学习笔记 [TODO]
+title: 「MySQL实战45讲」学习笔记 [DOING]
 catalog: true
 date: 2022-06-14 19:08:20
 subtitle:
 header-img:
 tags:
+- storage
 categories:
+- 工程
 ---
+
+> 书籍豆瓣链接：
+>  
+> 开始学习时间：
+> 
+> 预计完成时间：
+> 
+> 实际完成时间：
 
 
 [next-key lock的规则](https://blog.csdn.net/wang11yangyang/article/details/118087876)
