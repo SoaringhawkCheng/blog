@@ -238,13 +238,26 @@
 <p>开源资料链接：<br>
 <a target="_blank" rel="noopener" href="https://relph1119.github.io/mysql-learning-notes/#/">《MySQL是怎样运行的》</a></p>
 </blockquote>
-<p><img src="https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/how-mysql-use-and-work/page-summary.png?raw=true" alt></p>
+<!--![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/how-mysql-use-and-work/page-summary.png?raw=true)-->
+<ul>
+<li>const：在主键列或者唯一二级索引列和一个常数进行等值比较</li>
+<li>ref：搜索条件为二级索引列与常数等值比较，采用二级索引来执行查询的访问方法</li>
+<li>ref_or_null：ref的情况，同时还要查值NULL</li>
+<li>range：利用索引进行范围匹配的访问方法</li>
+<li>index：遍历二级索引记录，不用进行回表的执行方式</li>
+<li>all：直接扫描聚簇索引</li>
+<li>eq_ref：对被驱动表使用主键值或者唯一二级索引列的值进行等值查找的查询执行方式</li>
+</ul>
 
                 
 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/文科/cambridge-english-grammar/" data-toggle="tooltip" data-placement="top" title="「剑桥英语语法」学习笔记 [DOING]">&larr; Previous Post</a>
+                        </li>
                     
                     
                         <li class="next">
