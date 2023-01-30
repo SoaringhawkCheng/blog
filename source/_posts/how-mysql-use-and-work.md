@@ -17,4 +17,13 @@ categories:
 > [《MySQL是怎样运行的》](https://relph1119.github.io/mysql-learning-notes/#/)
 
 
-![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/how-mysql-use-and-work/page-summary.png?raw=true)
+<!--![](https://github.com/SoaringhawkCheng/blog/blob/master/source/_posts/how-mysql-use-and-work/page-summary.png?raw=true)-->
+
+* const：在主键列或者唯一二级索引列和一个常数进行等值比较
+* ref：搜索条件为二级索引列与常数等值比较，采用二级索引来执行查询的访问方法
+* ref_or_null：ref的情况，同时还要查值NULL
+* range：利用索引进行范围匹配的访问方法
+* index：遍历二级索引记录，不用进行回表的执行方式
+*  all：直接扫描聚簇索引
+* eq_ref：对被驱动表使用主键值或者唯一二级索引列的值进行等值查找的查询执行方式
+
