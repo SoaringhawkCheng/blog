@@ -1,7 +1,7 @@
 ---
-title: 「Redis深度历险」读书笔记 [TODO]
+title: 「Redis开发与运维&Redis深度历险」读书笔记 [TODO]
 catalog: true
-date: 2022-05-14 12:18:12
+date: 2023-02-21 12:18:12
 subtitle:
 header-img:
 tags:
@@ -10,17 +10,15 @@ categories:
 - 工程
 ---
 
-> 书籍豆瓣链接：[《Redis 深度历险：核心原理与应用实践》](https://book.douban.com/subject/30386804/
+> 书籍豆瓣链接：
+> [《Redis深度历险：核心原理与应用实践》](https://book.douban.com/subject/30386804/)
+> [《Redis开发与运维》](https://book.douban.com/subject/26971561/)
 > 
-> 开始学习时间：
-> 
-> 预计完成时间：
-> 
-> 实际完成时间：
+> 相关在线资料：
+> [高并发redis学习笔记](https://so.51cto.com/?sever_type=2&keywords=%E9%AB%98%E5%B9%B6%E5%8F%91redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0)
+> [PassJava Redis进阶](http://www.passjava.cn/#/)
 
 redis占用内存评估
-
-[高并发redis学习笔记](https://so.51cto.com/?sever_type=2&keywords=%E9%AB%98%E5%B9%B6%E5%8F%91redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0)
 
 # 一、基础篇
 
