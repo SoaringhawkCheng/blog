@@ -9,6 +9,14 @@
 
 
     <url>
+        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/redis-adventure/</loc>
+        <lastmod>2023-02-19T07:12:00.125Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://blog.soaringhawkcheng.tech/%E6%96%87%E7%A7%91/cambridge-english-grammar/</loc>
         <lastmod>2023-01-30T12:48:30.153Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -67,14 +75,6 @@
     <url>
         <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/java-concurrent-implement/</loc>
         <lastmod>2022-08-05T15:25:25.911Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://blog.soaringhawkcheng.tech/%E5%B7%A5%E7%A8%8B/redis-adventure/</loc>
-        <lastmod>2022-07-30T00:45:29.962Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
