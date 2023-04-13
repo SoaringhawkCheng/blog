@@ -3,8 +3,15 @@
 
 
     <url>
+        <loc>https://blog.soaringhawkcheng.tech/tags/psy/</loc>
+        <lastmod>2023-04-13T07:35:55.614Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://blog.soaringhawkcheng.tech/tags/framework/</loc>
-        <lastmod>2023-04-03T10:24:35.329Z</lastmod>
+        <lastmod>2023-04-13T07:34:11.172Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
