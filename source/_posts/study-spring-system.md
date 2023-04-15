@@ -25,3 +25,13 @@ Bean实例化之前执行，所有的bd已经全部加载完毕，然后可以�
 BeanPostProcessor
 针对Bean实例化之后做一些逻辑处理
 
+
+那么如果想要被Spring容器管理的Bean的路径不再Spring Boot 的包扫描路径下，怎么办呢？也就是如何去加载第三方的Bean 呢?
+
+[ApplicationContext容器源码解析：spring启动时是如何解析xml配置文件并注册bean的？](https://zhuanlan.zhihu.com/p/358803204)
+
+[spring boot自动装配原理](https://zhuanlan.zhihu.com/p/503007698)
+
+[Spring基础组件的使用——@ComponentScan扫描规则及其源码分析](https://blog.csdn.net/qq_27610647/article/details/115704426)
+
+
