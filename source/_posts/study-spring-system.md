@@ -15,6 +15,8 @@ categories:
 > [《Spring Cloud Alibaba 微服务原理与实战》](https://book.douban.com/subject/35041576/)
 > 
 > 相关在线资料：
+> [某博客Java专栏源码系列 - 超级全](https://blog.csdn.net/aqin1012/article/details/124325005)
+
 
 BeanDefinitionRegistryPostProcessor
 所有常规bd已经加载完毕，然后可以再添加一些额外的bd
@@ -34,4 +36,7 @@ BeanPostProcessor
 
 [Spring基础组件的使用——@ComponentScan扫描规则及其源码分析](https://blog.csdn.net/qq_27610647/article/details/115704426)
 
+[超级重要的ConfigurationClassPostProcessor](https://blog.csdn.net/aqin1012/article/details/126053792)
 
+todo 看完自动化配置源码
+[深入Spring Boot ：从源码分析自动配置原理](https://zhuanlan.zhihu.com/p/559705017)
