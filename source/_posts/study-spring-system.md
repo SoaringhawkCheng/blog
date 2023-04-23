@@ -1,5 +1,5 @@
 ---
-title: 「Spring框架体系」学习笔记「TODO」
+title: 「Spring框架体系」学习笔记「DOING」
 catalog: true
 date: 2023-04-03 18:18:51
 subtitle:
@@ -17,18 +17,11 @@ categories:
 > 相关在线资料：
 > [某博客Java专栏源码系列 - 超级全](https://blog.csdn.net/aqin1012/article/details/124325005)
 
+## 我的源码阅读笔记
 
-BeanDefinitionRegistryPostProcessor
-所有常规bd已经加载完毕，然后可以再添加一些额外的bd
+[Spring Boot启动源码分析](https://note.youdao.com/s/CFcCjew)
 
-BeanFactoryPostProcessor
-Bean实例化之前执行，所有的bd已经全部加载完毕，然后可以对这些bd做一些属性的修改或者添加工作
-
-BeanPostProcessor
-针对Bean实例化之后做一些逻辑处理
-
-
-那么如果想要被Spring容器管理的Bean的路径不再Spring Boot 的包扫描路径下，怎么办呢？也就是如何去加载第三方的Bean 呢?
+## 其他一些零散稳定
 
 [ApplicationContext容器源码解析：spring启动时是如何解析xml配置文件并注册bean的？](https://zhuanlan.zhihu.com/p/358803204)
 
